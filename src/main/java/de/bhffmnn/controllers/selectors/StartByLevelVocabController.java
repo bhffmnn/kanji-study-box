@@ -24,36 +24,40 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class StartByLevelVocabController implements Initializable {
-    private int unitAmount;
+    private int vocableAmount;
 
     @FXML
     private ComboBox<String> studyDirectionBox;
     @FXML
-    private Label unitCount;
+    private Label itemCountLabel;
     @FXML
     private Spinner<Integer> levelSpinner;
     @FXML
     private Spinner<Integer> studyCountSpinner;
     @FXML
     private Button studyButton;
+    @FXML
+    private Label itemLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        itemLabel.setText("vocables");
+
         //Set up levelSpinner
         levelSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
         levelSpinner.valueProperty().addListener((o, oldValue, newValue) -> {
             App.vocableStudyList = App.vocableDictionary.getByLevel(newValue);
-            unitAmount = App.vocableStudyList.size();
-            unitCount.setText(String.valueOf(unitAmount));
-            if (unitAmount == 0) {
+            vocableAmount = App.vocableStudyList.size();
+            itemCountLabel.setText(String.valueOf(vocableAmount));
+            if (vocableAmount == 0) {
                 studyCountSpinner.setDisable(true);
                 studyButton.setDisable(true);
             }
             else {
                 studyCountSpinner.setDisable(false);
                 studyButton.setDisable(false);
-                studyCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, unitAmount));
-                studyCountSpinner.getValueFactory().setValue(Integer.parseInt(unitCount.getText()));
+                studyCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, vocableAmount));
+                studyCountSpinner.getValueFactory().setValue(Integer.parseInt(itemCountLabel.getText()));
             }
 
 
@@ -85,7 +89,7 @@ public class StartByLevelVocabController implements Initializable {
     private void backButtonAction() throws IOException {
         Parent parent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
         Scene scene = new Scene(parent);
-        Stage stage = (Stage) (unitCount.getScene().getWindow());
+        Stage stage = (Stage) (itemCountLabel.getScene().getWindow());
 
         stage.setScene(scene);
         stage.show();

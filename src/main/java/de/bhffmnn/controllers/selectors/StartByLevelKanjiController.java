@@ -29,16 +29,20 @@ public class StartByLevelKanjiController implements Initializable {
     @FXML
     private ComboBox<String> studyDirectionBox;
     @FXML
-    private Label kanjiCount;
+    private Label itemCountLabel;
     @FXML
     private Spinner<Integer> levelSpinner;
     @FXML
     private Spinner<Integer> studyCountSpinner;
     @FXML
     private Button studyButton;
+    @FXML
+    private Label itemLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        itemLabel.setText("kanji");
+
         //Set up levelSpinner
         levelSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
         levelSpinner.valueProperty().addListener((o, oldValue, newValue) -> {
@@ -77,7 +81,7 @@ public class StartByLevelKanjiController implements Initializable {
                 break;
         }
         kanjiAmount = App.kanjiStudyList.size();
-        kanjiCount.setText(String.valueOf(kanjiAmount));
+        itemCountLabel.setText(String.valueOf(kanjiAmount));
         if (kanjiAmount == 0) {
             studyCountSpinner.setDisable(true);
             studyButton.setDisable(true);
@@ -86,7 +90,7 @@ public class StartByLevelKanjiController implements Initializable {
             studyCountSpinner.setDisable(false);
             studyButton.setDisable(false);
             studyCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, kanjiAmount));
-            studyCountSpinner.getValueFactory().setValue(Integer.parseInt(kanjiCount.getText()));
+            studyCountSpinner.getValueFactory().setValue(Integer.parseInt(itemCountLabel.getText()));
         }
     }
 
@@ -104,7 +108,7 @@ public class StartByLevelKanjiController implements Initializable {
     private void backButtonAction() throws IOException {
         Parent parent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
         Scene scene = new Scene(parent);
-        Stage stage = (Stage) (kanjiCount.getScene().getWindow());
+        Stage stage = (Stage) (itemCountLabel.getScene().getWindow());
 
         stage.setScene(scene);
         stage.show();

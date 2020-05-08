@@ -9,6 +9,8 @@
 package de.bhffmnn.controllers.menu;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.selectors.StartByLevelKanjiController;
+import de.bhffmnn.controllers.selectors.StartByLevelVocabController;
 import de.bhffmnn.controllers.selectors.StartScheduledKanjiController;
 import de.bhffmnn.controllers.selectors.StartScheduledVocabController;
 import javafx.event.ActionEvent;
@@ -51,7 +53,12 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void studyByLevelButtonAction(ActionEvent actionEvent) throws Exception {
-        loadNewSceneStatic(actionEvent,"selectors/startKanjiByLevel.fxml");
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/selectors/startByLevel.fxml"));
+        loader.setController(new StartByLevelKanjiController());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
     }
 
     @FXML
@@ -72,7 +79,12 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void studyVocabByLevelButtonAction(ActionEvent actionEvent) throws Exception {
-        loadNewSceneStatic(actionEvent,"selectors/startVocabByLevel.fxml");
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/selectors/startByLevel.fxml"));
+        loader.setController(new StartByLevelVocabController());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
     }
 
     @FXML

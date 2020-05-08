@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bhffmnn.controllers.selectors.StartByLevelKanjiController">
+<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane>
          <center>
@@ -22,8 +22,10 @@
                   <HBox maxWidth="-Infinity">
                      <children>
                         <Label text="There are " />
-                        <Label fx:id="kanjiCount" text="0" />
-                        <Label text=" kanji on that level. " />
+                        <Label fx:id="itemCountLabel" text="0" />
+                        <Label text=" " />
+                        <Label fx:id="itemLabel" text="items" />
+                        <Label text=" on that level. " />
                      </children>
                   </HBox>
                   <Label text="How many do you want to study?" />
