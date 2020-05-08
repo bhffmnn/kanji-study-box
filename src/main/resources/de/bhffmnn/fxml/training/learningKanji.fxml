@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#handleKeyPress" stylesheets="@../../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bhffmnn.controllers.training.LearningKanjiController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane id="features" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="300.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" />
+                      <RowConstraints minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="on" layoutX="10.0" layoutY="202.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label layoutX="10.0" layoutY="69.0" text="ON-Reading" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label layoutX="10.0" layoutY="335.0" text="Meaning:" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="mnemonic" layoutX="10.0" layoutY="17.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="meaning" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="character" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="50.0" />
+                           </font></Label>
+                        <Label layoutX="10.0" layoutY="17.0" text="Mnemonic" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets bottom="35.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label text="kun-Reading" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="kun" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Vocabulary:" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="vocab" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </opaqueInsets>
+                  </GridPane>
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity">
+                     <buttons>
+                        <Button fx:id="previousButton" mnemonicParsing="false" onAction="#previousButtonAction" text="Previous" />
+                        <Button fx:id="showAndCheckButton" mnemonicParsing="false" onAction="#showAndCheckButtonAction" text="Show/Check" />
+                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonAction" text="Next" />
+                     </buttons>
+                  </ButtonBar>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" />
+               </BorderPane.margin>
+            </VBox>
+         </bottom>
+         <top>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="64.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="275.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="64.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#xButtonAction" text="X">
+                     <GridPane.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <StackPane GridPane.columnIndex="1">
+                     <children>
+                        <ProgressBar id="progressBar" fx:id="progressBar" prefWidth="200.0" progress="0.0" />
+                        <Label id="progressLabel" fx:id="progressLabel" text="0/0" />
+                     </children>
+                  </StackPane>
+                   <Circle fx:id="checkCircle" fill="#ffffff00" radius="10.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                       <GridPane.margin>
+                           <Insets right="5.0" top="5.0" />
+                       </GridPane.margin>
+                   </Circle>
+               </children>
+            </GridPane>
+         </top>
+      </BorderPane>
+   </children>
+</StackPane>

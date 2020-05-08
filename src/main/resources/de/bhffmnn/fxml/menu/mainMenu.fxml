@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bhffmnn.controllers.menu.MainMenuController">
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="600.0">
+         <top>
+            <Label text="Main menu" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </top>
+         <center>
+            <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER">
+                           <children>
+                              <Label text="Kanji">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#learnNewKanjiButtonAction" prefWidth="150.0" text="Learn new kanji" />
+                              <Button mnemonicParsing="false" onAction="#studyByScheduleButtonAction" prefWidth="150.0" text="Study by schedule" />
+                              <Button mnemonicParsing="false" onAction="#studyByLevelButtonAction" prefWidth="150.0" text="Study by level" />
+                              <Button mnemonicParsing="false" onAction="#kanjiDictionaryAction" prefWidth="150.0" text="Dictionary..." />
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER">
+                           <children>
+                              <Label text="Vocabulary">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Button mnemonicParsing="false" onAction="#learnNewVocabularyButtonAction" prefWidth="150.0" text="Learn new vocabulary" />
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#studyVocabByScheduleButtonAction" prefWidth="150.0" text="Study by schedule" />
+                              <Button mnemonicParsing="false" onAction="#studyVocabByLevelButtonAction" prefWidth="150.0" text="Study by level" />
+                              <Button mnemonicParsing="false" onAction="#vocDictionaryAction" prefWidth="150.0" text="Dictionary..." />
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#settingsButtonAction" prefWidth="150.0" text="Settings" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>
