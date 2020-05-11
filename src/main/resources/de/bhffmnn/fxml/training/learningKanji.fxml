@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,10 +17,10 @@
 
 <StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#handleKeyPress" stylesheets="@../../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bhffmnn.controllers.training.LearningKanjiController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane prefHeight="400.0" prefWidth="600.0">
          <center>
-            <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
-               <children>
+            <ScrollPane BorderPane.alignment="CENTER">
+               <content>
                   <GridPane id="features" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
                     <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
@@ -38,34 +39,41 @@
                         <Label fx:id="on" layoutX="10.0" layoutY="202.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label layoutX="10.0" layoutY="69.0" text="ON-Reading" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label layoutX="10.0" layoutY="335.0" text="Meaning:" GridPane.rowIndex="4">
                            <font>
                               <Font size="16.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label fx:id="mnemonic" layoutX="10.0" layoutY="17.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="16.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label fx:id="meaning" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="16.0" />
-                           </font></Label>
-                        <Label fx:id="character" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           </font>
+                        </Label>
+                        <Label fx:id="character" layoutX="10.0" layoutY="17.0" text="漢" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
-                              <Font size="50.0" />
-                           </font></Label>
+                              <Font name="MS Gothic" size="80.0" />
+                           </font>
+                        </Label>
                         <Label layoutX="10.0" layoutY="17.0" text="Mnemonic" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets bottom="35.0" />
                            </GridPane.margin>
                            <font>
                               <Font size="16.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label text="kun-Reading" GridPane.rowIndex="3">
                            <font>
                               <Font size="16.0" />
@@ -91,8 +99,8 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </opaqueInsets>
                   </GridPane>
-               </children>
-            </VBox>
+               </content>
+            </ScrollPane>
          </center>
          <bottom>
             <VBox alignment="CENTER" BorderPane.alignment="CENTER">
@@ -113,9 +121,9 @@
          <top>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="64.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="275.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="64.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="64.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="64.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

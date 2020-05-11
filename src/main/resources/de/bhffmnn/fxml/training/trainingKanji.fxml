@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -18,55 +19,116 @@
 
 <StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#handleKeyPress" stylesheets="@../../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bhffmnn.controllers.training.TrainingKanjiController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane prefHeight="400.0" prefWidth="600.0">
          <center>
-            <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="character" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" text="漢" textAlignment="CENTER">
-                     <font>
-                        <Font name="MS Gothic" size="80.0" />
-                     </font>
-                  </Label>
-                  <GridPane id="features" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
-                    <columnConstraints>
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="300.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" />
-                      <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-                    </rowConstraints>
+            <ScrollPane BorderPane.alignment="CENTER">
+               <content>
+                  <VBox alignment="TOP_CENTER">
                      <children>
-                        <Label layoutX="10.0" layoutY="69.0" text="ON-Reading:" GridPane.rowIndex="1" />
-                        <Label fx:id="kun" layoutX="10.0" layoutY="202.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label layoutX="10.0" layoutY="69.0" text="kun-Reading:" GridPane.rowIndex="2" />
-                        <Label layoutX="10.0" layoutY="335.0" text="Meaning:" GridPane.rowIndex="3" />
-                        <Label layoutX="110.0" layoutY="77.0" text="Due:" GridPane.rowIndex="7" />
-                        <Label fx:id="level" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label layoutX="10.0" layoutY="17.0" text="Level:" GridPane.rowIndex="6" />
-                        <Label fx:id="mnemonic" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label layoutX="10.0" layoutY="17.0" text="Mnemonic:" GridPane.rowIndex="5" />
-                        <Label fx:id="vocab" layoutX="10.0" layoutY="17.0" text="Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label " wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="meaning" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="on" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label layoutX="10.0" layoutY="17.0" text="Vocabulary:" GridPane.rowIndex="4">
-                           <GridPane.margin>
-                              <Insets bottom="35.0" />
-                           </GridPane.margin></Label>
-                        <Label fx:id="due" layoutX="10.0" layoutY="197.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <GridPane id="features" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="300.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="-Infinity" minHeight="10.0" />
+                            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" />
+                            <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label fx:id="character" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" text="漢" textAlignment="CENTER" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="MS Gothic" size="80.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="69.0" text="ON-Reading:" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="kun" layoutX="10.0" layoutY="202.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="69.0" text="kun-Reading:" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="335.0" text="Meaning:" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="110.0" layoutY="77.0" text="Due:" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="level" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="17.0" text="Level:" GridPane.rowIndex="7">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="mnemonic" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="17.0" text="Mnemonic:" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="vocab" layoutX="10.0" layoutY="17.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="meaning" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="on" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="17.0" text="Vocabulary:" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="due" layoutX="10.0" layoutY="197.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </opaqueInsets>
+                        </GridPane>
                      </children>
-                     <opaqueInsets>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </opaqueInsets>
-                  </GridPane>
-               </children>
-            </VBox>
+                  </VBox>
+               </content>
+            </ScrollPane>
          </center>
          <bottom>
             <VBox alignment="CENTER" BorderPane.alignment="CENTER">
@@ -112,9 +174,9 @@
          <top>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="64.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0" minWidth="10.0" prefWidth="275.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="64.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="64.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="275.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="64.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
