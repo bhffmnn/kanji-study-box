@@ -220,7 +220,7 @@ public class LearningKanjiController implements Initializable {
         //At the end of the dictionary / when exiting with xButton
         String[] choices = {"Save and finish", "Save and finish", "Finish without saving"};
         endDialog = new ChoiceDialog<>(choices[0], choices);
-        endDialog.setTitle("End of list");
+        endDialog.setTitle("Closing session");
         endDialog.setHeaderText("How do you want to proceed?");
         Optional<String> choice = endDialog.showAndWait();
         if (choice.isPresent()) {

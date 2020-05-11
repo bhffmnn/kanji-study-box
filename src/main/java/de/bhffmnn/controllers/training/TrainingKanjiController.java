@@ -245,7 +245,7 @@ public class TrainingKanjiController implements Initializable {
             choices = new String[]{"Save and finish", "Save and finish", "Finish without saving"};
         }
         endDialog = new ChoiceDialog<>(choices[0], choices);
-        endDialog.setTitle("End of list");
+        endDialog.setTitle("Closing session");
         endDialog.setHeaderText("How do you want to proceed?");
         Optional<String> choice = endDialog.showAndWait();
         if (choice.isPresent()) {
