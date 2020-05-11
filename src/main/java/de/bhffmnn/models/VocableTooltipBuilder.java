@@ -18,29 +18,17 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 //TODO
 public class VocableTooltipBuilder {
-    /*
-    public static Tooltip vocableTooltip(String word) {
-        ArrayList<Vocable> vocableList = new ArrayList<>();
+    public static Tooltip vocableTooltip(Vocable vocable) {
 
-        for (String letter : word.split("")) {
-            Kanji vocable;
-            if ((vocable = App.vocableDictionary.(letter)) != null) {
-                vocableList.add(vocable);
-            }
-        }
         GridPane gridPane = new GridPane();
-        int y = 0;
-        for (Vocable vocable : vocableList) {
-            gridPane.add(new Label("Form:"), y, 0);
-            gridPane.add(new Label("Reading:"), y, 1);
-            gridPane.add(new Label("Meaning:"), y, 2);
-            gridPane.add(new Label("Level:"), y, 3);
-            gridPane.add(new Label(vocable.getForm()), y + 1,0);
-            gridPane.add(new Label(vocable.getReading()),  y + 1,1);
-            gridPane.add(new Label(vocable.getMeaning()),y + 1, 2);
-            gridPane.add(new Label(vocable.getLevel().toString()), y + 1, 3);
-            y += 2;
-        }
+        gridPane.add(new Label("Form:"), 0, 0);
+        gridPane.add(new Label("Reading:"), 0, 1);
+        gridPane.add(new Label("Meaning:"), 0, 2);
+        gridPane.add(new Label("Level:"), 0, 3);
+        gridPane.add(new Label(vocable.getForm()), 1,0);
+        gridPane.add(new Label(vocable.getReading()),1,1);
+        gridPane.add(new Label(vocable.getMeaning()),1, 2);
+        gridPane.add(new Label(vocable.getLevel().toString()), 1, 3);
 
         Tooltip tooltip = new Tooltip();
         tooltip.graphicProperty().setValue(gridPane);
@@ -48,6 +36,4 @@ public class VocableTooltipBuilder {
         tooltip.setFont(Font.font(16));
         return tooltip;
     }
-
-     */
 }

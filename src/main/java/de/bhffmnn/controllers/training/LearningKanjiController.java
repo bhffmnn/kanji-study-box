@@ -9,10 +9,7 @@
 package de.bhffmnn.controllers.training;
 
 import de.bhffmnn.App;
-import de.bhffmnn.models.Kanji;
-import de.bhffmnn.models.KanjiDictionary;
-import de.bhffmnn.models.Vocable;
-import de.bhffmnn.models.VocableDictionary;
+import de.bhffmnn.models.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -25,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -32,6 +30,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -57,6 +56,9 @@ public class LearningKanjiController implements Initializable {
     private KanjiDictionary uncheckedKanji;
     private KanjiDictionary studyKanji;
 
+    //Stores vocables of current kanji for vocable tooltip
+    ArrayList<Vocable> currentVocables;
+
     //Character feature labels
     @FXML
     private Label character;
@@ -67,9 +69,9 @@ public class LearningKanjiController implements Initializable {
     @FXML
     private Label meaning;
     @FXML
-    private Label vocab;
-    @FXML
     private Label mnemonic;
+    @FXML
+    private VBox vocabBox;
 
     //Progress bar
     @FXML
@@ -250,19 +252,24 @@ public class LearningKanjiController implements Initializable {
     }
 
     private void loadFeatures(int index) {
-        character.setText(App.kanjiStudyList.getByIndex(index).getCharacter());
-        on.setText(App.kanjiStudyList.getByIndex(index).getOnReading());
-        kun.setText(App.kanjiStudyList.getByIndex(index).getKunReading());
-        meaning.setText(App.kanjiStudyList.getByIndex(index).getMeaning());
+        Kanji currentKanji = App.kanjiStudyList.getByIndex(index);
 
-        VocableDictionary kanjiVocables = App.vocableDictionary.getByCharacter(App.kanjiStudyList.getByIndex(index).getCharacter());
-        StringBuilder vocables = new StringBuilder();
-        for (Vocable v : kanjiVocables) {
-            vocables.append(v.getReading() + " - " + v.getMeaning() + "\n");
+        character.setText(currentKanji.getCharacter());
+        on.setText(currentKanji.getOnReading());
+        kun.setText(currentKanji.getKunReading());
+        meaning.setText(currentKanji.getMeaning());
+
+        vocabBox.getChildren().clear();
+        currentVocables = new ArrayList<>();
+        currentVocables.addAll(App.vocableDictionary.getByCharacter(currentKanji.getCharacter()));
+        for (Vocable v : currentVocables) {
+            Label vocableLabel = new Label(v.getReading() + " - " + v.getMeaning());
+            vocableLabel.setStyle("-fx-font-size:16");
+            vocableLabel.setTooltip(VocableTooltipBuilder.vocableTooltip(v));
+            vocabBox.getChildren().add(vocableLabel);
         }
 
-        vocab.setText(vocables.toString());
-        mnemonic.setText(App.kanjiStudyList.getByIndex(index).getMnemonic());
+        mnemonic.setText(currentKanji.getMnemonic());
     }
 
     private void showFeature(String feature) {
@@ -280,7 +287,7 @@ public class LearningKanjiController implements Initializable {
                 meaning.setVisible(true);
                 break;
             case "vocab":
-                vocab.setVisible(true);
+                vocabBox.setVisible(true);
                 break;
             case "mnemonic":
                 mnemonic.setVisible(true);
@@ -303,7 +310,7 @@ public class LearningKanjiController implements Initializable {
                 meaning.setVisible(false);
                 break;
             case "vocab":
-                vocab.setVisible(false);
+                vocabBox.setVisible(false);
                 break;
             case "mnemonic":
                 mnemonic.setVisible(false);

@@ -92,11 +92,6 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="vocab" layoutX="10.0" layoutY="17.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
                               <Label fx:id="meaning" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="16.0" />
@@ -120,6 +115,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
+                              <VBox fx:id="vocabBox" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                            <opaqueInsets>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
