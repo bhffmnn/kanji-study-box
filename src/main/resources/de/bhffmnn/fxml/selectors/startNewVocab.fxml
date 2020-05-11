@@ -15,7 +15,7 @@
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <center>
-            <VBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
                   <ComboBox fx:id="scopeComboBox" minWidth="150.0" />
                   <HBox maxWidth="-Infinity">
@@ -44,7 +44,7 @@
                   <Insets top="5.0" />
                </BorderPane.margin>
                <font>
-                  <Font size="16.0" />
+                  <Font size="36.0" />
                </font>
             </Label>
          </top>
