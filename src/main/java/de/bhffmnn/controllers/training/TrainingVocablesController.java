@@ -23,8 +23,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,7 +53,7 @@ public class TrainingVocablesController implements Initializable {
 
     //Character feature labels
     @FXML
-    private Label form;
+    private HBox formBox;
     @FXML
     private Label reading;
     @FXML
@@ -59,6 +64,8 @@ public class TrainingVocablesController implements Initializable {
     private Label level;
     @FXML
     private Label due;
+    @FXML
+    private GridPane gridPane;
 
     //Progress bar
     @FXML
@@ -121,8 +128,6 @@ public class TrainingVocablesController implements Initializable {
                     else {
                         checkCircle.setFill(Color.GREEN);
                     }
-
-                    form.setTooltip(KanjiTooltipBuilder.kanjiTooltip(form.getText()));
                 })
         );
 
@@ -195,6 +200,7 @@ public class TrainingVocablesController implements Initializable {
     private void xButtonAction() throws IOException {
         showEndDialog();
     }
+    /*
     @FXML
     private void infoButtonAction(ActionEvent actionEvent) {
         Kanji kanji;
@@ -204,6 +210,7 @@ public class TrainingVocablesController implements Initializable {
             }
         }
     }
+     */
 
     //Keyboard configuration
     @FXML
@@ -275,14 +282,14 @@ public class TrainingVocablesController implements Initializable {
                 App.vocableDictionary.save(App.settings.getVocableDictionaryFilePath());
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
                 Scene trainingScene = new Scene(trainingParent);
-                Stage stage = (Stage) form.getScene().getWindow();
+                Stage stage = (Stage) formBox.getScene().getWindow();
                 stage.setScene(trainingScene);
                 stage.show();
             } else if (choice.get().equals("Finish without saving")) {
                 App.vocableDictionary.reload(App.settings.getVocableDictionaryFilePath());
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
                 Scene trainingScene = new Scene(trainingParent);
-                Stage stage = (Stage) form.getScene().getWindow();
+                Stage stage = (Stage) formBox.getScene().getWindow();
                 stage.setScene(trainingScene);
                 stage.show();
             } else if (choice.get().equals("Continue with not updated kanji")) {
@@ -298,7 +305,7 @@ public class TrainingVocablesController implements Initializable {
         }
     }
     private void showHints(int index) {
-        form.setVisible(true);
+        formBox.setVisible(true);
     }
     private void showAnswers() {
         for (String feature : App.settings.getStudyDirectionsVocab()[App.studyDirection]) {
@@ -311,7 +318,18 @@ public class TrainingVocablesController implements Initializable {
         }
     }
     private void loadFeatures(int index) {
-        form.setText(App.vocableStudyList.getByIndex(index).getForm());
+        formBox.getChildren().clear();
+        for (String character : App.vocableStudyList.getByIndex(index).getForm().split("")) {
+            Label charLabel = new Label(character);
+            System.out.println(charLabel.getLayoutX());
+            charLabel.setStyle("-fx-font-size:50; -fx-label-padding: -6;");
+            Kanji kanji = App.kanjiDictionary.getKanjiByCharacter(character);
+            if (kanji != null) {
+                charLabel.setTooltip(KanjiTooltipBuilder.kanjiTooltip(kanji));
+            }
+            formBox.getChildren().add(charLabel);
+        }
+
         reading.setText(App.vocableStudyList.getByIndex(index).getReading());
         meaning.setText(App.vocableStudyList.getByIndex(index).getMeaning());
         example.setText(App.vocableStudyList.getByIndex(index).getExample());
@@ -340,7 +358,7 @@ public class TrainingVocablesController implements Initializable {
     private void showFeature(String feature) {
         switch (feature) {
             case "form":
-                form.setVisible(true);
+                formBox.setVisible(true);
                 break;
             case "reading":
                 reading.setVisible(true);
@@ -363,7 +381,7 @@ public class TrainingVocablesController implements Initializable {
     private void hideFeature(String feature) {
         switch (feature) {
             case "form":
-                form.setVisible(false);
+                formBox.setVisible(false);
                 break;
             case "reading":
                 reading.setVisible(false);

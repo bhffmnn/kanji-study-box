@@ -23,7 +23,7 @@
          <center>
             <ScrollPane BorderPane.alignment="CENTER">
                <content>
-                  <GridPane id="features" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+                  <GridPane id="features" fx:id="gridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
                     <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
@@ -31,59 +31,53 @@
                     <rowConstraints>
                       <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" />
                       <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="reading" layoutX="10.0" layoutY="202.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="reading" layoutX="10.0" layoutY="202.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="69.0" text="Reading" GridPane.rowIndex="2">
+                        <Label layoutX="10.0" layoutY="69.0" text="Reading" GridPane.rowIndex="1">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="335.0" text="Meaning:" GridPane.rowIndex="3">
+                        <Label layoutX="10.0" layoutY="335.0" text="Meaning:" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="110.0" layoutY="77.0" text="Due:" GridPane.rowIndex="6">
+                        <Label layoutX="110.0" layoutY="77.0" text="Due:" GridPane.rowIndex="5">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="level" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label fx:id="level" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="17.0" text="Level:" GridPane.rowIndex="5">
+                        <Label layoutX="10.0" layoutY="17.0" text="Level:" GridPane.rowIndex="4">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="example" layoutX="10.0" layoutY="17.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label fx:id="example" layoutX="10.0" layoutY="17.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="meaning" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="meaning" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="form" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="50.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="17.0" text="Example:" GridPane.rowIndex="4">
+                        <Label layoutX="10.0" layoutY="17.0" text="Example:" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -91,11 +85,21 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="due" layoutX="10.0" layoutY="197.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <Label fx:id="due" layoutX="10.0" layoutY="197.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
+                        <Label>
+                           <font>
+                              <Font size="50.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox" GridPane.columnIndex="1">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </HBox>
                      </children>
                      <opaqueInsets>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

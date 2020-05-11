@@ -9,10 +9,7 @@
 package de.bhffmnn.controllers.training;
 
 import de.bhffmnn.App;
-import de.bhffmnn.models.KanjiDictionary;
-import de.bhffmnn.models.StudyUnit;
-import de.bhffmnn.models.Vocable;
-import de.bhffmnn.models.VocableDictionary;
+import de.bhffmnn.models.*;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -55,7 +53,7 @@ public class LearningVocablesController implements Initializable {
 
     //Character feature labels
     @FXML
-    private Label form;
+    private HBox formBox;
     @FXML
     private Label reading;
     @FXML
@@ -220,13 +218,13 @@ public class LearningVocablesController implements Initializable {
                 App.vocableDictionary.save(App.settings.getVocableDictionaryFilePath());
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
                 Scene trainingScene = new Scene(trainingParent);
-                Stage stage = (Stage) form.getScene().getWindow();
+                Stage stage = (Stage) formBox.getScene().getWindow();
                 stage.setScene(trainingScene);
                 stage.show();
             } else if (choice.get().equals("Finish without saving")) {
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
                 Scene trainingScene = new Scene(trainingParent);
-                Stage stage = (Stage) form.getScene().getWindow();
+                Stage stage = (Stage) formBox.getScene().getWindow();
                 stage.setScene(trainingScene);
                 stage.show();
             }
@@ -234,7 +232,17 @@ public class LearningVocablesController implements Initializable {
     }
 
     private void loadFeatures(int index) {
-        form.setText(studyVocab.getByIndex(index).getForm());
+        formBox.getChildren().clear();
+        for (String character : studyVocab.getByIndex(index).getForm().split("")) {
+            Label charLabel = new Label(character);
+            System.out.println(charLabel.getLayoutX());
+            charLabel.setStyle("-fx-font-size:50; -fx-label-padding: -6;");
+            Kanji kanji = App.kanjiDictionary.getKanjiByCharacter(character);
+            if (kanji != null) {
+                charLabel.setTooltip(KanjiTooltipBuilder.kanjiTooltip(kanji));
+            }
+            formBox.getChildren().add(charLabel);
+        }
         reading.setText(studyVocab.getByIndex(index).getReading());
         meaning.setText(studyVocab.getByIndex(index).getMeaning());
         example.setText(studyVocab.getByIndex(index).getExample());
@@ -243,7 +251,7 @@ public class LearningVocablesController implements Initializable {
     private void showFeature(String feature) {
         switch (feature) {
             case "form":
-                form.setVisible(true);
+                formBox.setVisible(true);
                 break;
             case "reading":
                 reading.setVisible(true);
@@ -260,7 +268,7 @@ public class LearningVocablesController implements Initializable {
     private void hideFeature(String feature) {
         switch (feature) {
             case "form":
-                form.setVisible(false);
+                formBox.setVisible(false);
                 break;
             case "reading":
                 reading.setVisible(false);

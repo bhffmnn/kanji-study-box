@@ -18,30 +18,18 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class KanjiTooltipBuilder {
-    public static Tooltip kanjiTooltip(String word) {
-        ArrayList<Kanji> kanjiList = new ArrayList<>();
-
-        for (String letter : word.split("")) {
-            Kanji kanji;
-            if ((kanji = App.kanjiDictionary.getKanjiByCharacter(letter)) != null) {
-                kanjiList.add(kanji);
-            }
-        }
+    public static Tooltip kanjiTooltip(Kanji kanji) {
         GridPane gridPane = new GridPane();
-        int y = 0;
-        for (Kanji kanji : kanjiList) {
-            gridPane.add(new Label("Character:"), y, 0);
-            gridPane.add(new Label("ON-Reading:"), y, 1);
-            gridPane.add(new Label("kun-Reading:"), y, 2);
-            gridPane.add(new Label("Meaning:"), y, 3);
-            gridPane.add(new Label("Level:"), y, 4);
-            gridPane.add(new Label(kanji.getCharacter()), y + 1,0);
-            gridPane.add(new Label(kanji.getOnReading()),  y + 1,1);
-            gridPane.add(new Label(kanji.getKunReading()),y + 1, 2);
-            gridPane.add(new Label(kanji.getMeaning()), y + 1, 3);
-            gridPane.add(new Label(kanji.getCharacterLevel().toString()), y + 1, 4);
-            y += 2;
-        }
+        gridPane.add(new Label("Character:"), 0, 0);
+        gridPane.add(new Label("ON-Reading:"), 0, 1);
+        gridPane.add(new Label("kun-Reading:"), 0, 2);
+        gridPane.add(new Label("Meaning:"), 0, 3);
+        gridPane.add(new Label("Level:"), 0, 4);
+        gridPane.add(new Label(kanji.getCharacter()), 1,0);
+        gridPane.add(new Label(kanji.getOnReading()),  1,1);
+        gridPane.add(new Label(kanji.getKunReading()),1, 2);
+        gridPane.add(new Label(kanji.getMeaning()), 1, 3);
+        gridPane.add(new Label(kanji.getCharacterLevel().toString()), 1, 4);
 
         Tooltip tooltip = new Tooltip();
         tooltip.graphicProperty().setValue(gridPane);

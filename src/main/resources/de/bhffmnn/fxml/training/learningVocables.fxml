@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -59,7 +60,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="form" layoutX="10.0" layoutY="17.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label layoutX="10.0" layoutY="17.0" text=" " GridPane.rowIndex="1">
                            <font>
                               <Font size="50.0" />
                            </font>
@@ -72,6 +73,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
+                        <HBox fx:id="formBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                      <opaqueInsets>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
