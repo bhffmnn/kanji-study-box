@@ -97,10 +97,8 @@ public class TrainingVocablesController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Shuffle for better effect :)
         App.vocableStudyList.shuffle();
-        loadFeatures(0);
-
-        disableUpdateButtons();
 
         //Initialize progress bar
         progressLabel.setText("1/" + App.vocableStudyList.size());
@@ -146,11 +144,13 @@ public class TrainingVocablesController implements Initializable {
             }
         }));
 
+        //Initialize property values
         answersHidden.setValue(true);
-
-        //fire currentIndex listener
-        currentIndex.setValue(1);
         currentIndex.setValue(0);
+
+        //Property listeners won't fire yet so we initially do stuff manually here
+        loadFeatures(0);
+        disableUpdateButtons();
     }
 
     //Button actions

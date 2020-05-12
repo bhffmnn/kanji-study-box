@@ -94,16 +94,14 @@ public class TrainingKanjiController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Shuffle for better effect :)
         App.kanjiStudyList.shuffle();
-        loadFeatures(0);
-
-        disableUpdateButtons();
 
         //Initialize progress bar
         progressLabel.setText("1/" + App.kanjiStudyList.size());
         progressBar.progressProperty().set(1 / (App.kanjiStudyList.size()));
 
-        //Set up currentIndex property
+        //Set up currentIndex property which will do all the things when switching between kanji
         currentIndex = new SimpleIntegerProperty(0);
         currentIndex.addListener(
                 ((observableValue, oldValue, newValue) -> {
@@ -125,6 +123,7 @@ public class TrainingKanjiController implements Initializable {
                     else {
                         checkCircle.setFill(Color.GREEN);
                     }
+                    System.out.println("currentIndex listener fired");
                 })
         );
 
@@ -143,12 +142,13 @@ public class TrainingKanjiController implements Initializable {
             }
         }));
 
-        //When learning new kanji, answers must not be hidden
+        //Initialize property values
         answersHidden.setValue(true);
-
-        //fire currentIndex listener
-        currentIndex.setValue(1);
         currentIndex.setValue(0);
+
+        //Property listeners won't fire yet so we initially do stuff manually here
+        loadFeatures(0);
+        disableUpdateButtons();
     }
 
     //Button actions
