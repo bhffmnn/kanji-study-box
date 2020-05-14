@@ -9,6 +9,7 @@
 package de.bhffmnn.controllers.training;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.selectors.VocableChooserController;
 import de.bhffmnn.models.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -53,8 +54,9 @@ public class LearningKanjiController implements Initializable {
     private ChoiceDialog<String> endDialog;
 
     //KanjiDictionary tracking updated kanji
-    private KanjiDictionary uncheckedKanji;
-    private KanjiDictionary studyKanji;
+    private KanjiDictionary uncheckedKanji; //At the start of a phase all kanji are stored here
+    private KanjiDictionary studyKanji; //Gets set to uncheckedKanji.clone() after reaching the end and reset to
+                                        //App.kanjiStudyList.clone() at the start of a new phase
 
     //Stores vocables of current kanji for vocable tooltip
     ArrayList<Vocable> currentVocables;
@@ -235,12 +237,32 @@ public class LearningKanjiController implements Initializable {
                     kanji.setMeaningLevel(1);
                     kanji.setMeaningDue(LocalDate.now());
                 }
-                App.vocableDictionary.save(App.settings.getVocableDictionaryFilePath());
-                Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
-                Scene trainingScene = new Scene(trainingParent);
-                Stage stage = (Stage) character.getScene().getWindow();
-                stage.setScene(trainingScene);
-                stage.show();
+                App.kanjiDictionary.save(App.settings.getKanjiDictionaryFilePath());
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("What next?");
+                alert.setContentText("Do you want to learn new vocables for these kanji next?");
+                ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+                alert.getButtonTypes().setAll(yesButton, noButton);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent()) {
+                    if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
+                        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/selectors/vocableChooser.fxml"));
+
+                        VocableChooserController controller = new VocableChooserController(App.kanjiStudyList);
+                        loader.setController(controller);
+                        Stage stage = (Stage) character.getScene().getWindow();
+                        stage.setScene(new Scene((loader.load())));
+                    }
+                    else {
+                        Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
+                        Scene trainingScene = new Scene(trainingParent);
+                        Stage stage = (Stage) character.getScene().getWindow();
+                        stage.setScene(trainingScene);
+                        stage.show();
+                    }
+                }
             } else if (choice.get().equals("Finish without saving")) {
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
                 Scene trainingScene = new Scene(trainingParent);
@@ -315,24 +337,6 @@ public class LearningKanjiController implements Initializable {
             case "mnemonic":
                 mnemonic.setVisible(false);
                 break;
-        }
-    }
-
-    private void chooseNewVocab() throws IOException {
-        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.NO);
-        Alert alert = new Alert(Alert.AlertType.WARNING,
-                "Wanna start some fancy new vocabulary for these kanji?",
-                yes,
-                no);
-        alert.setTitle("New vocabulary?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
-            Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/selectors/choosingVocabByKanji.fxml"));
-            Scene trainingScene = new Scene(trainingParent);
-            Stage stage = (Stage) character.getScene().getWindow();
-            stage.setScene(trainingScene);
-            stage.show();
         }
     }
 }
