@@ -204,13 +204,21 @@ public class LearningVocablesController implements Initializable {
 
     private void showEndDialog() throws IOException {
         //At the end of the dictionary / when exiting with xButton
-        String[] choices = {"Save and finish", "Save and finish", "Finish without saving"};
-        endDialog = new ChoiceDialog<>(choices[0], choices);
-        endDialog.setTitle("Finishing");
-        endDialog.setHeaderText("How do you want to proceed?");
-        Optional<String> choice = endDialog.showAndWait();
+
+        //The buttons for the Alert
+        ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        Alert endDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        endDialog.setTitle("Closing learning session");
+        endDialog.setContentText("Do you want to save and schedule these vocables for studying?");
+        endDialog.setHeaderText("");
+        endDialog.getButtonTypes().setAll(yesButton, noButton, cancelButton);
+
+        Optional<ButtonType> choice = endDialog.showAndWait();
         if (choice.isPresent()) {
-            if (choice.get().equals("Save and finish")) {
+            if (choice.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
                 for (Vocable vocable : App.vocableStudyList) {
                     vocable.setLevel(1);
                     vocable.setDue(LocalDate.now());
@@ -221,7 +229,8 @@ public class LearningVocablesController implements Initializable {
                 Stage stage = (Stage) formBox.getScene().getWindow();
                 stage.setScene(trainingScene);
                 stage.show();
-            } else if (choice.get().equals("Finish without saving")) {
+            }
+            else if (choice.get().equals(choice.get().getButtonData().equals(ButtonBar.ButtonData.NO))) {
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
                 Scene trainingScene = new Scene(trainingParent);
                 Stage stage = (Stage) formBox.getScene().getWindow();

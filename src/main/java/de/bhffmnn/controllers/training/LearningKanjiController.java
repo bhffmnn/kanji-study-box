@@ -50,9 +50,6 @@ public class LearningKanjiController implements Initializable {
     //Tracks whether answers are hidden
     private BooleanProperty answersHidden;
 
-    //Dialog for saving and exiting
-    private ChoiceDialog<String> endDialog;
-
     //KanjiDictionary tracking updated kanji
     private KanjiDictionary uncheckedKanji; //At the start of a phase all kanji are stored here
     private KanjiDictionary studyKanji; //Gets set to uncheckedKanji.clone() after reaching the end and reset to
@@ -222,13 +219,21 @@ public class LearningKanjiController implements Initializable {
 
     private void showEndDialog() throws IOException {
         //At the end of the dictionary / when exiting with xButton
-        String[] choices = {"Save and finish", "Save and finish", "Finish without saving"};
-        endDialog = new ChoiceDialog<>(choices[0], choices);
-        endDialog.setTitle("Closing session");
-        endDialog.setHeaderText("How do you want to proceed?");
-        Optional<String> choice = endDialog.showAndWait();
-        if (choice.isPresent()) {
-            if (choice.get().equals("Save and finish")) {
+
+        //The buttons for the Alerts
+        ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        Alert endDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        endDialog.setTitle("Closing learning session");
+        endDialog.setContentText("Do you want to save and schedule these kanji for studying?");
+        endDialog.setHeaderText("");
+        endDialog.getButtonTypes().setAll(yesButton, noButton, cancelButton);
+
+        Optional<ButtonType> result = endDialog.showAndWait();
+        if (result.isPresent()) {
+            if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
                 for (Kanji kanji : App.kanjiStudyList) {
                     kanji.setCharacterLevel(1);
                     kanji.setCharacterDue(LocalDate.now());
@@ -239,13 +244,12 @@ public class LearningKanjiController implements Initializable {
                 }
                 App.kanjiDictionary.save(App.settings.getKanjiDictionaryFilePath());
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("What next?");
-                alert.setContentText("Do you want to learn new vocables for these kanji next?");
-                ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-                ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
-                alert.getButtonTypes().setAll(yesButton, noButton);
-                Optional<ButtonType> result = alert.showAndWait();
+                Alert newVocDialog = new Alert(Alert.AlertType.CONFIRMATION);
+                newVocDialog.setTitle("What next?");
+                newVocDialog.setContentText("Do you want to learn new vocables for these kanji next?");
+                newVocDialog.setHeaderText("");
+                newVocDialog.getButtonTypes().setAll(yesButton, noButton);
+                result = newVocDialog.showAndWait();
                 if (result.isPresent()) {
                     if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
                         FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/selectors/vocableChooser.fxml"));
@@ -263,7 +267,8 @@ public class LearningKanjiController implements Initializable {
                         stage.show();
                     }
                 }
-            } else if (choice.get().equals("Finish without saving")) {
+            }
+            else if (result.get().getButtonData().equals(ButtonBar.ButtonData.NO)) {
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
                 Scene trainingScene = new Scene(trainingParent);
                 Stage stage = (Stage) character.getScene().getWindow();
