@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -152,7 +153,8 @@ public class App extends Application {
         }
         Parent root = FXMLLoader.load(getClass().getResource("fxml/menu/mainMenu.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Kanji Study App");
+        stage.setTitle("Kanji Study Box");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("images/kanjibox.png")));
         stage.show();
     }
 
