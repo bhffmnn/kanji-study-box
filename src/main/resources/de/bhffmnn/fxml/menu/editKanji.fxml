@@ -14,9 +14,9 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="TOP_CENTER">
+      <GridPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="TOP_CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
@@ -49,12 +49,12 @@
             <Label text="Reading Due" GridPane.rowIndex="8" />
             <Label text="Meaning Level" GridPane.rowIndex="9" />
             <Label text="Meaning Due" GridPane.rowIndex="10" />
-            <Spinner fx:id="charLvlSpinner" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <DatePicker fx:id="charDP" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Spinner fx:id="readLvlSpinner" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <DatePicker fx:id="readDP" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Spinner fx:id="meanLvlSpinner" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <DatePicker fx:id="meanDP" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Spinner fx:id="charLvlSpinner" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <DatePicker fx:id="charDP" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Spinner fx:id="readLvlSpinner" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <DatePicker fx:id="readDP" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Spinner fx:id="meanLvlSpinner" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <DatePicker fx:id="meanDP" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="10" />
          </children>
       </GridPane>
    </center>
