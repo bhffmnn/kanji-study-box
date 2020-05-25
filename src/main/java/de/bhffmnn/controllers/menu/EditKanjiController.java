@@ -95,10 +95,7 @@ public class EditKanjiController implements Initializable {
         kanji.setCharacterDue(charDP.getValue());
         kanji.setReadingDue(readDP.getValue());
         kanji.setMeaningDue(meanDP.getValue());
-
-        System.out.println("Clone: " + kanji.getCharacterDue());
-        System.out.println("Original: " + App.kanjiDictionary.getKanjiByCharacter(kanji.getCharacter()).getCharacterDue());
-
+        
         ((Stage) charField.getScene().getWindow()).close();
     }
 }
