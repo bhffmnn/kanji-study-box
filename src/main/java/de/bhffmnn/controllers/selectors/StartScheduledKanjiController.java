@@ -64,6 +64,8 @@ public class StartScheduledKanjiController implements Initializable {
             else {
                 studyCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, kanjiAmount));
                 studyCountSpinner.getValueFactory().setValue(Integer.parseInt(itemCountLabel.getText()));
+                studyCountSpinner.setDisable(false);
+                studyButton.setDisable(false);
             }
         });
         studyDirectionBox.getSelectionModel().select("Study characters");
