@@ -10,6 +10,7 @@ package de.bhffmnn.controllers.selectors;
 
 import de.bhffmnn.App;
 import de.bhffmnn.models.Kanji;
+import de.bhffmnn.models.Vocable;
 import de.bhffmnn.models.VocableDictionary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,6 +47,16 @@ public class StartNewVocabController implements Initializable {
                 for (Kanji kanji : App.kanjiDictionary.getStarted()) {
                     App.vocableStudyList.addAll(App.vocableDictionary.getByCharacter(kanji.getCharacter()));
                 }
+                VocableDictionary removeList = new VocableDictionary();
+                for (Vocable v : App.vocableStudyList) {
+                    for (char c : v.getForm().toCharArray()) {
+                        Kanji k = App.kanjiDictionary.getKanjiByCharacter(String.valueOf(c));
+                        if (!(k == null) && (k.getCharacterLevel() == 0)) { //if the kanji exists but isn't started yet
+                            removeList.add(v);
+                        }
+                    }
+                }
+                App.vocableStudyList.removeAll(removeList);
             }
             else {
                 App.vocableStudyList = App.vocableDictionary.clone();
