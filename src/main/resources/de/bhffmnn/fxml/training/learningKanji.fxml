@@ -41,7 +41,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="69.0" text="ON-Reading" GridPane.rowIndex="2">
+                        <Label layoutX="10.0" layoutY="69.0" text="ON-Reading:" GridPane.rowIndex="2">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -66,7 +66,7 @@
                               <Font name="MS Gothic" size="80.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="17.0" text="Mnemonic" GridPane.rowIndex="6">
+                        <Label layoutX="10.0" layoutY="17.0" text="Mnemonic:" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets bottom="35.0" />
                            </GridPane.margin>
@@ -74,7 +74,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label text="kun-Reading" GridPane.rowIndex="3">
+                        <Label text="kun-Reading:" GridPane.rowIndex="3">
                            <font>
                               <Font size="16.0" />
                            </font>
