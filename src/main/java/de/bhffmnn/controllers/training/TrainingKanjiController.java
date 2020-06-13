@@ -304,6 +304,8 @@ public class TrainingKanjiController implements Initializable {
         }
 
         character.setText(currentKanji.getCharacter());
+        character.setTooltip(KanjiTooltipBuilder.kanjiTooltip(currentKanji));
+
         on.setText(currentKanji.getOnReading());
         kun.setText(currentKanji.getKunReading());
         meaning.setText(currentKanji.getMeaning());
