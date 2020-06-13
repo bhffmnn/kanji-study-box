@@ -176,24 +176,56 @@ public class TrainingVocablesController implements Initializable {
     }
     @FXML
     private void setButtonAction() {
-        App.vocableStudyList.getByIndex(currentIndex.get()).updateLevel(Integer.parseInt(levelField.getText()));
-        level.setText(String.valueOf(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel()));
-        due.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getDue().toString());
-        notUpdatedVocab.remove(App.vocableStudyList.getByIndex((currentIndex.get())));
-
-        //update check circle
-        checkCircle.setFill(Color.GREEN);
+        try {
+            int newLevel = Integer.parseInt(levelField.getText());
+            if (newLevel >= 0 && newLevel <= 10) {
+                App.vocableStudyList.getByIndex(currentIndex.get()).updateLevel(Integer.parseInt(levelField.getText()));
+                level.setText(String.valueOf(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel()));
+                due.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getDue().toString());
+                notUpdatedVocab.remove(App.vocableStudyList.getByIndex((currentIndex.get())));
+                //update check circle
+                checkCircle.setFill(Color.GREEN);
+            }
+            else {
+                //TODO: Sth that says number is not in range
+            }
+        }
+        catch (NumberFormatException nfe) {
+            //TODO: Sth that says it's not a valid number
+        }
     }
     @FXML
     private void minusButtonAction() {
-        if (Integer.parseInt(levelField.getText()) > 0) {
-            levelField.setText(String.valueOf(Integer.parseInt(levelField.getText()) - 1));
+        try {
+            int currentLevel = Integer.parseInt(levelField.getText());
+            if (currentLevel > 0) {
+                levelField.setText(String.valueOf(currentLevel - 1));
+            }
+            else {
+                //if 0 or lower, set to 0
+                levelField.setText("0");
+            }
+        }
+        catch (NumberFormatException nfe) {
+            //Reset level field to current level
+            levelField.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
         }
     }
     @FXML
     private void plusButtonAction() {
-        if (Integer.parseInt(levelField.getText()) < 10) {
-            levelField.setText(String.valueOf(Integer.parseInt(levelField.getText()) + 1));
+        try {
+            int currentLevel = Integer.parseInt(levelField.getText());
+            if (currentLevel < 10) {
+                levelField.setText(String.valueOf(currentLevel + 1));
+            }
+            else {
+                //if 10 or higher, set to 10
+                levelField.setText("10");
+            }
+        }
+        catch (NumberFormatException nfe) {
+            //Reset level field to current level
+            levelField.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
         }
     }
     @FXML
