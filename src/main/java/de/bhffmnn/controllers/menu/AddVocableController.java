@@ -21,6 +21,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the AddVocable view that lets the user add a vocable to a dictionary.
+ */
+
 public class AddVocableController implements Initializable {
     @FXML
     TextField formField;
@@ -33,6 +37,10 @@ public class AddVocableController implements Initializable {
 
     private VocableDictionary cloneDictionary;
 
+    /**
+     *
+     * @param cloneDictionary The dictionary that the vocable should added to
+     */
     public AddVocableController(VocableDictionary cloneDictionary) {
         this.cloneDictionary = cloneDictionary;
     }

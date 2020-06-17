@@ -31,6 +31,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the Settings view that lets the user change the settings of the application.
+ */
+
 public class SettingsController implements Initializable {
     @FXML
     private Label kanjiPathLabel;

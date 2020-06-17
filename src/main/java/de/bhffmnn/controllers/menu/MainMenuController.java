@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the MainMenu view.
+ */
 public class MainMenuController implements Initializable {
 
     @Override

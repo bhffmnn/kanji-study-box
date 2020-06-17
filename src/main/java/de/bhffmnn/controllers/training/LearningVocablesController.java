@@ -30,6 +30,11 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the LearningVocables view which lets the user learn new vocables. These vocables are determined by the
+ * global variable App.vocableStudyList
+ */
+
 public class LearningVocablesController implements Initializable {
     /*
     The following variable tracks the learning phase.

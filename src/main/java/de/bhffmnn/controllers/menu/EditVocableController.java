@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the EditVocable view that lets the user edit a Vocable object.
+ */
+
 public class EditVocableController implements Initializable {
     @FXML
     TextField formField;
@@ -45,11 +49,13 @@ public class EditVocableController implements Initializable {
 
     private Vocable vocable;
 
+    /**
+     *
+     * @param vocable The vocable that should be edited
+     */
     public EditVocableController(Vocable vocable) {
         this.vocable = vocable;
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

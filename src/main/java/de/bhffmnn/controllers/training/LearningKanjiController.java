@@ -35,6 +35,11 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the LearningKanji view which lets the user learn new kanji. These kanji are determined by the global
+ * variable App.kanjiStudyList
+ */
+
 public class LearningKanjiController implements Initializable {
     /*
     The following variable tracks the learning phase.

@@ -8,27 +8,32 @@
 
 package de.bhffmnn.controllers.training;
 
-        import java.io.IOException;
-        import java.net.URL;
-        import java.util.ArrayList;
-        import java.util.Optional;
-        import java.util.ResourceBundle;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
-        import de.bhffmnn.App;
-        import de.bhffmnn.models.*;
-        import javafx.beans.property.*;
-        import javafx.fxml.FXML;
-        import javafx.fxml.FXMLLoader;
-        import javafx.fxml.Initializable;
-        import javafx.scene.Parent;
-        import javafx.scene.Scene;
-        import javafx.scene.control.*;
-        import javafx.scene.input.KeyCode;
-        import javafx.scene.input.KeyEvent;
-        import javafx.scene.layout.VBox;
-        import javafx.scene.paint.Color;
-        import javafx.scene.shape.Circle;
-        import javafx.stage.Stage;
+import de.bhffmnn.App;
+import de.bhffmnn.models.*;
+import javafx.beans.property.*;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
+/**
+ * Controller for the TrainingKanji view which lets the user study kanji. These kanji are determined by the global
+ * variable App.kanjiStudyList
+ */
 
 public class TrainingKanjiController implements Initializable {
     //Index for iterating over kanjiStudyList
@@ -174,38 +179,71 @@ public class TrainingKanjiController implements Initializable {
     }
     @FXML
     private void setButtonAction() {
-        switch (App.studyDirection) {
-            case 0:
-                App.kanjiStudyList.getByIndex(currentIndex.get()).updateCharacterLevel(Integer.parseInt(levelField.getText()));
-                level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getCharacterLevel()));
-                due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getCharacterDue().toString());
-                break;
-            case 1:
-                App.kanjiStudyList.getByIndex(currentIndex.get()).updateReadingLevel(Integer.parseInt(levelField.getText()));
-                level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getReadingLevel()));
-                due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getReadingDue().toString());
-                break;
-            case 2:
-                App.kanjiStudyList.getByIndex(currentIndex.get()).updateMeaningLevel(Integer.parseInt(levelField.getText()));
-                level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getMeaningLevel()));
-                due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getMeaningDue().toString());
-                break;
-        }
-        notUpdatedKanji.remove(App.kanjiStudyList.getByIndex((currentIndex.get())));
+        try {
+            int newLevel = Integer.parseInt(levelField.getText());
+            if (newLevel >= 0 && newLevel <= 10) {
+                switch (App.studyDirection) {
+                    case 0:
+                        App.kanjiStudyList.getByIndex(currentIndex.get()).updateCharacterLevel(Integer.parseInt(levelField.getText()));
+                        level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getCharacterLevel()));
+                        due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getCharacterDue().toString());
+                        break;
+                    case 1:
+                        App.kanjiStudyList.getByIndex(currentIndex.get()).updateReadingLevel(Integer.parseInt(levelField.getText()));
+                        level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getReadingLevel()));
+                        due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getReadingDue().toString());
+                        break;
+                    case 2:
+                        App.kanjiStudyList.getByIndex(currentIndex.get()).updateMeaningLevel(Integer.parseInt(levelField.getText()));
+                        level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getMeaningLevel()));
+                        due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getMeaningDue().toString());
+                        break;
+                }
+                notUpdatedKanji.remove(App.kanjiStudyList.getByIndex((currentIndex.get())));
 
-        //update check circle
-        checkCircle.setFill(Color.GREEN);
+                //update check circle
+                checkCircle.setFill(Color.GREEN);
+            }
+            else {
+                //TODO: Sth that says number is not in range
+            }
+        }
+        catch (NumberFormatException nfe) {
+        //TODO: Sth that says it's not a valid number
+    }
     }
     @FXML
     private void minusButtonAction() {
-        if (Integer.parseInt(levelField.getText()) > 0) {
-            levelField.setText(String.valueOf(Integer.parseInt(levelField.getText()) - 1));
+        try {
+            int currentLevel = Integer.parseInt(levelField.getText());
+            if (currentLevel > 0) {
+                levelField.setText(String.valueOf(currentLevel - 1));
+            }
+            else {
+                //if 0 or lower, set to 0
+                levelField.setText("0");
+            }
+        }
+        catch (NumberFormatException nfe) {
+            //Reset level field to current level
+            levelField.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
         }
     }
     @FXML
     private void plusButtonAction() {
-        if (Integer.parseInt(levelField.getText()) < 10) {
-            levelField.setText(String.valueOf(Integer.parseInt(levelField.getText()) + 1));
+        try {
+            int currentLevel = Integer.parseInt(levelField.getText());
+            if (currentLevel < 10) {
+                levelField.setText(String.valueOf(currentLevel + 1));
+            }
+            else {
+                //if 10 or higher, set to 10
+                levelField.setText("10");
+            }
+        }
+        catch (NumberFormatException nfe) {
+            //Reset level field to current level
+            levelField.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
         }
     }
     @FXML

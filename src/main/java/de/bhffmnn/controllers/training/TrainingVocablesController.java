@@ -38,6 +38,12 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the TrainingVocables view which lets the user study vocables. These vocables are determined by the
+ * global variable App.vocableStudyList
+ */
+
+
 public class TrainingVocablesController implements Initializable {
     //Index for iterating over kanjiStudyList
     private IntegerProperty currentIndex;

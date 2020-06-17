@@ -33,6 +33,11 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the VocableChooser view. It lets the user select vocables for kanji of a KanjiDictionary object to
+ * schedule for study.
+ */
+
 public class VocableChooserController implements Initializable {
     private KanjiDictionary kanjiDictionary;
 
@@ -66,6 +71,10 @@ public class VocableChooserController implements Initializable {
     //Index of the currently displayed kanji
     private IntegerProperty currentIndex;
 
+    /**
+     *
+     * @param kanjiDictionary The kanji for which vocables should be chosen
+     */
     public VocableChooserController(KanjiDictionary kanjiDictionary) {
         this.kanjiDictionary = kanjiDictionary;
     }

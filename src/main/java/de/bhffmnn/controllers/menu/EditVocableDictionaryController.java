@@ -30,6 +30,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the EditVocableDictionary view that lets the user edit a VocableDictionary object. The object is
+ * cloned and the save button has to be used in order to overwrite the original object.
+ */
+
 public class EditVocableDictionaryController implements Initializable {
 
     @FXML

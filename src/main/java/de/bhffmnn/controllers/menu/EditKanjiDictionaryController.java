@@ -29,6 +29,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the EditKanjiDictionary view that lets the user edit a KanjiDictionary object. The object is cloned
+ * and the save button has to be used in order to overwrite the original object.
+ */
+
 public class EditKanjiDictionaryController implements Initializable {
 
     @FXML

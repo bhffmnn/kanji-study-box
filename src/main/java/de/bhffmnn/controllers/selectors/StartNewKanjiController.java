@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the StartNewKanji view. It lets the user choose a amount of new kanji to learn, saves those into the
+ * global variable App.kanjiStudyList amd opens the LearningKanji view to learn them.
+ */
 public class StartNewKanjiController implements Initializable {
     private int kanjiAmount;
 

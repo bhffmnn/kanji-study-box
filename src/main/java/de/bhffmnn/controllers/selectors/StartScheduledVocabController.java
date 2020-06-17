@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the StartScheduled view hat lets the user choose an amount of due vocables. It saves the chosen
+ * vocables into the global variable App.vocableStudyList opens the TrainingVocable view to study them.
+ */
 public class StartScheduledVocabController implements Initializable {
     private int vocableAmount;
 

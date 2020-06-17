@@ -29,13 +29,36 @@ import java.util.Optional;
  * JavaFX App
  */
 public class App extends Application {
+    /**
+     * Global variable for the kanjiDictionary
+     */
     static public KanjiDictionary kanjiDictionary;
+    /**
+     * Global variable for the kanji that are meant to be studied either in the training or learning views
+     */
     static public KanjiDictionary kanjiStudyList;
+    /**
+     * Global variable for the vocableDictionary
+     */
     static public VocableDictionary vocableDictionary;
+    /**
+     * Global variable for the vocables that are meant to be studied either in the training or learning views
+     */
     static public VocableDictionary vocableStudyList;
+    /**
+     * Global variable for settings
+     */
     static public Settings settings;
+    /**
+     * Global variable the studyDirection of the training or learning views
+     */
     public static int studyDirection;
 
+    /**
+     * The init method tries to load the settings file into the global settings variable. If the file does not exist a
+     * new settings object is created instead.
+     * @throws Exception
+     */
     @Override
     public void init() throws Exception {
         settings = Settings.loadSettings();
@@ -44,6 +67,13 @@ public class App extends Application {
         }
     }
 
+    /**
+     * The start method tries to open the dictionaries from their paths specified in the settings. If this is not
+     * successful, the user is asked to either load existing or create new dictionaries for vocables and kanji.
+     * In the end the MainMenu view is loaded.
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         try {

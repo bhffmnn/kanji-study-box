@@ -10,6 +10,11 @@ package de.bhffmnn;
 
 import java.io.*;
 
+
+/**
+ * Class containing the settings of the application. That includes the file paths to the dictionaries.
+ */
+
 public class Settings {
     private String kanjiDictionaryFilePath; //loaded from settings
     private String vocableDictionaryFilePath;
@@ -30,6 +35,10 @@ public class Settings {
         studyDirectionsVocab = new String[][]{answersFormVocab, answersReadingVocab};
     }
 
+    /**
+     * Loads the settings from the settings file.
+     * @return A settings object generated from the setinngs file or null if no settings file exist.
+     */
     static Settings loadSettings() {
         Settings settings = new Settings();
         try {
@@ -44,15 +53,21 @@ public class Settings {
         return settings;
     }
 
+    /**
+     * Saves the current settings to the settings file.
+     * @throws IOException
+     */
     public void save() throws IOException {
         PrintWriter writer = new PrintWriter(new FileOutputStream("settings", false));
         writer.print(kanjiDictionaryFilePath + "\n" + vocableDictionaryFilePath);
         writer.close();
     }
 
+
     public void setKanjiDictionaryFilePath(String filePath) {
         kanjiDictionaryFilePath = filePath;
     }
+
 
     public void setVocableDictionaryFilePath(String vocableDictionaryFilePath) {
         this.vocableDictionaryFilePath = vocableDictionaryFilePath;

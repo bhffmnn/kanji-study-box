@@ -23,6 +23,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the AddKanji view that lets the user add a kanji to a dictionary.
+ */
+
 public class AddKanjiController implements Initializable {
     @FXML
     TextField charField;
@@ -37,6 +41,10 @@ public class AddKanjiController implements Initializable {
 
     private KanjiDictionary cloneDictionary;
 
+    /**
+     *
+     * @param cloneDictionary The dictionary that the kanji should added to
+     */
     public AddKanjiController(KanjiDictionary cloneDictionary) {
         this.cloneDictionary = cloneDictionary;
     }

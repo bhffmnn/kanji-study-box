@@ -23,6 +23,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the StartByLevel view hat lets the user choose vocables by their level. It saves the chosen vocables
+ * into the global variable App.vocableStudyList opens the TrainingVocable view to study
+ * them.
+ */
+
 public class StartByLevelVocabController implements Initializable {
     private int vocableAmount;
 

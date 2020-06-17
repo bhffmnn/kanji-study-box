@@ -23,6 +23,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the StartByLevel view that lets the user choose kanji by their level. It saves the chosen kanji into
+ * the global variable App.kanjiStudyList opens the TrainingKanji view to study them.
+ */
+
 public class StartByLevelKanjiController implements Initializable {
     private int kanjiAmount;
 

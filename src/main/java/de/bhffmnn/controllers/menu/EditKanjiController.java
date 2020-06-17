@@ -26,6 +26,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the EditKanji view that lets the user edit a Kanji object.
+ */
+
 public class EditKanjiController implements Initializable {
     @FXML
     TextField charField;
@@ -54,11 +58,13 @@ public class EditKanjiController implements Initializable {
 
     private Kanji kanji;
 
+    /**
+     *
+     * @param kanji The kanji that should be edited
+     */
     public EditKanjiController(Kanji kanji) {
         this.kanji = kanji;
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
