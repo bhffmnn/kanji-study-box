@@ -39,14 +39,14 @@ public class AddKanjiController implements Initializable {
     @FXML
     TextField mnemField;
 
-    private KanjiDictionary cloneDictionary;
+    private KanjiDictionary kanjiDictionary;
 
     /**
      *
-     * @param cloneDictionary The dictionary that the kanji should added to
+     * @param kanjiDictionary The dictionary that the kanji should added to
      */
-    public AddKanjiController(KanjiDictionary cloneDictionary) {
-        this.cloneDictionary = cloneDictionary;
+    public AddKanjiController(KanjiDictionary kanjiDictionary) {
+        this.kanjiDictionary = kanjiDictionary;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class AddKanjiController implements Initializable {
     private void addButtonAction(ActionEvent actionEvent) {
         Kanji kanji = new Kanji(charField.getText(), onField.getText(), kunField.getText(), meanField.getText(),
                                 mnemField.getText());
-        if(!cloneDictionary.add(kanji)) {
+        if(!kanjiDictionary.add(kanji)) {
             System.out.println("Did not work.");
         }
         ((Stage) charField.getScene().getWindow()).close();

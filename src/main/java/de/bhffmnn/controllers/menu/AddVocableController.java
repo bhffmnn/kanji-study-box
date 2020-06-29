@@ -35,14 +35,14 @@ public class AddVocableController implements Initializable {
     @FXML
     TextField exmplField;
 
-    private VocableDictionary cloneDictionary;
+    private VocableDictionary vocableDictionary;
 
     /**
      *
-     * @param cloneDictionary The dictionary that the vocable should added to
+     * @param vocableDictionary The dictionary that the vocable should added to
      */
-    public AddVocableController(VocableDictionary cloneDictionary) {
-        this.cloneDictionary = cloneDictionary;
+    public AddVocableController(VocableDictionary vocableDictionary) {
+        this.vocableDictionary = vocableDictionary;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AddVocableController implements Initializable {
     @FXML
     private void addButtonAction(ActionEvent actionEvent) {
         Vocable vocable = new Vocable(formField.getText(), readField.getText(), meanField.getText(), exmplField.getText());
-        if(!cloneDictionary.add(vocable)) {
+        if(!vocableDictionary.add(vocable)) {
             System.out.println("Did not work.");
         }
         ((Stage) formField.getScene().getWindow()).close();
