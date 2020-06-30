@@ -9,8 +9,6 @@
 package de.bhffmnn.controllers.menu;
 
 import de.bhffmnn.App;
-import de.bhffmnn.models.Kanji;
-import de.bhffmnn.models.KanjiDictionary;
 import de.bhffmnn.models.Vocable;
 import de.bhffmnn.models.VocableDictionary;
 import javafx.event.ActionEvent;

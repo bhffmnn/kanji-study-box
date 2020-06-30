@@ -8,14 +8,12 @@
 
 package de.bhffmnn.models;
 
-import de.bhffmnn.App;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
 //TODO
 public class VocableTooltipBuilder {
     public static Tooltip vocableTooltip(Vocable vocable) {

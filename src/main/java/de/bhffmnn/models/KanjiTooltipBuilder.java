@@ -19,7 +19,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 public class KanjiTooltipBuilder {
     public static Tooltip kanjiTooltip(Kanji kanji) {

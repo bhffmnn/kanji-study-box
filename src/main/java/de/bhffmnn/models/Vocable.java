@@ -9,7 +9,6 @@
 package de.bhffmnn.models;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a vocable
