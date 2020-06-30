@@ -74,7 +74,6 @@ public class MainMenuController implements Initializable {
 
         stage.setScene(new Scene(loader.load()));
         stage.show();
-        //loadNewSceneStatic(actionEvent,"selectors/startScheduledVocab.fxml");
     }
 
     @FXML

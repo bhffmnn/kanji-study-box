@@ -180,36 +180,7 @@ public class App extends Application {
     }
 
     @Override
-    public void stop() throws IOException {
-        /*
-        if (kanjiStudyList != null) {
-            ButtonType yesSave = new ButtonType("Save", ButtonBar.ButtonData.YES);
-            ButtonType noQuit = new ButtonType("Quit", ButtonBar.ButtonData.NO);
-            Alert alert = new Alert(Alert.AlertType.WARNING,
-                    "There might be unsaved changes to your kanji dictionary. Do you want to save?",
-                    yesSave,
-                    noQuit);
-            alert.setTitle("Stop right there!");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
-                kanjiDictionary.save(settings.getKanjiDictionaryFilePath());
-            }
-        }
-        else if (vocableStudyList != null) {
-            ButtonType yesSave = new ButtonType("Save", ButtonBar.ButtonData.YES);
-            ButtonType noQuit = new ButtonType("Quit", ButtonBar.ButtonData.NO);
-            Alert alert = new Alert(Alert.AlertType.WARNING,
-                    "There might be unsaved changes to your vocable dictionary. Do you want to save?",
-                    yesSave,
-                    noQuit);
-            alert.setTitle("Stop right there!");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
-                vocableDictionary.save(settings.getVocableDictionaryFilePath());
-            }
-        }
-        
-         */
+    public void stop() {
     }
 
     public static void main(String[] args) {
