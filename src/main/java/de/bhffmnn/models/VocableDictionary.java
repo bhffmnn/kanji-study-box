@@ -171,13 +171,13 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
      */
     @Override
     public boolean add(Vocable vocable) {
-        if (dictionary.contains(vocable)) { //TODO: This should compare forms directly
-            return false;
+        for (Vocable v : dictionary) {
+            if (v.getForm().equals(vocable.getForm())) {
+                return false;
+            }
         }
-        else {
-            dictionary.add(vocable);
-            return true;
-        }
+        dictionary.add(vocable);
+        return true;
     }
 
     public VocableDictionary clone() {

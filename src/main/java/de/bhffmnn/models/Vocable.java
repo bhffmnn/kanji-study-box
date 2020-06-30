@@ -142,15 +142,6 @@ public class Vocable {
         return meaning;
     }
 
-    //TODO: This is semantically wrong and should be removed. For this, the add method of VocableDictionary has to be changed
-    @Override
-    public boolean equals(Object obj) {
-        if (!obj.getClass().equals(this.getClass())) {
-            return false;
-        }
-        return (form.equals(((Vocable) obj).getForm()));
-    }
-
     /**
      *
      * @return Fields separated by tabs as String
