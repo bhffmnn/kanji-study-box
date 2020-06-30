@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+/**
+ * Represents a dictionary of Vocable objects. There can only be one Vocable object per form inside the dictionary.
+ */
 public class VocableDictionary extends AbstractCollection<Vocable> implements Cloneable {
     private ArrayList<Vocable> dictionary;
 
@@ -46,10 +49,20 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         return dictionary.size();
     }
 
+    /**
+     * Get the Vocable object at a specified position inside the dictionary.
+     * @param i The position of the Vocable object
+     * @return The Vocable object at position i
+     */
     public Vocable getByIndex(int i) {
         return dictionary.get(i);
     }
 
+    /**
+     * Resets the dictionary field and reloads it from a specified file path.
+     * @param filePath Path to the dictionary file
+     * @throws IOException
+     */
     public void reload(String filePath) throws IOException{
         dictionary = new ArrayList<Vocable>();
         BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
@@ -66,6 +79,12 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         csvReader.close();
     }
 
+    /**
+     * Returns a VocableDictionary starting and ending at the specified dictionary positions
+     * @param start Staring index
+     * @param stop Ending index (exclusive)
+     * @return VocableDictionary object starting and ending at the specified dictionary positions
+     */
     public VocableDictionary getByRange(int start, int stop) {
         VocableDictionary vocableDictionary = new VocableDictionary();
         for (int index = start; index < stop; index++) {
@@ -74,6 +93,10 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         return vocableDictionary;
     }
 
+    /**
+     * Gets all vocables for which due is true and returns them as a VocableDictionary object.
+     * @return VocableDictionary object containing all vocables for which due is true
+     */
     public VocableDictionary getDue() {
         VocableDictionary vocableDictionary = new VocableDictionary();
         for (Vocable vocable : dictionary) {
@@ -84,6 +107,11 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         return vocableDictionary;
     }
 
+    /**
+     * Gets all vocables with the specified level and returns them as a VocableDictionary object.
+     * @param level level of the vocables that are to be returned
+     * @return VocableDictionary containing all vocables with the specified level
+     */
     public VocableDictionary getByLevel(int level) {
         VocableDictionary vocableDictionary = new VocableDictionary();
         for (Vocable vocable : dictionary) {
@@ -102,7 +130,12 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         return null;
     }
 
-    public VocableDictionary getByCharacter(String character) {
+    /**
+     * Gets the vocables with a form containing the specified character
+     * @param character Character with shall be contained in the vocables
+     * @return VocableDictionary with vocables containing the specified character
+     */
+    public VocableDictionary getByCharacter(String character) { //TODO: This is a String, not a character
         VocableDictionary vocableDictionary = new VocableDictionary();
         for (Vocable vocable : this.dictionary) {
             if (vocable.getForm().contains(character)) {
@@ -112,6 +145,11 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         return vocableDictionary;
     }
 
+    /**
+     * Saves the dictionary to a specified file path
+     * @param filePath The file path to which the dictionary shall be saved to
+     * @throws IOException
+     */
     public void save(String filePath) throws IOException {
         PrintWriter csvWriter = new PrintWriter(new FileOutputStream(filePath, false));
         StringBuilder csvStringBuilder = new StringBuilder();
@@ -125,9 +163,15 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         csvWriter.close();
     }
 
+    /**
+     * Adds a Vocable object to the dictionary. This will only add a Vocable if no other Vocable with the same form is
+     * contained in the dictionary already.
+     * @param vocable The vocable that shall be added to the dictionary
+     * @return True if added
+     */
     @Override
     public boolean add(Vocable vocable) {
-        if (dictionary.contains(vocable)) {
+        if (dictionary.contains(vocable)) { //TODO: This should compare forms directly
             return false;
         }
         else {
@@ -150,6 +194,12 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         return cloneDictionary;
     }
 
+    /**
+     * Returns a deep clone of this object. Vocable objects in this deep clone can be altered without affecting the
+     * original.
+     *
+     * @return Deep clone of this object
+     */
     public VocableDictionary cloneDeep() {
         VocableDictionary cloneDictionary;
         try {
@@ -166,6 +216,12 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         }
         return cloneDictionary;
     }
+
+    /**
+     * Randomizes the order of the vocables in the dictionary.
+     * This is not meant to be used on the global App.vocableDictionary, only for clones/subsets used in Training and
+     * Learning views.
+     */
     public void shuffle() {
         Collections.shuffle(dictionary);
     }

@@ -12,6 +12,9 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Represents a dictionary of Kanji objects. There can only be one Kanji object per character inside the dictionary.
+ */
 public class KanjiDictionary extends AbstractCollection<Kanji> implements Cloneable {
     private ArrayList<Kanji> dictionary;
 
@@ -45,10 +48,20 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return dictionary.size();
     }
 
+    /**
+     * Get the Kanji object at a specified position inside the dictionary.
+     * @param i The position of the Kanji object
+     * @return The Kanji object at position i
+     */
     public Kanji getByIndex(int i) {
         return dictionary.get(i);
     }
 
+    /**
+     * Resets the dictionary field and reloads it from a specified file path.
+     * @param filePath Path to the dictionary file
+     * @throws IOException
+     */
     public void reload(String filePath) throws IOException {
         dictionary = new ArrayList<Kanji>();
         BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
@@ -67,6 +80,12 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         csvReader.close();
     }
 
+    /**
+     * Returns a KanjiDictionary starting and ending at the specified dictionary positions
+     * @param start Staring index
+     * @param stop Ending index (exclusive)
+     * @return KanjiDictionary object starting and ending at the specified dictionary positions
+     */
     public KanjiDictionary getByRange(int start, int stop) {
         KanjiDictionary kanjiDictionary = new KanjiDictionary();
         for (int index = start; index < stop; index++) {
@@ -75,6 +94,10 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return kanjiDictionary;
     }
 
+    /**
+     * Gets all kanji for which characterDue is true and returns them as a KanjiDictionary object.
+     * @return KanjiDictionary object containing all kanji for which characterDue is true
+     */
     public KanjiDictionary getCharacterDue() {
         KanjiDictionary kanjiList = new KanjiDictionary();
         for (Kanji kanji : dictionary) {
@@ -85,6 +108,10 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return kanjiList;
     }
 
+    /**
+     * Gets all kanji for which readingDue is true and returns them as a KanjiDictionary object.
+     * @return KanjiDictionary object containing all kanji for which readingDue is true
+     */
     public KanjiDictionary getReadingDue() {
         KanjiDictionary kanjiList = new KanjiDictionary();
         for (Kanji kanji : dictionary) {
@@ -95,6 +122,10 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return kanjiList;
     }
 
+    /**
+     * Gets all kanji for which meaningDue is true and returns them as a KanjiDictionary object.
+     * @return KanjiDictionary object containing all kanji for which meaningDue is true
+     */
     public KanjiDictionary getMeaningDue() {
         KanjiDictionary kanjiList = new KanjiDictionary();
         for (Kanji kanji : dictionary) {
@@ -105,6 +136,11 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return kanjiList;
     }
 
+    /**
+     * Gets all kanji with a characterLevel at the specified level and returns them as a KanjiDictionary object.
+     * @param level characterLevel of the kanji that are to be returned
+     * @return KanjiDictionary containing all kanji with the specified characterLevel
+     */
     public KanjiDictionary getByCharacterLevel(int level) {
         KanjiDictionary kanjiList = new KanjiDictionary();
         for (Kanji kanji : dictionary) {
@@ -115,6 +151,11 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return kanjiList;
     }
 
+    /**
+     * Gets all kanji with a readingLevel at the specified level and returns them as a KanjiDictionary object.
+     * @param level readingLevel of the kanji that are to be returned
+     * @return KanjiDictionary containing all kanji with the specified readingLevel
+     */
     public KanjiDictionary getByReadingLevel(int level) {
         KanjiDictionary kanjiList = new KanjiDictionary();
         for (Kanji kanji : dictionary) {
@@ -125,6 +166,11 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return kanjiList;
     }
 
+    /**
+     * Gets all kanji with a meaningLevel at the specified level and returns them as a KanjiDictionary object.
+     * @param level meaningLevel of the kanji that are to be returned
+     * @return KanjiDictionary containing all kanji with the specified meaningLevel
+     */
     public KanjiDictionary getByMeaningLevel(int level) {
         KanjiDictionary kanjiList = new KanjiDictionary();
         for (Kanji kanji : dictionary) {
@@ -135,6 +181,11 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return kanjiList;
     }
 
+    /**
+     * Gets the Kanji object with the specified character
+     * @param character Character of the kanji
+     * @return Kanji object with the specified character
+     */
     public Kanji getKanjiByCharacter(String character) {
         for (Kanji kanji : dictionary) {
             if (kanji.getCharacter().equals(character))
@@ -150,6 +201,11 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return startedKanji;
     }
 
+    /**
+     * Saves the dictionary to a specified file path
+     * @param filePath The file path to which the dictionary shall be saved to
+     * @throws IOException
+     */
     public void save(String filePath) throws IOException {
         PrintWriter csvWriter = new PrintWriter(new FileOutputStream(filePath, false));
         StringBuilder csvStringBuilder = new StringBuilder();
@@ -164,6 +220,12 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         csvWriter.close();
     }
 
+    /**
+     * Adds a Kanji object to the dictionary. This will only add a Kanji if no other Kanji with the same character
+     * is contained in the dictionary already.
+     * @param kanji The kanji that shall be added to the dictionary
+     * @return True if added
+     */
     @Override
     public boolean add(Kanji kanji) {
         for (Kanji k : dictionary) {
@@ -189,6 +251,12 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return cloneDictionary;
     }
 
+    /**
+     * Returns a deep clone of this object. Kanji objects in this deep clone can be altered without affecting the
+     * original.
+     *
+     * @return Deep clone of this object
+     */
     public KanjiDictionary cloneDeep() {
         KanjiDictionary cloneDictionary;
         try {
@@ -210,6 +278,11 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return cloneDictionary;
     }
 
+    /**
+     * Randomizes the order of the kanji in the dictionary.
+     * This is not meant to be used on the global App.kanjiDictionary, only for clones/subsets used in Training and
+     * Learning views.
+     */
     public void shuffle() {
         Collections.shuffle(dictionary);
     }

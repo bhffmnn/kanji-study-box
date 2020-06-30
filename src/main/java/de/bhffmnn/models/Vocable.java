@@ -11,6 +11,10 @@ package de.bhffmnn.models;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a vocable
+ */
+
 public class Vocable {
     private String form;
     private String reading;
@@ -37,6 +41,10 @@ public class Vocable {
         this.due = due;
     }
 
+    /**
+     * Sets a new level for the vocable and updates its due time accordingly.
+     * @param newLevel The new level for the vocable
+     */
     public void updateLevel(int newLevel){
         if (newLevel == 1) {
             this.due = LocalDate.now().plusDays(1);
@@ -98,6 +106,10 @@ public class Vocable {
         this.due = due;
     }
 
+    /**
+     *
+     * @return True if the vocable's due time is today or earlier
+     */
     public boolean isDue() {
         if (this.due.compareTo(LocalDate.now()) <= 0) {
             return true;
@@ -131,6 +143,7 @@ public class Vocable {
         return meaning;
     }
 
+    //TODO: This is semantically wrong and should be removed. For this, the add method of VocableDictionary has to be changed
     @Override
     public boolean equals(Object obj) {
         if (!obj.getClass().equals(this.getClass())) {
@@ -139,6 +152,10 @@ public class Vocable {
         return (form.equals(((Vocable) obj).getForm()));
     }
 
+    /**
+     *
+     * @return Fields separated by tabs as String
+     */
     @Override
     public String toString() {
         return form + "\t" + reading + "\t" + meaning + "\t" + example + "\t" + level.toString() + "\t" + due.toString();

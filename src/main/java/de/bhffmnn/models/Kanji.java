@@ -10,6 +10,10 @@ package de.bhffmnn.models;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a kanji
+ */
+
 public class Kanji {
     private String character;
     private String onReading;
@@ -80,6 +84,10 @@ public class Kanji {
         this.onReading = onReading;
     }
 
+    /**
+     * Sets a new level for the character and updates its due time accordingly.
+     * @param newLevel The new level for the character
+     */
     public void updateCharacterLevel(int newLevel){
         if (newLevel == 1) {
             this.characterDue = LocalDate.now().plusDays(1);
@@ -117,6 +125,10 @@ public class Kanji {
         this.characterLevel = newLevel;
     }
 
+    /**
+     * Sets a new level for the reading and updates its due time accordingly.
+     * @param newLevel The new level for the reading
+     */
     public void updateReadingLevel(int newLevel){
         if (newLevel == 1) {
             this.readingDue = LocalDate.now().plusDays(1);
@@ -154,6 +166,10 @@ public class Kanji {
         this.readingLevel = newLevel;
     }
 
+    /**
+     * Sets a new level for the meaning and updates its due time accordingly.
+     * @param newLevel The new level for the meaning
+     */
     public void updateMeaningLevel(int newLevel){
         if (newLevel == 1) {
             this.meaningDue = LocalDate.now().plusDays(1);
@@ -191,6 +207,10 @@ public class Kanji {
         this.meaningLevel = newLevel;
     }
 
+    /**
+     *
+     * @return True if the character's due time is today or earlier
+     */
     public boolean isCharacterDue() {
         if (this.characterDue.compareTo(LocalDate.now()) <= 0) {
             return true;
@@ -200,6 +220,10 @@ public class Kanji {
         }
     }
 
+    /**
+     *
+     * @return True if the reading's due time is today or earlier
+     */
     public boolean isReadingDue() {
         if (this.readingDue.compareTo(LocalDate.now()) <= 0) {
             return true;
@@ -209,6 +233,10 @@ public class Kanji {
         }
     }
 
+    /**
+     *
+     * @return True if the meaning's due time is today or earlier
+     */
     public boolean isMeaningDue() {
         if (this.meaningDue.compareTo(LocalDate.now()) <= 0) {
             return true;
@@ -286,6 +314,10 @@ public class Kanji {
         this.meaningDue = meaningDue;
     }
 
+    /**
+     *
+     * @return Fields separated by tabs as String
+     */
     @Override
     public String toString() {
         return character + "\t" +
