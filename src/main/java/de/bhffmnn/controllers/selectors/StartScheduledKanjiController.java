@@ -9,6 +9,8 @@
 package de.bhffmnn.controllers.selectors;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.training.TrainingKanjiController;
+import de.bhffmnn.models.KanjiDictionary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +26,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the StartScheduled view that lets the user choose an amount of due kanji to study. It saves the chosen
- * kanji into the global variable App.kanjiStudyList opens the TrainingKanji view to study them.
+ * Controller for the StartScheduled view that lets the user choose an amount of due kanji to study. Those kanji are
+ * then passed to the TrainingKanji view to study them.
  */
 public class StartScheduledKanjiController implements Initializable {
     private int kanjiAmount;
+    private int studyDirection;
+    private KanjiDictionary kanjiStudyList;
 
     @FXML
     private ComboBox<String> studyDirectionBox;
@@ -48,15 +52,15 @@ public class StartScheduledKanjiController implements Initializable {
         studyDirectionBox.valueProperty().addListener((o, oldValue, newValue) -> {
             switch (newValue) {
                 case "Study characters":
-                    App.studyDirection = 0;
+                    studyDirection = 0;
                     kanjiAmount = App.kanjiDictionary.getCharacterDue().size();
                     break;
                 case "Study readings":
-                    App.studyDirection = 1;
+                    studyDirection = 1;
                     kanjiAmount = App.kanjiDictionary.getReadingDue().size();
                     break;
                 case "Study meanings":
-                    App.studyDirection = 2;
+                    studyDirection = 2;
                     kanjiAmount = App.kanjiDictionary.getMeaningDue().size();
                     break;
             }
@@ -77,20 +81,23 @@ public class StartScheduledKanjiController implements Initializable {
 
     @FXML
     private void studyButtonAction(ActionEvent actionEvent) throws Exception {
-        switch (App.studyDirection) {
+        switch (studyDirection) {
             case 0:
-                App.kanjiStudyList = App.kanjiDictionary.getCharacterDue().getByRange(0, studyCountSpinner.getValue());
+                kanjiStudyList = App.kanjiDictionary.getCharacterDue().getByRange(0, studyCountSpinner.getValue());
                 break;
             case 1:
-                App.kanjiStudyList = App.kanjiDictionary.getReadingDue().getByRange(0, studyCountSpinner.getValue());
+                kanjiStudyList = App.kanjiDictionary.getReadingDue().getByRange(0, studyCountSpinner.getValue());
                 break;
             case 2:
-                App.kanjiStudyList = App.kanjiDictionary.getMeaningDue().getByRange(0, studyCountSpinner.getValue());
+                kanjiStudyList = App.kanjiDictionary.getMeaningDue().getByRange(0, studyCountSpinner.getValue());
                 break;
         }
-        
 
-        Parent parent = FXMLLoader.load(App.class.getResource("fxml/training/trainingKanji.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/training/trainingKanji.fxml"));
+        TrainingKanjiController controller = new TrainingKanjiController(kanjiStudyList, studyDirection);
+        loader.setController(controller);
+
+        Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 

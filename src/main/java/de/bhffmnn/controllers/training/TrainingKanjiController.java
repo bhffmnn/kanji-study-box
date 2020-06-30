@@ -36,6 +36,11 @@ import javafx.stage.Stage;
  */
 
 public class TrainingKanjiController implements Initializable {
+    //Kanji which are to be studied
+    private KanjiDictionary kanjiStudyList;
+
+    private int studyDirection;
+
     //Index for iterating over kanjiStudyList
     private IntegerProperty currentIndex;
 
@@ -46,7 +51,7 @@ public class TrainingKanjiController implements Initializable {
     private ChoiceDialog<String> endDialog;
 
     //KanjiDictionary tracking updated kanji
-    KanjiDictionary notUpdatedKanji = App.kanjiStudyList.clone();
+    KanjiDictionary notUpdatedKanji;
 
     //Stores vocables of current kanji for vocable tooltip
     ArrayList<Vocable> currentVocables;
@@ -97,14 +102,26 @@ public class TrainingKanjiController implements Initializable {
     @FXML
     private Circle checkCircle;
 
+    /**
+     *
+     * @param kanjiStudyList The kanji that are to be studied
+     * @param studyDirection The study direction (0 = characters, 1 = readings, 2 = meanings)
+     */
+    public TrainingKanjiController(KanjiDictionary kanjiStudyList, int studyDirection) {
+        this.kanjiStudyList = kanjiStudyList;
+        this.studyDirection = studyDirection;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        notUpdatedKanji = kanjiStudyList.clone();
+
         //Shuffle for better effect :)
-        App.kanjiStudyList.shuffle();
+        kanjiStudyList.shuffle();
 
         //Initialize progress bar
-        progressLabel.setText("1/" + App.kanjiStudyList.size());
-        progressBar.progressProperty().set(1 / (App.kanjiStudyList.size()));
+        progressLabel.setText("1/" + kanjiStudyList.size());
+        progressBar.progressProperty().set(1 / (kanjiStudyList.size()));
 
         //Set up currentIndex property which will do all the things when switching between kanji
         currentIndex = new SimpleIntegerProperty(0);
@@ -118,11 +135,11 @@ public class TrainingKanjiController implements Initializable {
                     loadFeatures(newValue.intValue());
 
                     //update progress bar
-                    progressBar.progressProperty().set((newValue.doubleValue() + 1) / (App.kanjiStudyList.size()));
-                    progressLabel.setText((newValue.intValue() + 1) + "/" + App.kanjiStudyList.size());
+                    progressBar.progressProperty().set((newValue.doubleValue() + 1) / (kanjiStudyList.size()));
+                    progressLabel.setText((newValue.intValue() + 1) + "/" + kanjiStudyList.size());
 
                     //Update check circle
-                    if (notUpdatedKanji.contains(App.kanjiStudyList.getByIndex(currentIndex.get()))) {
+                    if (notUpdatedKanji.contains(kanjiStudyList.getByIndex(currentIndex.get()))) {
                         checkCircle.setFill(null);
                     }
                     else {
@@ -159,7 +176,7 @@ public class TrainingKanjiController implements Initializable {
     //Button actions
     @FXML
     private void nextButtonAction() throws IOException {
-        if (currentIndex.get() != App.kanjiStudyList.size() - 1) {
+        if (currentIndex.get() != kanjiStudyList.size() - 1) {
             currentIndex.set(currentIndex.getValue() + 1);
         }
         //If at end of kanjiStudyList
@@ -182,24 +199,24 @@ public class TrainingKanjiController implements Initializable {
         try {
             int newLevel = Integer.parseInt(levelField.getText());
             if (newLevel >= 0 && newLevel <= 10) {
-                switch (App.studyDirection) {
+                switch (studyDirection) {
                     case 0:
-                        App.kanjiStudyList.getByIndex(currentIndex.get()).updateCharacterLevel(Integer.parseInt(levelField.getText()));
-                        level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getCharacterLevel()));
-                        due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getCharacterDue().toString());
+                        kanjiStudyList.getByIndex(currentIndex.get()).updateCharacterLevel(Integer.parseInt(levelField.getText()));
+                        level.setText(String.valueOf(kanjiStudyList.getByIndex(currentIndex.get()).getCharacterLevel()));
+                        due.setText(kanjiStudyList.getByIndex(currentIndex.get()).getCharacterDue().toString());
                         break;
                     case 1:
-                        App.kanjiStudyList.getByIndex(currentIndex.get()).updateReadingLevel(Integer.parseInt(levelField.getText()));
-                        level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getReadingLevel()));
-                        due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getReadingDue().toString());
+                        kanjiStudyList.getByIndex(currentIndex.get()).updateReadingLevel(Integer.parseInt(levelField.getText()));
+                        level.setText(String.valueOf(kanjiStudyList.getByIndex(currentIndex.get()).getReadingLevel()));
+                        due.setText(kanjiStudyList.getByIndex(currentIndex.get()).getReadingDue().toString());
                         break;
                     case 2:
-                        App.kanjiStudyList.getByIndex(currentIndex.get()).updateMeaningLevel(Integer.parseInt(levelField.getText()));
-                        level.setText(String.valueOf(App.kanjiStudyList.getByIndex(currentIndex.get()).getMeaningLevel()));
-                        due.setText(App.kanjiStudyList.getByIndex(currentIndex.get()).getMeaningDue().toString());
+                        kanjiStudyList.getByIndex(currentIndex.get()).updateMeaningLevel(Integer.parseInt(levelField.getText()));
+                        level.setText(String.valueOf(kanjiStudyList.getByIndex(currentIndex.get()).getMeaningLevel()));
+                        due.setText(kanjiStudyList.getByIndex(currentIndex.get()).getMeaningDue().toString());
                         break;
                 }
-                notUpdatedKanji.remove(App.kanjiStudyList.getByIndex((currentIndex.get())));
+                notUpdatedKanji.remove(kanjiStudyList.getByIndex((currentIndex.get())));
 
                 //update check circle
                 checkCircle.setFill(Color.GREEN);
@@ -226,7 +243,18 @@ public class TrainingKanjiController implements Initializable {
         }
         catch (NumberFormatException nfe) {
             //Reset level field to current level
-            levelField.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
+
+            switch (studyDirection) {
+                case 0:
+                    level.setText(kanjiStudyList.getByIndex(currentIndex.get()).getCharacterLevel().toString());
+                    break;
+                case 1:
+                    level.setText(kanjiStudyList.getByIndex(currentIndex.get()).getReadingLevel().toString());
+                    break;
+                case 2:
+                    level.setText(kanjiStudyList.getByIndex(currentIndex.get()).getMeaningLevel().toString());
+                    break;
+            }
         }
     }
     @FXML
@@ -243,7 +271,17 @@ public class TrainingKanjiController implements Initializable {
         }
         catch (NumberFormatException nfe) {
             //Reset level field to current level
-            levelField.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
+            switch (studyDirection) {
+                case 0:
+                    level.setText(kanjiStudyList.getByIndex(currentIndex.get()).getCharacterLevel().toString());
+                    break;
+                case 1:
+                    level.setText(kanjiStudyList.getByIndex(currentIndex.get()).getReadingLevel().toString());
+                    break;
+                case 2:
+                    level.setText(kanjiStudyList.getByIndex(currentIndex.get()).getMeaningLevel().toString());
+                    break;
+            }
         }
     }
     @FXML
@@ -305,7 +343,7 @@ public class TrainingKanjiController implements Initializable {
                 stage.show();
             } else if (choice.get().equals("Continue with not updated kanji")) {
                 notUpdatedKanji.shuffle();
-                App.kanjiStudyList = notUpdatedKanji.clone();
+                kanjiStudyList = notUpdatedKanji.clone();
                 currentIndex.set(0);
                 loadFeatures(0);
                 //In case there's only one kanji left
@@ -319,17 +357,17 @@ public class TrainingKanjiController implements Initializable {
         character.setVisible(true);
     }
     private void showAnswers() {
-        for (String feature : App.settings.getStudyDirectionsKanji()[App.studyDirection]) {
+        for (String feature : App.settings.getStudyDirectionsKanji()[studyDirection]) {
             showFeature(feature);
         }
     }
     private void hideAnswers() {
-        for (String feature : App.settings.getStudyDirectionsKanji()[App.studyDirection]) {
+        for (String feature : App.settings.getStudyDirectionsKanji()[studyDirection]) {
             hideFeature(feature);
         }
     }
     private void loadFeatures(int index) {
-        Kanji currentKanji = App.kanjiStudyList.getByIndex(index);
+        Kanji currentKanji = kanjiStudyList.getByIndex(index);
 
         vocabBox.getChildren().clear();
         currentVocables = new ArrayList<>();
@@ -348,7 +386,7 @@ public class TrainingKanjiController implements Initializable {
         kun.setText(currentKanji.getKunReading());
         meaning.setText(currentKanji.getMeaning());
         mnemonic.setText(currentKanji.getMnemonic());
-        switch (App.studyDirection) {
+        switch (studyDirection) {
             case 0:
                 level.setText(currentKanji.getCharacterLevel().toString());
                 due.setText(currentKanji.getCharacterDue().toString());

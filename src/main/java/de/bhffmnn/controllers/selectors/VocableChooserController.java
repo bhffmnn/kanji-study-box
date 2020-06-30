@@ -103,8 +103,8 @@ public class VocableChooserController implements Initializable {
                     }
 
                     //update progress bar
-                    progressBar.progressProperty().set((newValue.doubleValue() + 1) / (App.kanjiStudyList.size()));
-                    progressLabel.setText((newValue.intValue() + 1) + "/" + App.kanjiStudyList.size());
+                    progressBar.progressProperty().set((newValue.doubleValue() + 1) / (kanjiDictionary.size()));
+                    progressLabel.setText((newValue.intValue() + 1) + "/" + kanjiDictionary.size());
                 })
         );
         //Set up character labels
@@ -125,8 +125,8 @@ public class VocableChooserController implements Initializable {
         }
 
         //Set up progress bar
-        progressBar.progressProperty().set(1.0 / (App.kanjiStudyList.size()));
-        progressLabel.setText(1 + "/" + App.kanjiStudyList.size());
+        progressBar.progressProperty().set(1.0 / (kanjiDictionary.size()));
+        progressLabel.setText(1 + "/" + kanjiDictionary.size());
     }
 
     @FXML

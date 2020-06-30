@@ -9,6 +9,8 @@
 package de.bhffmnn.controllers.selectors;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.training.LearningKanjiController;
+import de.bhffmnn.models.KanjiDictionary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +26,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the StartNewKanji view. It lets the user choose a amount of new kanji to learn, saves those into the
- * global variable App.kanjiStudyList amd opens the LearningKanji view to learn them.
+ * Controller for the StartNewKanji view. It lets the user choose a amount of new kanji to learn, and passes those kanji
+ * to the LearningKanji view.
  */
 public class StartNewKanjiController implements Initializable {
     private int kanjiAmount;
+    private KanjiDictionary kanjiStudyList;
 
     @FXML
     private Label kanjiCount;
@@ -39,8 +42,8 @@ public class StartNewKanjiController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        App.kanjiStudyList = App.kanjiDictionary.getByCharacterLevel(0);
-        kanjiAmount = App.kanjiStudyList.size();
+        kanjiStudyList = App.kanjiDictionary.getByCharacterLevel(0);
+        kanjiAmount = kanjiStudyList.size();
         kanjiCount.setText(String.valueOf(kanjiAmount));
         if (kanjiAmount == 0) {
             studyCountSpinner.setDisable(true);
@@ -53,8 +56,12 @@ public class StartNewKanjiController implements Initializable {
 
     @FXML
     private void studyButtonAction(ActionEvent actionEvent) throws Exception {
-        App.kanjiStudyList = App.kanjiStudyList.getByRange(0, studyCountSpinner.getValue());
-        Parent parent = FXMLLoader.load(App.class.getResource("fxml/training/learningKanji.fxml"));
+        kanjiStudyList = kanjiStudyList.getByRange(0, studyCountSpinner.getValue());
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/training/learningKanji.fxml"));
+        LearningKanjiController controller = new LearningKanjiController(kanjiStudyList);
+        loader.setController(controller);
+
+        Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 

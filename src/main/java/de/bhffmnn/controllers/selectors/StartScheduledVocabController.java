@@ -9,6 +9,8 @@
 package de.bhffmnn.controllers.selectors;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.training.TrainingVocablesController;
+import de.bhffmnn.models.VocableDictionary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +26,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the StartScheduled view hat lets the user choose an amount of due vocables. It saves the chosen
- * vocables into the global variable App.vocableStudyList opens the TrainingVocable view to study them.
+ * Controller for the StartScheduled view hat lets the user choose an amount of due vocables. Those vocables are then
+ * passed to the TrainingVocables view to study them.
  */
 public class StartScheduledVocabController implements Initializable {
     private int vocableAmount;
+    private int studyDirection;
+    private VocableDictionary vocableStudyList;
 
     @FXML
     private ComboBox<String> studyDirectionBox;
@@ -60,18 +64,21 @@ public class StartScheduledVocabController implements Initializable {
 
     @FXML
     private void studyButtonAction(ActionEvent actionEvent) throws Exception {
-        App.vocableStudyList = App.vocableDictionary.getDue().getByRange(0, studyCountSpinner.getValue());
+        vocableStudyList = App.vocableDictionary.getDue().getByRange(0, studyCountSpinner.getValue());
         if (studyDirectionBox.getValue().equals("Study forms")) {
-            App.studyDirection = 0;
+            studyDirection = 0;
         }
         else if (studyDirectionBox.getValue().equals("Study readings")) {
-            App.studyDirection = 1;
+            studyDirection = 1;
         }
 
-        Parent parent = FXMLLoader.load(App.class.getResource("fxml/training/trainingVocables.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/training/trainingVocables.fxml"));
+        TrainingVocablesController controller = new TrainingVocablesController(vocableStudyList, studyDirection);
+        loader.setController(controller);
+
+        Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
         stage.setScene(scene);
         stage.show();
     }

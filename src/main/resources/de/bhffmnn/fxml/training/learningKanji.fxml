@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#handleKeyPress" stylesheets="@../../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bhffmnn.controllers.training.LearningKanjiController">
+<StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#handleKeyPress" stylesheets="@../../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="600.0">
          <center>

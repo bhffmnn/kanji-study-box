@@ -9,6 +9,7 @@
 package de.bhffmnn.controllers.selectors;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.training.LearningVocablesController;
 import de.bhffmnn.models.Kanji;
 import de.bhffmnn.models.Vocable;
 import de.bhffmnn.models.VocableDictionary;
@@ -27,12 +28,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the StartNewVocab view. It lets the user choose a amount of new vocables to learn, saves those into
- * the global variable App.vocableStudyList amd opens the LearningVocables view to learn them.
+ * Controller for the StartNewVocab view. It lets the user choose a amount of new vocables to learn, and passes those
+ * vocables to the LearningVocables view.
  */
 
 public class StartNewVocabController implements Initializable {
     private int vocabAmount;
+    private VocableDictionary vocableStudyList;
 
     @FXML
     private ComboBox<String> scopeComboBox;
@@ -48,12 +50,12 @@ public class StartNewVocabController implements Initializable {
         scopeComboBox.getItems().addAll("Vocabulary of started kanji", "All vocabulary");
         scopeComboBox.getSelectionModel().selectedItemProperty().addListener((o, oldValue, newValue) -> {
             if (newValue.equals("Vocabulary of started kanji")) {
-                App.vocableStudyList = new VocableDictionary();
+                vocableStudyList = new VocableDictionary();
                 for (Kanji kanji : App.kanjiDictionary.getStarted()) {
-                    App.vocableStudyList.addAll(App.vocableDictionary.getByCharacter(kanji.getCharacter()));
+                    vocableStudyList.addAll(App.vocableDictionary.getByCharacter(kanji.getCharacter()));
                 }
                 VocableDictionary removeList = new VocableDictionary();
-                for (Vocable v : App.vocableStudyList) {
+                for (Vocable v : vocableStudyList) {
                     for (char c : v.getForm().toCharArray()) {
                         Kanji k = App.kanjiDictionary.getKanjiByCharacter(String.valueOf(c));
                         if (!(k == null) && (k.getCharacterLevel() == 0)) { //if the kanji exists but isn't started yet
@@ -61,13 +63,13 @@ public class StartNewVocabController implements Initializable {
                         }
                     }
                 }
-                App.vocableStudyList.removeAll(removeList);
+                vocableStudyList.removeAll(removeList);
             }
             else {
-                App.vocableStudyList = App.vocableDictionary.clone();
+                vocableStudyList = App.vocableDictionary.clone();
             }
-            App.vocableStudyList = App.vocableStudyList.getByLevel(0);
-            vocabAmount = App.vocableStudyList.size();
+            vocableStudyList = vocableStudyList.getByLevel(0);
+            vocabAmount = vocableStudyList.size();
             vocabCount.setText(String.valueOf(vocabAmount));
             studyCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, vocabAmount));
             studyCountSpinner.getValueFactory().setValue(Integer.parseInt(vocabCount.getText()));
@@ -85,11 +87,14 @@ public class StartNewVocabController implements Initializable {
 
     @FXML
     private void studyButtonAction(ActionEvent actionEvent) throws Exception {
-        App.vocableStudyList = App.vocableStudyList.getByRange(0, studyCountSpinner.getValue());
-        Parent parent = FXMLLoader.load(App.class.getResource("fxml/training/learningVocables.fxml"));
+        vocableStudyList = vocableStudyList.getByRange(0, studyCountSpinner.getValue());
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/training/learningVocables.fxml"));
+        LearningVocablesController controller = new LearningVocablesController(vocableStudyList);
+        loader.setController(controller);
+
+        Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
         stage.setScene(scene);
         stage.show();
     }

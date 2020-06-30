@@ -45,6 +45,12 @@ import java.util.ResourceBundle;
 
 
 public class TrainingVocablesController implements Initializable {
+    //Vocables which are to be studied
+    private VocableDictionary vocableStudyList;
+
+    private int studyDirection;
+
+
     //Index for iterating over kanjiStudyList
     private IntegerProperty currentIndex;
 
@@ -55,7 +61,7 @@ public class TrainingVocablesController implements Initializable {
     private ChoiceDialog<String> endDialog;
 
     //KanjiDictionary tracking updated kanji
-    private VocableDictionary notUpdatedVocab = App.vocableStudyList.clone();
+    private VocableDictionary notUpdatedVocab;
 
     //Character feature labels
     @FXML
@@ -101,14 +107,26 @@ public class TrainingVocablesController implements Initializable {
     @FXML
     private Circle checkCircle;
 
+    /**
+     *
+     * @param vocableStudyList The vocables that are to be studied
+     * @param studyDirection The study direction (0 = forms, 1 = readings)
+     */
+    public TrainingVocablesController(VocableDictionary vocableStudyList, int studyDirection) {
+        this.vocableStudyList = vocableStudyList;
+        this.studyDirection = studyDirection;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        notUpdatedVocab = vocableStudyList.clone();
+
         //Shuffle for better effect :)
-        App.vocableStudyList.shuffle();
+        vocableStudyList.shuffle();
 
         //Initialize progress bar
-        progressLabel.setText("1/" + App.vocableStudyList.size());
-        progressBar.progressProperty().set(1 / (App.vocableStudyList.size()));
+        progressLabel.setText("1/" + vocableStudyList.size());
+        progressBar.progressProperty().set(1 / (vocableStudyList.size()));
 
         //Set up currentIndex property
         currentIndex = new SimpleIntegerProperty(0);
@@ -122,11 +140,11 @@ public class TrainingVocablesController implements Initializable {
                     loadFeatures(newValue.intValue());
 
                     //update progress bar
-                    progressBar.progressProperty().set((newValue.doubleValue() + 1) / (App.vocableStudyList.size()));
-                    progressLabel.setText((newValue.intValue() + 1) + "/" + App.vocableStudyList.size());
+                    progressBar.progressProperty().set((newValue.doubleValue() + 1) / (vocableStudyList.size()));
+                    progressLabel.setText((newValue.intValue() + 1) + "/" + vocableStudyList.size());
 
                     //Update check circle
-                    if (notUpdatedVocab.contains(App.vocableStudyList.getByIndex(currentIndex.get()))) {
+                    if (notUpdatedVocab.contains(vocableStudyList.getByIndex(currentIndex.get()))) {
                         checkCircle.setFill(null);
                     }
                     else {
@@ -162,7 +180,7 @@ public class TrainingVocablesController implements Initializable {
     //Button actions
     @FXML
     private void nextButtonAction() throws IOException {
-        if (currentIndex.get() != App.vocableStudyList.size() - 1) {
+        if (currentIndex.get() != vocableStudyList.size() - 1) {
             currentIndex.set(currentIndex.getValue() + 1);
         }
         //If at end of kanjiStudyList
@@ -185,10 +203,10 @@ public class TrainingVocablesController implements Initializable {
         try {
             int newLevel = Integer.parseInt(levelField.getText());
             if (newLevel >= 0 && newLevel <= 10) {
-                App.vocableStudyList.getByIndex(currentIndex.get()).updateLevel(Integer.parseInt(levelField.getText()));
-                level.setText(String.valueOf(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel()));
-                due.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getDue().toString());
-                notUpdatedVocab.remove(App.vocableStudyList.getByIndex((currentIndex.get())));
+                vocableStudyList.getByIndex(currentIndex.get()).updateLevel(Integer.parseInt(levelField.getText()));
+                level.setText(String.valueOf(vocableStudyList.getByIndex(currentIndex.get()).getLevel()));
+                due.setText(vocableStudyList.getByIndex(currentIndex.get()).getDue().toString());
+                notUpdatedVocab.remove(vocableStudyList.getByIndex((currentIndex.get())));
                 //update check circle
                 checkCircle.setFill(Color.GREEN);
             }
@@ -214,7 +232,7 @@ public class TrainingVocablesController implements Initializable {
         }
         catch (NumberFormatException nfe) {
             //Reset level field to current level
-            levelField.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
+            levelField.setText(vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
         }
     }
     @FXML
@@ -231,7 +249,7 @@ public class TrainingVocablesController implements Initializable {
         }
         catch (NumberFormatException nfe) {
             //Reset level field to current level
-            levelField.setText(App.vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
+            levelField.setText(vocableStudyList.getByIndex(currentIndex.get()).getLevel().toString());
         }
     }
     @FXML
@@ -274,31 +292,31 @@ public class TrainingVocablesController implements Initializable {
             }
         }
         else if (keyEvent.getCode().equals(KeyCode.M)) {
-            Vocable currentVocable = App.vocableStudyList.getByIndex(currentIndex.get());
+            Vocable currentVocable = vocableStudyList.getByIndex(currentIndex.get());
             if (currentVocable.getLevel() == 10) {
                 currentVocable.updateLevel(10);
             }
             else {
                 currentVocable.updateLevel(currentVocable.getLevel() + 1);
             }
-            notUpdatedVocab.remove(App.vocableStudyList.getByIndex((currentIndex.get())));
+            notUpdatedVocab.remove(vocableStudyList.getByIndex((currentIndex.get())));
             nextButton.fire();
         }
         else if (keyEvent.getCode().equals(KeyCode.B)) {
-            Vocable currentVocable = App.vocableStudyList.getByIndex(currentIndex.get());
+            Vocable currentVocable = vocableStudyList.getByIndex(currentIndex.get());
             if (currentVocable.getLevel() <= 1) {
                 currentVocable.updateLevel(currentVocable.getLevel());
             }
             else {
                 currentVocable.updateLevel(1);
             }
-            notUpdatedVocab.remove(App.vocableStudyList.getByIndex((currentIndex.get())));
+            notUpdatedVocab.remove(vocableStudyList.getByIndex((currentIndex.get())));
             nextButton.fire();
         }
         else if (keyEvent.getCode().equals(KeyCode.N)) {
-            Vocable currentVocable = App.vocableStudyList.getByIndex(currentIndex.get());
+            Vocable currentVocable = vocableStudyList.getByIndex(currentIndex.get());
             currentVocable.updateLevel(currentVocable.getLevel());
-            notUpdatedVocab.remove(App.vocableStudyList.getByIndex((currentIndex.get())));
+            notUpdatedVocab.remove(vocableStudyList.getByIndex((currentIndex.get())));
             nextButton.fire();
         }
     }
@@ -332,7 +350,7 @@ public class TrainingVocablesController implements Initializable {
                 stage.show();
             } else if (choice.get().equals("Continue with not updated kanji")) {
                 notUpdatedVocab.shuffle();
-                App.vocableStudyList = notUpdatedVocab.clone();
+                vocableStudyList = notUpdatedVocab.clone();
                 currentIndex.set(0);
                 loadFeatures(0);
                 //In case there's only one kanji left
@@ -346,18 +364,18 @@ public class TrainingVocablesController implements Initializable {
         formBox.setVisible(true);
     }
     private void showAnswers() {
-        for (String feature : App.settings.getStudyDirectionsVocab()[App.studyDirection]) {
+        for (String feature : App.settings.getStudyDirectionsVocab()[studyDirection]) {
             showFeature(feature);
         }
     }
     private void hideAnswers() {
-        for (String feature : App.settings.getStudyDirectionsVocab()[App.studyDirection]) {
+        for (String feature : App.settings.getStudyDirectionsVocab()[studyDirection]) {
             hideFeature(feature);
         }
     }
     private void loadFeatures(int index) {
         formBox.getChildren().clear();
-        for (String character : App.vocableStudyList.getByIndex(index).getForm().split("")) {
+        for (String character : vocableStudyList.getByIndex(index).getForm().split("")) {
             Label charLabel = new Label(character);
             System.out.println(charLabel.getLayoutX());
             charLabel.setStyle("-fx-font-size:50; -fx-label-padding: -6;");
@@ -368,11 +386,11 @@ public class TrainingVocablesController implements Initializable {
             formBox.getChildren().add(charLabel);
         }
 
-        reading.setText(App.vocableStudyList.getByIndex(index).getReading());
-        meaning.setText(App.vocableStudyList.getByIndex(index).getMeaning());
-        example.setText(App.vocableStudyList.getByIndex(index).getExample());
-        level.setText(String.valueOf(App.vocableStudyList.getByIndex(index).getLevel()));
-        due.setText(App.vocableStudyList.getByIndex(index).getDue().toString());
+        reading.setText(vocableStudyList.getByIndex(index).getReading());
+        meaning.setText(vocableStudyList.getByIndex(index).getMeaning());
+        example.setText(vocableStudyList.getByIndex(index).getExample());
+        level.setText(String.valueOf(vocableStudyList.getByIndex(index).getLevel()));
+        due.setText(vocableStudyList.getByIndex(index).getDue().toString());
     }
 
     private void enableUpdateButtons() {

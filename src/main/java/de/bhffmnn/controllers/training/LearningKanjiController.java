@@ -36,11 +36,13 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the LearningKanji view which lets the user learn new kanji. These kanji are determined by the global
- * variable App.kanjiStudyList
+ * Controller for the LearningKanji view which lets the user learn new kanji.
  */
 
 public class LearningKanjiController implements Initializable {
+    //Kanji that are to be studied
+    private KanjiDictionary kanjiStudyList;
+
     /*
     The following variable tracks the learning phase.
     Phase 0: All features are visible and the showAndCheckButton is disabled.
@@ -95,16 +97,24 @@ public class LearningKanjiController implements Initializable {
     @FXML
     private Circle checkCircle;
 
+    /**
+     *
+     * @param kanjiStudyList The kanji that are to be learned.
+     */
+    public LearningKanjiController(KanjiDictionary kanjiStudyList) {
+        this.kanjiStudyList = kanjiStudyList;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        studyKanji = App.kanjiStudyList.clone();
-        uncheckedKanji = App.kanjiStudyList.clone();
+        studyKanji = kanjiStudyList.clone();
+        uncheckedKanji = kanjiStudyList.clone();
 
         loadFeatures(0);
 
         //Initialize progress bar
-        progressLabel.setText("1/" + App.kanjiStudyList.size());
-        progressBar.progressProperty().set(1 / (App.kanjiStudyList.size()));
+        progressLabel.setText("1/" + kanjiStudyList.size());
+        progressBar.progressProperty().set(1 / (kanjiStudyList.size()));
 
         //Set up currentIndex property
         currentIndex = new SimpleIntegerProperty(0);
@@ -136,7 +146,7 @@ public class LearningKanjiController implements Initializable {
             if (newValue.intValue() > 0) {
                 showAndCheckButton.setDisable(false);
             }
-            studyKanji = App.kanjiStudyList.clone();
+            studyKanji = kanjiStudyList.clone();
             uncheckedKanji = studyKanji.clone();
             currentIndex.set(0);
         }));
@@ -239,7 +249,7 @@ public class LearningKanjiController implements Initializable {
         Optional<ButtonType> result = endDialog.showAndWait();
         if (result.isPresent()) {
             if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
-                for (Kanji kanji : App.kanjiStudyList) {
+                for (Kanji kanji : kanjiStudyList) {
                     kanji.setCharacterLevel(1);
                     kanji.setCharacterDue(LocalDate.now());
                     kanji.setReadingLevel(1);
@@ -259,7 +269,7 @@ public class LearningKanjiController implements Initializable {
                     if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
                         FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/selectors/vocableChooser.fxml"));
 
-                        VocableChooserController controller = new VocableChooserController(App.kanjiStudyList);
+                        VocableChooserController controller = new VocableChooserController(kanjiStudyList);
                         loader.setController(controller);
                         Stage stage = (Stage) character.getScene().getWindow();
                         stage.setScene(new Scene((loader.load())));
@@ -284,7 +294,7 @@ public class LearningKanjiController implements Initializable {
     }
 
     private void loadFeatures(int index) {
-        Kanji currentKanji = App.kanjiStudyList.getByIndex(index);
+        Kanji currentKanji = kanjiStudyList.getByIndex(index);
 
         character.setText(currentKanji.getCharacter());
         character.setTooltip(KanjiTooltipBuilder.kanjiTooltip(currentKanji));

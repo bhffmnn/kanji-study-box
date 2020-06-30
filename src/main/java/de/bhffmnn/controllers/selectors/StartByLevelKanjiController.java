@@ -9,6 +9,8 @@
 package de.bhffmnn.controllers.selectors;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.training.TrainingKanjiController;
+import de.bhffmnn.models.KanjiDictionary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,12 +26,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the StartByLevel view that lets the user choose kanji by their level. It saves the chosen kanji into
- * the global variable App.kanjiStudyList opens the TrainingKanji view to study them.
+ * Controller for the StartByLevel view that lets the user choose kanji by their level. Those kanji are then passed to
+ * TrainingKanji view to study them.
  */
 
 public class StartByLevelKanjiController implements Initializable {
     private int kanjiAmount;
+    private int studyDirection;
+    private KanjiDictionary kanjiStudyList;
 
     @FXML
     private ComboBox<String> studyDirectionBox;
@@ -60,13 +64,13 @@ public class StartByLevelKanjiController implements Initializable {
         studyDirectionBox.valueProperty().addListener((o, oldValue, newValue) -> {
             switch (newValue) {
                 case "Study characters":
-                    App.studyDirection = 0;
+                    studyDirection = 0;
                     break;
                 case "Study readings":
-                    App.studyDirection = 1;
+                    studyDirection = 1;
                     break;
                 case "Study meanings":
-                    App.studyDirection = 2;
+                    studyDirection = 2;
                     break;
             }
             setStudyList(levelSpinner.getValue());
@@ -74,18 +78,18 @@ public class StartByLevelKanjiController implements Initializable {
     }
 
     private void setStudyList(int level) {
-        switch (App.studyDirection) {
+        switch (studyDirection) {
             case 0:
-                App.kanjiStudyList = App.kanjiDictionary.getByCharacterLevel(level);
+                kanjiStudyList = App.kanjiDictionary.getByCharacterLevel(level);
                 break;
             case 1:
-                App.kanjiStudyList = App.kanjiDictionary.getByReadingLevel(level);
+                kanjiStudyList = App.kanjiDictionary.getByReadingLevel(level);
                 break;
             case 2:
-                App.kanjiStudyList = App.kanjiDictionary.getByMeaningLevel(level);
+                kanjiStudyList = App.kanjiDictionary.getByMeaningLevel(level);
                 break;
         }
-        kanjiAmount = App.kanjiStudyList.size();
+        kanjiAmount = kanjiStudyList.size();
         itemCountLabel.setText(String.valueOf(kanjiAmount));
         if (kanjiAmount == 0) {
             studyCountSpinner.setDisable(true);
@@ -101,8 +105,12 @@ public class StartByLevelKanjiController implements Initializable {
 
     @FXML
     private void studyButtonAction(ActionEvent actionEvent) throws Exception {
-        App.kanjiStudyList = App.kanjiStudyList.getByRange(0, studyCountSpinner.getValue());
-        Parent parent = FXMLLoader.load(App.class.getResource("fxml/training/trainingKanji.fxml"));
+        kanjiStudyList = kanjiStudyList.getByRange(0, studyCountSpinner.getValue());
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/training/trainingKanji.fxml"));
+        TrainingKanjiController controller = new TrainingKanjiController(kanjiStudyList, studyDirection);
+        loader.setController(controller);
+
+        Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 

@@ -31,11 +31,13 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the LearningVocables view which lets the user learn new vocables. These vocables are determined by the
- * global variable App.vocableStudyList
+ * Controller for the LearningVocables view which lets the user learn new vocables.
  */
 
 public class LearningVocablesController implements Initializable {
+    //Vocables which are to be studied
+    private VocableDictionary vocableStudyList;
+
     /*
     The following variable tracks the learning phase.
     Phase 0: All features are visible and the showAndCheckButton is disabled.
@@ -84,10 +86,18 @@ public class LearningVocablesController implements Initializable {
     @FXML
     private Circle checkCircle;
 
+    /**
+     *
+     * @param vocableStudyList The vocables that are to be learned
+     */
+    public LearningVocablesController(VocableDictionary vocableStudyList) {
+        this.vocableStudyList = vocableStudyList;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        studyVocab = App.vocableStudyList.clone();
-        uncheckedVocab = App.vocableStudyList.clone();
+        studyVocab = vocableStudyList.clone();
+        uncheckedVocab = vocableStudyList.clone();
 
         loadFeatures(0);
 
@@ -124,7 +134,7 @@ public class LearningVocablesController implements Initializable {
             if (newValue.intValue() > 0) {
                 showAndCheckButton.setDisable(false);
             }
-            studyVocab = App.vocableStudyList.clone();
+            studyVocab = vocableStudyList.clone();
             uncheckedVocab = studyVocab.clone();
             currentIndex.set(0);
         }));
@@ -224,7 +234,7 @@ public class LearningVocablesController implements Initializable {
         Optional<ButtonType> choice = endDialog.showAndWait();
         if (choice.isPresent()) {
             if (choice.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
-                for (Vocable vocable : App.vocableStudyList) {
+                for (Vocable vocable : vocableStudyList) {
                     vocable.setLevel(1);
                     vocable.setDue(LocalDate.now());
                 }

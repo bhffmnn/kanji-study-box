@@ -9,6 +9,8 @@
 package de.bhffmnn.controllers.selectors;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.training.TrainingVocablesController;
+import de.bhffmnn.models.VocableDictionary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,13 +26,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the StartByLevel view hat lets the user choose vocables by their level. It saves the chosen vocables
- * into the global variable App.vocableStudyList opens the TrainingVocable view to study
- * them.
+ * Controller for the StartByLevel view that lets the user choose vocables by their level. Those vocables are then
+ * passed to the TrainingVocables view to study them.
  */
 
 public class StartByLevelVocabController implements Initializable {
     private int vocableAmount;
+    private int studyDirection;
+    private VocableDictionary vocableStudyList;
 
     @FXML
     private ComboBox<String> studyDirectionBox;
@@ -52,8 +55,8 @@ public class StartByLevelVocabController implements Initializable {
         //Set up levelSpinner
         levelSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
         levelSpinner.valueProperty().addListener((o, oldValue, newValue) -> {
-            App.vocableStudyList = App.vocableDictionary.getByLevel(newValue);
-            vocableAmount = App.vocableStudyList.size();
+            vocableStudyList = App.vocableDictionary.getByLevel(newValue);
+            vocableAmount = vocableStudyList.size();
             itemCountLabel.setText(String.valueOf(vocableAmount));
             if (vocableAmount == 0) {
                 studyCountSpinner.setDisable(true);
@@ -76,21 +79,25 @@ public class StartByLevelVocabController implements Initializable {
 
     @FXML
     private void studyButtonAction(ActionEvent actionEvent) throws Exception {
-        App.vocableStudyList = App.vocableDictionary.getDue().getByRange(0, studyCountSpinner.getValue());
+        vocableStudyList = App.vocableDictionary.getDue().getByRange(0, studyCountSpinner.getValue());
         if (studyDirectionBox.getValue().equals("Study forms")) {
-            App.studyDirection = 0;
+            studyDirection = 0;
         }
         else if (studyDirectionBox.getValue().equals("Study readings")) {
-            App.studyDirection = 1;
+           studyDirection = 1;
         }
-        App.vocableStudyList = App.vocableStudyList.getByRange(0, studyCountSpinner.getValue());
-        Parent parent = FXMLLoader.load(App.class.getResource("fxml/training/trainingVocables.fxml"));
+        vocableStudyList = vocableStudyList.getByRange(0, studyCountSpinner.getValue());
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/training/trainingVocables.fxml"));
+        TrainingVocablesController controller = new TrainingVocablesController(vocableStudyList, studyDirection);
+        loader.setController(controller);
+
+        Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
         stage.setScene(scene);
         stage.show();
     }
+
     @FXML
     private void backButtonAction() throws IOException {
         Parent parent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));

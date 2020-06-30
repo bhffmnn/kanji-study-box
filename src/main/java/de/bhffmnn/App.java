@@ -33,26 +33,17 @@ public class App extends Application {
      * Global variable for the kanjiDictionary
      */
     static public KanjiDictionary kanjiDictionary;
-    /**
-     * Global variable for the kanji that are meant to be studied either in the training or learning views
-     */
-    static public KanjiDictionary kanjiStudyList;
+
     /**
      * Global variable for the vocableDictionary
      */
     static public VocableDictionary vocableDictionary;
+
     /**
-     * Global variable for the vocables that are meant to be studied either in the training or learning views
-     */
-    static public VocableDictionary vocableStudyList;
-    /**
-     * Global variable for settings
+     * Global variable for the application settings
      */
     static public Settings settings;
-    /**
-     * Global variable the studyDirection of the training or learning views
-     */
-    public static int studyDirection;
+
 
     /**
      * The init method tries to load the settings file into the global settings variable. If the file does not exist a

@@ -33,9 +33,6 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        App.kanjiStudyList = null;
-        App.vocableStudyList = null;
-        App.studyDirection = 0;
     }
 
     @FXML
