@@ -233,6 +233,7 @@ public class LearningVocablesController implements Initializable {
 
         Optional<ButtonType> choice = endDialog.showAndWait();
         if (choice.isPresent()) {
+            System.out.println("0");
             if (choice.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
                 for (Vocable vocable : vocableStudyList) {
                     vocable.setLevel(1);
@@ -244,13 +245,15 @@ public class LearningVocablesController implements Initializable {
                 Stage stage = (Stage) formBox.getScene().getWindow();
                 stage.setScene(trainingScene);
                 stage.show();
+                System.out.println("1");
             }
-            else if (choice.get().equals(choice.get().getButtonData().equals(ButtonBar.ButtonData.NO))) {
+            else if (choice.get().getButtonData().equals(ButtonBar.ButtonData.NO)) {
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
                 Scene trainingScene = new Scene(trainingParent);
                 Stage stage = (Stage) formBox.getScene().getWindow();
                 stage.setScene(trainingScene);
                 stage.show();
+                System.out.println("2");
             }
         }
     }
