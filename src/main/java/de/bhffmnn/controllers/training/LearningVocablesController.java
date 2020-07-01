@@ -9,6 +9,7 @@
 package de.bhffmnn.controllers.training;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.misc.KanjiTooltipBuilder;
 import de.bhffmnn.models.*;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;

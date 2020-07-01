@@ -6,9 +6,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-package de.bhffmnn.models;
+package de.bhffmnn.controllers.misc;
 
 import de.bhffmnn.App;
+import de.bhffmnn.models.Kanji;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;

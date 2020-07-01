@@ -15,6 +15,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import de.bhffmnn.App;
+import de.bhffmnn.controllers.misc.KanjiTooltipBuilder;
+import de.bhffmnn.controllers.misc.VocableTooltipBuilder;
 import de.bhffmnn.models.*;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;

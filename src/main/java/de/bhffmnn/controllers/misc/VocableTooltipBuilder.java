@@ -6,8 +6,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-package de.bhffmnn.models;
+package de.bhffmnn.controllers.misc;
 
+import de.bhffmnn.models.Vocable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
