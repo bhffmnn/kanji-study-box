@@ -201,6 +201,8 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return startedKanji;
     }
 
+    //TODO: addAll?
+
     /**
      * Saves the dictionary to a specified file path
      * @param filePath The file path to which the dictionary shall be saved to

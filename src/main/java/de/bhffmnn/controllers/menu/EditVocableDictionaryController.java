@@ -47,21 +47,11 @@ public class EditVocableDictionaryController implements Initializable {
     TextField meanFilterField;
 
     @FXML
-    private Spinner<Integer> levelSpinner;
-
-    @FXML
-    DatePicker duePicker;
-
-    @FXML
     CheckBox formCheckBox;
     @FXML
     CheckBox readCheckBox;
     @FXML
     CheckBox meanCheckBox;
-    @FXML
-    CheckBox levelCheckBox;
-    @FXML
-    CheckBox dueCheckBox;
 
     private VocableFilter vocableFilter;
 
@@ -69,8 +59,6 @@ public class EditVocableDictionaryController implements Initializable {
     private TableColumn<String, Vocable> readClmn;
     private TableColumn<String, Vocable> meanClmn;
     private TableColumn<String, Vocable> exmplClmn;
-    private TableColumn<String, Vocable> lvlClmn;
-    private TableColumn<String, Vocable> dueClmn;
 
     //This exists so you can discard changes
     private VocableDictionary cloneDictionary;
@@ -84,15 +72,11 @@ public class EditVocableDictionaryController implements Initializable {
         readClmn = createColumn("Reading", "reading");
         meanClmn = createColumn("Meaning", "meaning");
         exmplClmn = createColumn("Example", "example");
-        lvlClmn = createColumn("Level", "level");
-        dueClmn = createColumn("Due", "due");
 
         dictTable.getColumns().add(formClmn);
         dictTable.getColumns().add(readClmn);
         dictTable.getColumns().add(meanClmn);
         dictTable.getColumns().add(exmplClmn);
-        dictTable.getColumns().add(lvlClmn);
-        dictTable.getColumns().add(dueClmn);
 
         for (Vocable v : cloneDictionary) {
             dictTable.getItems().add(v);
@@ -103,18 +87,9 @@ public class EditVocableDictionaryController implements Initializable {
         readFilterField.setDisable(true);
         meanFilterField.setDisable(true);
 
-        levelSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
-        levelSpinner.getValueFactory().setValue(0);
-        levelSpinner.setDisable(true);
-
-        duePicker.setValue(LocalDate.now());
-        duePicker.setDisable(true);
-
         setUpCheckBox(formCheckBox, formFilterField);
         setUpCheckBox(readCheckBox, readFilterField);
         setUpCheckBox(meanCheckBox, meanFilterField);
-        setUpCheckBox(levelCheckBox, levelSpinner);
-        setUpCheckBox(dueCheckBox, duePicker);
     }
 
 
@@ -204,18 +179,6 @@ public class EditVocableDictionaryController implements Initializable {
             vocableFilter.setMeanFilter(meanFilterField.getText());
         }
 
-        if (levelSpinner.isDisabled()) {
-            vocableFilter.setLevelFilter(null);
-        } else {
-            vocableFilter.setLevelFilter(levelSpinner.getValue());
-        }
-
-        if (duePicker.isDisabled()) {
-            vocableFilter.setDueFilter(null);
-        } else {
-            vocableFilter.setDueFilter(duePicker.getValue());
-        }
-
         reloadTable();
     }
 
@@ -250,13 +213,10 @@ public class EditVocableDictionaryController implements Initializable {
         private String formFilter;
         private String readFilter;
         private String meanFilter;
-        private Integer levelFilter;
-        private LocalDate dueFilter;
+
 
         private VocableFilter() {
             formFilter = readFilter = meanFilter = null;
-            levelFilter = null;
-            dueFilter = null;
         }
 
         public String getFormFilter() {
@@ -268,12 +228,6 @@ public class EditVocableDictionaryController implements Initializable {
         public String getReadFilter() {
             return readFilter;
         }
-        public Integer getLevelFilter() {
-            return levelFilter;
-        }
-        public LocalDate getDueFilter() {
-            return dueFilter;
-        }
 
         public void setFormFilter(String formFilter) {
             this.formFilter = formFilter;
@@ -283,12 +237,6 @@ public class EditVocableDictionaryController implements Initializable {
         }
         public void setReadFilter(String readFilter) {
             this.readFilter = readFilter;
-        }
-        public void setLevelFilter(Integer levelFilter) {
-            this.levelFilter = levelFilter;
-        }
-        public void setDueFilter(LocalDate dueFilter) {
-            this.dueFilter = dueFilter;
         }
 
         public VocableDictionary filter(VocableDictionary vocableDictionary) {
@@ -315,21 +263,6 @@ public class EditVocableDictionaryController implements Initializable {
                 }
                 filteredDictionary.removeAll(removalList);
             }
-            if (!(levelFilter == null)) {
-                VocableDictionary removalList = filteredDictionary.clone();
-                removalList.removeAll(filteredDictionary.getByLevel(levelFilter));
-                filteredDictionary.removeAll(removalList);
-            }
-            if (!(dueFilter == null)) {
-                ArrayList<Vocable> removalList = new ArrayList<>();
-                for (Vocable v : filteredDictionary) {
-                    if (v.getDue().isAfter(dueFilter.plusDays(1))) {
-                        removalList.add(v);
-                    }
-                }
-                filteredDictionary.removeAll(removalList);
-            }
-
             return filteredDictionary;
         }
     }

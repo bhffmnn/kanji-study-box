@@ -32,12 +32,6 @@ public class EditVocableController implements Initializable {
     @FXML
     TextField exmplField;
 
-    @FXML
-    Spinner<Integer> lvlSpinner;
-
-    @FXML
-    DatePicker duePicker;
-
     private Vocable vocable;
 
     /**
@@ -54,11 +48,6 @@ public class EditVocableController implements Initializable {
         readField.setText(vocable.getReading());
         meanField.setText(vocable.getMeaning());
         exmplField.setText(vocable.getExample());
-
-        lvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
-        lvlSpinner.getValueFactory().setValue(vocable.getLevel());
-
-        duePicker.setValue(vocable.getDue());
     }
 
     @FXML
@@ -67,10 +56,6 @@ public class EditVocableController implements Initializable {
         vocable.setReading(readField.getText());
         vocable.setMeaning(meanField.getText());
         vocable.setExample(exmplField.getText());
-
-        vocable.setLevel(lvlSpinner.getValue());
-
-        vocable.setDue(duePicker.getValue());
 
         ((Stage) formField.getScene().getWindow()).close();
     }

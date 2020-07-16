@@ -11,7 +11,6 @@ package de.bhffmnn.controllers.training;
 import de.bhffmnn.App;
 import de.bhffmnn.controllers.misc.KanjiTooltipBuilder;
 import de.bhffmnn.controllers.misc.VocableTooltipBuilder;
-import de.bhffmnn.controllers.selectors.VocableChooserController;
 import de.bhffmnn.models.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -260,30 +259,11 @@ public class LearningKanjiController implements Initializable {
                     kanji.setMeaningDue(LocalDate.now());
                 }
                 App.kanjiDictionary.save(App.settings.getKanjiDictionaryFilePath());
-
-                Alert newVocDialog = new Alert(Alert.AlertType.CONFIRMATION);
-                newVocDialog.setTitle("What next?");
-                newVocDialog.setContentText("Do you want to learn new vocables for these kanji next?");
-                newVocDialog.setHeaderText("");
-                newVocDialog.getButtonTypes().setAll(yesButton, noButton);
-                result = newVocDialog.showAndWait();
-                if (result.isPresent()) {
-                    if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
-                        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/selectors/vocableChooser.fxml"));
-
-                        VocableChooserController controller = new VocableChooserController(kanjiStudyList);
-                        loader.setController(controller);
-                        Stage stage = (Stage) character.getScene().getWindow();
-                        stage.setScene(new Scene((loader.load())));
-                    }
-                    else {
-                        Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
-                        Scene trainingScene = new Scene(trainingParent);
-                        Stage stage = (Stage) character.getScene().getWindow();
-                        stage.setScene(trainingScene);
-                        stage.show();
-                    }
-                }
+                Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));
+                Scene trainingScene = new Scene(trainingParent);
+                Stage stage = (Stage) character.getScene().getWindow();
+                stage.setScene(trainingScene);
+                stage.show();
             }
             else if (result.get().getButtonData().equals(ButtonBar.ButtonData.NO)) {
                 Parent trainingParent = FXMLLoader.load(App.class.getResource("fxml/menu/mainMenu.fxml"));

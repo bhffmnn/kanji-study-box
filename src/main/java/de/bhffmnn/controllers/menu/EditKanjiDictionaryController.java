@@ -25,8 +25,11 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 
 /**
  * Controller for the EditKanjiDictionary view that lets the user edit a KanjiDictionary object. The object is cloned
@@ -83,28 +86,33 @@ public class EditKanjiDictionaryController implements Initializable {
 
     private KanjiFilter kanjiFilter;
 
-    private TableColumn<String, Kanji> charClmn;
-    private TableColumn<String, Kanji> onClmn;
-    private TableColumn<String, Kanji> kunClmn;
-    private TableColumn<String, Kanji> meanClmn;
-    private TableColumn<String, Kanji> mnemClmn;
-    private TableColumn<String, Kanji> charLvlClmn;
-    private TableColumn<String, Kanji> charDueClmn;
-    private TableColumn<String, Kanji> readLvlClmn;
-    private TableColumn<String, Kanji> readDueClmn;
-    private TableColumn<String, Kanji> meanLvlClmn;
-    private TableColumn<String, Kanji> meanDueClmn;
+    private TableColumn<String, KanjiMenuItem> indexClmn;
+    private TableColumn<String, KanjiMenuItem> charClmn;
+    private TableColumn<String, KanjiMenuItem> onClmn;
+    private TableColumn<String, KanjiMenuItem> kunClmn;
+    private TableColumn<String, KanjiMenuItem> meanClmn;
+    private TableColumn<String, KanjiMenuItem> mnemClmn;
+    private TableColumn<String, KanjiMenuItem> charLvlClmn;
+    private TableColumn<String, KanjiMenuItem> charDueClmn;
+    private TableColumn<String, KanjiMenuItem> readLvlClmn;
+    private TableColumn<String, KanjiMenuItem> readDueClmn;
+    private TableColumn<String, KanjiMenuItem> meanLvlClmn;
+    private TableColumn<String, KanjiMenuItem> meanDueClmn;
 
     //This exists so you can reset the dictionary
-    private KanjiDictionary cloneDictionary;
+    private KanjiMenuItemList kanjiMenuItems;
+    private ArrayList<Integer> currentListIndexes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         kanjiFilter = new KanjiFilter();
 
-        cloneDictionary = App.kanjiDictionary.cloneDeep();
+        kanjiMenuItems = new KanjiMenuItemList(App.kanjiDictionary);
 
-        charClmn = createColumn("character", "character");
+        currentListIndexes = new ArrayList<>();
+
+        indexClmn = createColumn("Index", "index");
+        charClmn = createColumn("Character", "character");
         onClmn = createColumn("ON-Reading", "onReading");
         kunClmn = createColumn("kun-Reading", "kunReading");
         meanClmn = createColumn("Meaning", "meaning");
@@ -117,6 +125,7 @@ public class EditKanjiDictionaryController implements Initializable {
         meanLvlClmn = createColumn("Meaning Level", "meaningLevel");
         meanDueClmn = createColumn("Meaning Due", "meaningDue");
 
+        dictTable.getColumns().add(indexClmn);
         dictTable.getColumns().add(charClmn);
         dictTable.getColumns().add(onClmn);
         dictTable.getColumns().add(kunClmn);
@@ -129,8 +138,11 @@ public class EditKanjiDictionaryController implements Initializable {
         dictTable.getColumns().add(meanLvlClmn);
         dictTable.getColumns().add(meanDueClmn);
 
-        for (Kanji k : cloneDictionary) {
-            dictTable.getItems().add(k);
+        int count = 0;
+        for (KanjiMenuItem kmi : kanjiMenuItems) {
+            dictTable.getItems().add(kmi);
+            currentListIndexes.add(count);
+            count++;
         }
 
         //Filter part
@@ -179,9 +191,10 @@ public class EditKanjiDictionaryController implements Initializable {
     }
 
     @FXML void addButtonAction(ActionEvent actionEvent) throws Exception {
+        //TODO
         FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/addKanji.fxml"));
 
-        AddKanjiController controller = new AddKanjiController(cloneDictionary);
+        AddKanjiMenuItemController controller = new AddKanjiMenuItemController(kanjiMenuItems);
         loader.setController(controller);
 
         Stage childStage = new Stage();
@@ -196,10 +209,11 @@ public class EditKanjiDictionaryController implements Initializable {
     @FXML void editButtonAction(ActionEvent actionEvent) throws Exception {
         if (!dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
             TablePosition position = (TablePosition) dictTable.getSelectionModel().getSelectedCells().get(0);
-            Kanji kanji = (Kanji) dictTable.getItems().get(position.getRow());
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/editKanji.fxml"));
+            int itemIndex = ((KanjiMenuItem) dictTable.getItems().get(position.getRow())).getIndex();
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/editKanjiMenuItem.fxml"));
 
-            EditKanjiController controller = new EditKanjiController(kanji);
+            EditKanjiMenuItemController controller =
+                    new EditKanjiMenuItemController(kanjiMenuItems, itemIndex);
             loader.setController(controller);
 
             Stage childStage = new Stage();
@@ -216,21 +230,25 @@ public class EditKanjiDictionaryController implements Initializable {
     void deleteButtonAction(ActionEvent actionEvent) throws Exception {
         if (!dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
             TablePosition position = (TablePosition) dictTable.getSelectionModel().getSelectedCells().get(0);
-            Kanji kanji = (Kanji) dictTable.getItems().get(position.getRow());
-            cloneDictionary.remove(kanji);
+            KanjiMenuItem kmi = (KanjiMenuItem) dictTable.getItems().get(position.getRow());
+            kanjiMenuItems.remove(kmi);
             reloadTable();
         }
 
     }
     @FXML
     private void saveButtonAction(ActionEvent actionEvent) throws Exception {
-        App.kanjiDictionary = cloneDictionary.cloneDeep();
+        KanjiDictionary kanjiDictionary = new KanjiDictionary();
+        for (Kanji k : kanjiMenuItems) {
+            kanjiDictionary.add(k);
+        }
+        App.kanjiDictionary = kanjiDictionary;
         App.kanjiDictionary.save(App.settings.getKanjiDictionaryFilePath());
     }
 
     @FXML
     private void resetButtonAction(ActionEvent actionEvent) throws Exception {
-        cloneDictionary = App.kanjiDictionary.cloneDeep();
+        kanjiMenuItems = new KanjiMenuItemList(App.kanjiDictionary);
         reloadTable();
     }
 
@@ -299,8 +317,8 @@ public class EditKanjiDictionaryController implements Initializable {
         reloadTable();
     }
 
-    private TableColumn<String, Kanji> createColumn(String title, String feature) {
-        TableColumn<String, Kanji> newColumn = new TableColumn<>(title);
+    private TableColumn<String, KanjiMenuItem> createColumn(String title, String feature) {
+        TableColumn<String, KanjiMenuItem> newColumn = new TableColumn<>(title);
         newColumn.setCellValueFactory(new PropertyValueFactory<>(feature));
         return newColumn;
     }
@@ -308,10 +326,10 @@ public class EditKanjiDictionaryController implements Initializable {
     private void reloadTable() {
         dictTable.getItems().clear();
 
-        KanjiDictionary filteredDictionary = kanjiFilter.filter(cloneDictionary);
+        currentListIndexes = kanjiFilter.filter(kanjiMenuItems);
 
-        for (Kanji k : filteredDictionary) {
-            dictTable.getItems().add(k);
+        for (int i : currentListIndexes) {
+            dictTable.getItems().add(kanjiMenuItems.get(i));
         }
     }
 
@@ -410,82 +428,207 @@ public class EditKanjiDictionaryController implements Initializable {
             this.meanDueFilter = meanDueFilter;
         }
 
-        public KanjiDictionary filter(KanjiDictionary kanjiDictionary) {
-            KanjiDictionary filteredDictionary = kanjiDictionary.clone();
+        public ArrayList<Integer> filter(KanjiMenuItemList kanjiMenuItems) {
+            ArrayList<Integer> filteredIndexes = new ArrayList<>();
+            for (int i = 0; i < kanjiMenuItems.size(); i++) {
+                filteredIndexes.add(i);
+            }
             if (!(charFilter == null)) {
-                filteredDictionary = new KanjiDictionary();
-                filteredDictionary.add(kanjiDictionary.getKanjiByCharacter(charFilter));
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!kmi.getCharacter().equals(charFilter)) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
+                    }
+                }
             }
             if (!(onFilter == null)) {
-                ArrayList<Kanji> removalList = new ArrayList<>();
-                for (Kanji k : filteredDictionary) {
-                    if (!k.getOnReading().contains(onFilter)) {
-                        removalList.add(k);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!kmi.getOnReading().contains(onFilter)) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
                     }
                 }
-                filteredDictionary.removeAll(removalList);
             }
             if (!(kunFilter == null)) {
-                ArrayList<Kanji> removalList = new ArrayList<>();
-                for (Kanji k : filteredDictionary) {
-                    if (!k.getKunReading().contains(kunFilter)) {
-                        removalList.add(k);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!kmi.getKunReading().contains(kunFilter)) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
                     }
                 }
-                filteredDictionary.removeAll(removalList);
             }
             if (!(meanFilter == null)) {
-                ArrayList<Kanji> removalList = new ArrayList<>();
-                for (Kanji k : filteredDictionary) {
-                    if (!k.getMeaning().contains(meanFilter)) {
-                        removalList.add(k);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!kmi.getMeaning().contains(meanFilter)) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
                     }
                 }
-                filteredDictionary.removeAll(removalList);
             }
             if (!(charLvlFilter == null)) {
-                KanjiDictionary removalList = filteredDictionary.clone();
-                removalList.removeAll(filteredDictionary.getByCharacterLevel(charLvlFilter));
-                filteredDictionary.removeAll(removalList);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!charLvlFilter.equals(kmi.getCharacterLevel())) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
+                    }
+                }
             }
             if (!(readLvlFilter == null)) {
-                KanjiDictionary removalList = filteredDictionary.clone();
-                removalList.removeAll(filteredDictionary.getByCharacterLevel(readLvlFilter));
-                filteredDictionary.removeAll(removalList);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!readLvlFilter.equals(kmi.getReadingLevel())) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
+                    }
+                }
             }
             if (!(meanLvlFilter == null)) {
-                KanjiDictionary removalList = filteredDictionary.clone();
-                removalList.removeAll(filteredDictionary.getByCharacterLevel(meanLvlFilter));
-                filteredDictionary.removeAll(removalList);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!meanLvlFilter.equals(kmi.getMeaningLevel())) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
+                    }
+                }
             }
             if (!(charDueFilter == null)) {
-                ArrayList<Kanji> removalList = new ArrayList<>();
-                for (Kanji k : filteredDictionary) {
-                    if (k.getCharacterDue().isAfter(charDueFilter.plusDays(1))) {
-                        removalList.add(k);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!kmi.getCharacterDue().isAfter(charDueFilter.minusDays(1))) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
                     }
                 }
-                filteredDictionary.removeAll(removalList);
             }
             if (!(readDueFilter == null)) {
-                ArrayList<Kanji> removalList = new ArrayList<>();
-                for (Kanji k : filteredDictionary) {
-                    if (k.getCharacterDue().isAfter(readDueFilter.plusDays(1))) {
-                        removalList.add(k);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!kmi.getReadingDue().isAfter(readDueFilter.minusDays(1))) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
                     }
                 }
-                filteredDictionary.removeAll(removalList);
             }
             if (!(meanDueFilter == null)) {
-                ArrayList<Kanji> removalList = new ArrayList<>();
-                for (Kanji k : filteredDictionary) {
-                    if (k.getCharacterDue().isAfter(meanDueFilter.plusDays(1))) {
-                        removalList.add(k);
+                for (KanjiMenuItem kmi : kanjiMenuItems) {
+                    if (!kmi.getMeaningDue().isAfter(meanDueFilter.minusDays(1))) {
+                        filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
                     }
                 }
-                filteredDictionary.removeAll(removalList);
             }
-            return filteredDictionary;
+            return filteredIndexes;
+        }
+    }
+
+    public class KanjiMenuItemList extends AbstractCollection<KanjiMenuItem> {
+        private ArrayList<KanjiMenuItem> kanjiMenuItems;
+
+        public KanjiMenuItemList() {
+            kanjiMenuItems = new ArrayList<>();
+        }
+
+        public KanjiMenuItemList(KanjiDictionary kanjiDictionary) {
+            kanjiMenuItems = new ArrayList<>();
+            for (Kanji k : kanjiDictionary) {
+                kanjiMenuItems.add(new KanjiMenuItem(k, kanjiMenuItems.size()));
+            }
+        }
+
+        public KanjiMenuItem get(int index) {
+            return kanjiMenuItems.get(index);
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            if (!kanjiMenuItems.contains(o)) {
+                return false;
+            }
+            this.changeIndexOf((KanjiMenuItem) o, this.size() - 1);
+            return kanjiMenuItems.remove(o);
+        }
+
+        public void changeIndexOf(KanjiMenuItem kanjiMenuItem, int newIndex) {
+            if (!kanjiMenuItems.contains(kanjiMenuItem)) {
+                throw new IllegalArgumentException("The KanjiMenuList object does not contain this KanjiMenuItem object");
+            }
+            if (newIndex > kanjiMenuItems.size() - 1 || newIndex < 0) {
+                throw new IndexOutOfBoundsException();
+            }
+            int oldIndex = kanjiMenuItems.indexOf(kanjiMenuItem);
+            if (newIndex == oldIndex) {
+                return;
+            }
+            ArrayList<KanjiMenuItem> newList = new ArrayList<>();
+            if (oldIndex < newIndex) {
+                for (int i = 0; i < oldIndex; i++) {
+                    newList.add(kanjiMenuItems.get(i));
+                }
+                for (int i = oldIndex + 1; i <= newIndex; i++) {
+                    newList.add(kanjiMenuItems.get(i));
+                    kanjiMenuItems.get(i).setIndex(i - 1);
+
+                }
+                newList.add(kanjiMenuItem);
+                kanjiMenuItem.setIndex(newIndex);
+                for (int i = newIndex + 1; i < kanjiMenuItems.size(); i++) {
+                    newList.add(kanjiMenuItems.get(i));
+                }
+            }
+            if (oldIndex > newIndex) {
+                for (int i = 0; i < newIndex; i++) {
+                    newList.add(kanjiMenuItems.get(i));
+                }
+                newList.add(kanjiMenuItem);
+                kanjiMenuItem.setIndex(newIndex);
+                for (int i = newIndex; i < oldIndex; i++) {
+                    newList.add(kanjiMenuItems.get(i));
+                    kanjiMenuItems.get(i).setIndex(i + 1);
+                }
+                for (int i = oldIndex + 1; i < kanjiMenuItems.size(); i++) {
+                    newList.add(kanjiMenuItems.get(i));
+                }
+            }
+            kanjiMenuItems = newList;
+        }
+
+        @Override
+        public Iterator<KanjiMenuItem> iterator() {
+            return kanjiMenuItems.iterator();
+        }
+
+        public int indexOf(KanjiMenuItem kanjiMenuItem) {
+            return kanjiMenuItems.indexOf(kanjiMenuItem);
+        }
+
+        @Override
+        public int size() {
+            return kanjiMenuItems.size();
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return kanjiMenuItems.contains(o);
+        }
+
+        @Override
+        public boolean add(KanjiMenuItem kanjiMenuItem) {
+            return false;
+        }
+
+        public boolean addNewItem(Kanji kanji) {
+            for (KanjiMenuItem kmi : kanjiMenuItems) {
+                if (kmi.getCharacter().equals(kanji.getCharacter())) {
+                    return false;
+                }
+            }
+            kanjiMenuItems.add(new KanjiMenuItem(kanji, kanjiMenuItems.size()));
+            return true;
+        }
+    }
+
+    public class KanjiMenuItem extends Kanji {
+        private int index;
+
+        private KanjiMenuItem(Kanji kanji, int index) {
+            super(kanji.getCharacter(), kanji.getOnReading(), kanji.getKunReading(), kanji.getMeaning(),
+                    kanji.getMnemonic(), kanji.getCharacterLevel(), kanji.getCharacterDue(), kanji.getReadingLevel(),
+                    kanji.getReadingDue(), kanji.getMeaningLevel(), kanji.getMeaningDue());
+            this.index = index;
+        }
+
+        private void setIndex(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
         }
     }
 }

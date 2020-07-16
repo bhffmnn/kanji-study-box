@@ -23,11 +23,11 @@ public class VocableTooltipBuilder {
         gridPane.add(new Label("Form:"), 0, 0);
         gridPane.add(new Label("Reading:"), 0, 1);
         gridPane.add(new Label("Meaning:"), 0, 2);
-        gridPane.add(new Label("Level:"), 0, 3);
+        gridPane.add(new Label("Example:"), 0, 3);
         gridPane.add(new Label(vocable.getForm()), 1,0);
         gridPane.add(new Label(vocable.getReading()),1,1);
         gridPane.add(new Label(vocable.getMeaning()),1, 2);
-        gridPane.add(new Label(vocable.getLevel().toString()), 1, 3);
+        gridPane.add(new Label(vocable.getExample()), 1, 3);
 
         Tooltip tooltip = new Tooltip();
         tooltip.graphicProperty().setValue(gridPane);

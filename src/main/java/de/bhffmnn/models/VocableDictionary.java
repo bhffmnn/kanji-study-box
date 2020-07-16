@@ -32,7 +32,7 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] fields = row.split("\t");
-            if (!dictionary.add(new Vocable(fields[0], fields[1], fields[2], fields[3], Integer.parseInt(fields[4]), LocalDate.parse(fields[5])))) {
+            if (!dictionary.add(new Vocable(fields[0], fields[1], fields[2], fields[3]))) {
                 System.out.print("Duplicate: " + fields);
             }
         }
@@ -72,7 +72,7 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] fields = row.split("\t");
-            if (!dictionary.add(new Vocable(fields[0], fields[1], fields[2], fields[3], Integer.parseInt(fields[4]), LocalDate.parse(fields[5])))) {
+            if (!dictionary.add(new Vocable(fields[0], fields[1], fields[2], fields[3]))) {
                 System.out.print("Duplicate: " + fields);
             }
         }
@@ -89,35 +89,6 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         VocableDictionary vocableDictionary = new VocableDictionary();
         for (int index = start; index < stop; index++) {
             vocableDictionary.add(dictionary.get(index));
-        }
-        return vocableDictionary;
-    }
-
-    /**
-     * Gets all vocables for which due is true and returns them as a VocableDictionary object.
-     * @return VocableDictionary object containing all vocables for which due is true
-     */
-    public VocableDictionary getDue() {
-        VocableDictionary vocableDictionary = new VocableDictionary();
-        for (Vocable vocable : dictionary) {
-            if (vocable.isDue()) {
-                vocableDictionary.add(vocable);
-            }
-        }
-        return vocableDictionary;
-    }
-
-    /**
-     * Gets all vocables with the specified level and returns them as a VocableDictionary object.
-     * @param level level of the vocables that are to be returned
-     * @return VocableDictionary containing all vocables with the specified level
-     */
-    public VocableDictionary getByLevel(int level) {
-        VocableDictionary vocableDictionary = new VocableDictionary();
-        for (Vocable vocable : dictionary) {
-            if (vocable.getLevel() == level) {
-                vocableDictionary.add(vocable);
-            }
         }
         return vocableDictionary;
     }
@@ -212,7 +183,7 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         cloneDictionary.dictionary = new ArrayList<Vocable>();
         for (Vocable v : this.dictionary) {
             cloneDictionary.add(new Vocable(v.getForm(), v.getReading(), v.getMeaning(),
-                                            v.getExample(), v.getLevel(), v.getDue()));
+                                            v.getExample()));
         }
         return cloneDictionary;
     }
