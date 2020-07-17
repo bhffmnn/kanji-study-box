@@ -111,6 +111,8 @@ public class EditKanjiDictionaryController implements Initializable {
 
         currentListIndexes = new ArrayList<>();
 
+        dictTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         indexClmn = createColumn("Index", "index");
         charClmn = createColumn("Character", "character");
         onClmn = createColumn("ON-Reading", "onReading");
@@ -207,13 +209,39 @@ public class EditKanjiDictionaryController implements Initializable {
     }
 
     @FXML void editButtonAction(ActionEvent actionEvent) throws Exception {
-        if (!dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
+        //If nothing selected
+        if (dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
+            return;
+        }
+        //If 1 row selected
+        if (dictTable.getSelectionModel().getSelectedCells().size() == 1) {
             TablePosition position = (TablePosition) dictTable.getSelectionModel().getSelectedCells().get(0);
             int itemIndex = ((KanjiMenuItem) dictTable.getItems().get(position.getRow())).getIndex();
             FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/editKanjiMenuItem.fxml"));
 
             EditKanjiMenuItemController controller =
                     new EditKanjiMenuItemController(kanjiMenuItems, itemIndex);
+            loader.setController(controller);
+
+            Stage childStage = new Stage();
+            childStage.initModality(Modality.WINDOW_MODAL);
+            childStage.initOwner(dictTable.getScene().getWindow());
+            childStage.setScene(new Scene((loader.load())));
+            childStage.showAndWait();
+
+            reloadTable();
+        }
+        //If multiple rows selected
+        else {
+            int[] itemIndexes = new int[dictTable.getSelectionModel().getSelectedCells().size()];
+            for (int i = 0; i < dictTable.getSelectionModel().getSelectedCells().size(); i++) {
+                TablePosition position = (TablePosition) dictTable.getSelectionModel().getSelectedCells().get(i);
+                itemIndexes[i] = position.getRow();
+            }
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/editKanjiMenuItemMultiple.fxml"));
+
+            EditKanjiMenuItemMultipleController controller =
+                    new EditKanjiMenuItemMultipleController(kanjiMenuItems, itemIndexes);
             loader.setController(controller);
 
             Stage childStage = new Stage();

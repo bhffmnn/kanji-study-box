@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <GridPane fx:id="mainGrid" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="TOP_CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <CheckBox mnemonicParsing="false" text="ON-Reading" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="kun-Reading" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Meaning" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Mnemonic" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Character Level" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Character Due" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Reading Level" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Reading Due" GridPane.columnIndex="0" GridPane.rowIndex="7">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Meaning Level" GridPane.columnIndex="0" GridPane.rowIndex="8">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Meaning Due" GridPane.columnIndex="0" GridPane.rowIndex="9">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </CheckBox>
+                <TextField fx:id="onField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="kunField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="meanField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="mnemField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Spinner fx:id="charLvlSpinner" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <DatePicker fx:id="charDP" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Spinner fx:id="readLvlSpinner" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <DatePicker fx:id="readDP" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                <Spinner fx:id="meanLvlSpinner" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                <DatePicker fx:id="meanDP" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            </children>
+        </GridPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" onAction="#saveButtonAction" prefWidth="60.0" text="Save all">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</BorderPane>
