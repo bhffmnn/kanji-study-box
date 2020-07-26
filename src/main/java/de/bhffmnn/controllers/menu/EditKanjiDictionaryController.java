@@ -208,6 +208,21 @@ public class EditKanjiDictionaryController implements Initializable {
         reloadTable();
     }
 
+    @FXML void importButtonAction(ActionEvent actionEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/importKanji.fxml"));
+
+        ImportKanjiController controller = new ImportKanjiController(kanjiMenuItems);
+        loader.setController(controller);
+
+        Stage childStage = new Stage();
+        childStage.initModality(Modality.WINDOW_MODAL);
+        childStage.initOwner(dictTable.getScene().getWindow());
+        childStage.setScene(new Scene((loader.load())));
+        childStage.showAndWait();
+
+        reloadTable();
+    }
+
     @FXML void editButtonAction(ActionEvent actionEvent) throws Exception {
         //If nothing selected
         if (dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
@@ -637,6 +652,16 @@ public class EditKanjiDictionaryController implements Initializable {
                 }
             }
             kanjiMenuItems.add(new KanjiMenuItem(kanji, kanjiMenuItems.size()));
+            return true;
+        }
+
+        public boolean removeByKanji(Kanji kanji) {
+            for (KanjiMenuItem kmi : kanjiMenuItems) {
+                if (kmi.getCharacter().equals(kanji.getCharacter())) {
+                    this.remove(kmi);
+                    return true;
+                }
+            }
             return true;
         }
     }

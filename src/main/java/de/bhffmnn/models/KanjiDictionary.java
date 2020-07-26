@@ -18,25 +18,36 @@ import java.util.*;
 public class KanjiDictionary extends AbstractCollection<Kanji> implements Cloneable {
     private ArrayList<Kanji> dictionary;
 
+
     public KanjiDictionary() {
         dictionary = new ArrayList<Kanji>();
     }
 
     public KanjiDictionary (String filePath) throws IOException {
         dictionary = new ArrayList<Kanji>();
-        BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
-        csvReader.readLine(); //skip header
-        String row;
-        while ((row = csvReader.readLine()) != null) {
-            String[] fields = row.split("\t");
-            if (!add(new Kanji(fields[0], fields[1], fields[2], fields[3],
-                    fields[4], Integer.parseInt(fields[5]), LocalDate.parse(fields[6]),
-                    Integer.parseInt(fields[7]), LocalDate.parse(fields[8]), Integer.parseInt(fields[9]), LocalDate.parse(fields[10])))) {
-                System.out.print("Duplicate kanji: " + fields);
+        try {
+            BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
+            csvReader.readLine(); //skip header
+            String row;
+            while ((row = csvReader.readLine()) != null) {
+                String[] fields = row.split("\t");
+                if (!add(new Kanji(fields[0], fields[1], fields[2], fields[3],
+                        fields[4], Integer.parseInt(fields[5]), LocalDate.parse(fields[6]),
+                        Integer.parseInt(fields[7]), LocalDate.parse(fields[8]), Integer.parseInt(fields[9]), LocalDate.parse(fields[10])))) {
+                    System.out.print("Duplicate kanji: " + fields);
+                }
             }
+            csvReader.close();
         }
-        csvReader.close();
+        catch (ArrayIndexOutOfBoundsException e) {
+            throw new IOException(e);
+        }
     }
+
+    public ArrayList<Kanji> getDictionaryAsArrayList() {
+        return dictionary;
+    }
+
 
     @Override
     public Iterator<Kanji> iterator() {

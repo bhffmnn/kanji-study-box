@@ -144,12 +144,12 @@
                   </Accordion>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addButtonAction" prefWidth="60.0" text="Add">
+                        <Button mnemonicParsing="false" onAction="#addButtonAction" prefWidth="60.0" text="Add...">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#editButtonAction" prefWidth="60.0" text="Edit">
+                        <Button mnemonicParsing="false" onAction="#editButtonAction" prefWidth="60.0" text="Edit...">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
@@ -169,6 +169,11 @@
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#resetButtonAction" prefWidth="60.0" text="Reset">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button layoutX="310.0" layoutY="15.0" mnemonicParsing="false" onAction="#importButtonAction" prefWidth="60.0" text="Import...">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
