@@ -75,11 +75,11 @@ public class App extends Application {
             ButtonType createButton = new ButtonType("Create");
             ButtonType quitButton = new ButtonType("Quit", ButtonBar.ButtonData.CANCEL_CLOSE);
             Alert dictionaryDialogue = new Alert(Alert.AlertType.NONE,
-                    "Kanji dictionary could not be loaded. Load from existing file or create new one?",
+                    "Load a kanji dictionary from an existing file or create new one?",
                     loadButton,
                     createButton,
                     quitButton);
-            dictionaryDialogue.setTitle("Stop right there, criminal scum!");
+            dictionaryDialogue.setTitle("Loading / Creating Kanji Dictionary");
             Optional<ButtonType> result = dictionaryDialogue.showAndWait();
             if (result.get() == loadButton) {
                 FileChooser fileChooser = new FileChooser();
@@ -128,11 +128,11 @@ public class App extends Application {
             ButtonType createButton = new ButtonType("Create");
             ButtonType quitButton = new ButtonType("Quit", ButtonBar.ButtonData.CANCEL_CLOSE);
             Alert dictionaryDialogue = new Alert(Alert.AlertType.NONE,
-                    "Vocabulary dictionary could not be loaded. Load from existing file or create new one?",
+                    "Load from an existing vocabulary file or create a new one?",
                     loadButton,
                     createButton,
                     quitButton);
-            dictionaryDialogue.setTitle("Stop right there, criminal scum!");
+            dictionaryDialogue.setTitle("Loading / Creating Vocabulary Dictionary");
             Optional<ButtonType> result = dictionaryDialogue.showAndWait();
             if (result.get() == loadButton) {
                 FileChooser fileChooser = new FileChooser();

@@ -69,7 +69,7 @@ public class SettingsController implements Initializable {
                 createButton,
                 backupButton,
                 cancelButton);
-        dictionaryDialogue.setTitle("Choose wisely");
+        dictionaryDialogue.setTitle("Kanji Dictionary File Options");
         Optional<ButtonType> result = dictionaryDialogue.showAndWait();
         if (result.get() == loadButton) {
             FileChooser fileChooser = new FileChooser();
@@ -139,7 +139,7 @@ public class SettingsController implements Initializable {
                 createButton,
                 backupButton,
                 cancelButton);
-        dictionaryDialogue.setTitle("Choose wisely");
+        dictionaryDialogue.setTitle("Vocable Dictionary File Path Options");
         Optional<ButtonType> result = dictionaryDialogue.showAndWait();
         if (result.get() == loadButton) {
             FileChooser fileChooser = new FileChooser();
