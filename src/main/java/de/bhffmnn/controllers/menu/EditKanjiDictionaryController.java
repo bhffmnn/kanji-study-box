@@ -29,7 +29,6 @@ import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
-import java.util.stream.IntStream;
 
 /**
  * Controller for the EditKanjiDictionary view that lets the user edit a KanjiDictionary object. The object is cloned
@@ -208,10 +207,25 @@ public class EditKanjiDictionaryController implements Initializable {
         reloadTable();
     }
 
-    @FXML void importButtonAction(ActionEvent actionEvent) throws Exception {
+    @FXML void importKanjiButtonAction(ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/importKanji.fxml"));
 
         ImportKanjiController controller = new ImportKanjiController(kanjiMenuItems);
+        loader.setController(controller);
+
+        Stage childStage = new Stage();
+        childStage.initModality(Modality.WINDOW_MODAL);
+        childStage.initOwner(dictTable.getScene().getWindow());
+        childStage.setScene(new Scene((loader.load())));
+        childStage.showAndWait();
+
+        reloadTable();
+    }
+
+    @FXML void importOrderButtonAction(ActionEvent actionEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/changeKanjiOrder.fxml"));
+
+        ChangeKanjiOrderController controller = new ChangeKanjiOrderController(kanjiMenuItems);
         loader.setController(controller);
 
         Stage childStage = new Stage();
@@ -575,6 +589,15 @@ public class EditKanjiDictionaryController implements Initializable {
             }
             this.changeIndexOf((KanjiMenuItem) o, this.size() - 1);
             return kanjiMenuItems.remove(o);
+        }
+
+        public KanjiMenuItem getByCharacter(char character) {
+            for (KanjiMenuItem kmi : kanjiMenuItems) {
+                if (kmi.getCharacter().charAt(0) == character) {
+                    return kmi;
+                }
+            }
+            return null;
         }
 
         public void changeIndexOf(KanjiMenuItem kanjiMenuItem, int newIndex) {

@@ -43,6 +43,7 @@ public class KandicReader {
         while (eventReader.hasNext()) {
             XMLEvent event = eventReader.nextEvent();
             if (event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("character")) {
+                dictNumbers.put(DictionaryType.DEFAULT, kanjList.size());
                 KanjidicKanji kanji = new KanjidicKanji(character.charAt(0), onReading,
                         kunReading, meaning, jlpt, dictNumbers);
                 kanjList.add(kanji);

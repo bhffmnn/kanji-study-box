@@ -37,6 +37,10 @@ public class KanjidicKanji {
         return jlpt;
     }
 
+    public boolean hasDictionaryNumber(DictionaryType dictionaryType) {
+        return dictNumbers.containsKey(dictionaryType);
+    }
+
     public Integer getDictionaryNumber(DictionaryType dictType) {
         return dictNumbers.get(dictType);
     }

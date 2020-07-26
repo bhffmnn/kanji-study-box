@@ -34,10 +34,16 @@
                <children>
                   <TableView fx:id="dictTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" />
                </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </padding>
             </StackPane>
          </center>
          <bottom>
-            <VBox BorderPane.alignment="CENTER">
+            <VBox spacing="5.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </BorderPane.margin>
@@ -133,7 +139,6 @@
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Spinner maxWidth="1.7976931348623157E308" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -142,40 +147,51 @@
                       </TitledPane>
                     </panes>
                   </Accordion>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER" spacing="5.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#addButtonAction" prefWidth="60.0" text="Add...">
                            <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#editButtonAction" prefWidth="60.0" text="Edit...">
                            <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#deleteButtonAction" prefWidth="60.0" text="Delete">
                            <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </HBox.margin>
                         </Button>
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </HBox>
-                  <HBox alignment="TOP_CENTER" prefWidth="200.0">
+                  <HBox alignment="TOP_CENTER" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Button layoutX="310.0" layoutY="15.0" mnemonicParsing="false" onAction="#importKanjiButtonAction" prefWidth="100.0" text="Import Kanji...">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#importOrderButtonAction" prefWidth="100.0" text="Change Order..." />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefWidth="200.0" spacing="5.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#saveButtonAction" prefWidth="60.0" text="Save">
                            <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#resetButtonAction" prefWidth="60.0" text="Reset">
                            <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button layoutX="310.0" layoutY="15.0" mnemonicParsing="false" onAction="#importButtonAction" prefWidth="60.0" text="Import...">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </HBox.margin>
                         </Button>
                      </children>
