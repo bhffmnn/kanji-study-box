@@ -73,6 +73,8 @@ public class EditVocableDictionaryController implements Initializable {
         meanClmn = createColumn("Meaning", "meaning");
         exmplClmn = createColumn("Example", "example");
 
+        dictTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         dictTable.getColumns().add(formClmn);
         dictTable.getColumns().add(readClmn);
         dictTable.getColumns().add(meanClmn);
@@ -139,12 +141,25 @@ public class EditVocableDictionaryController implements Initializable {
 
     @FXML
     void deleteButtonAction(ActionEvent actionEvent) throws Exception {
-        if (!dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
+        //If nothing selected
+        if (dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
+            return;
+        }
+        //If 1 row selected
+        if (dictTable.getSelectionModel().getSelectedCells().size() == 1) {
             TablePosition position = (TablePosition) dictTable.getSelectionModel().getSelectedCells().get(0);
             Vocable vocable = (Vocable) dictTable.getItems().get(position.getRow());
             cloneDictionary.remove(vocable);
-            reloadTable();
         }
+        //If multiple rows selected
+        else {
+            for (int i = 0; i < dictTable.getSelectionModel().getSelectedCells().size(); i++) {
+                TablePosition position = (TablePosition) dictTable.getSelectionModel().getSelectedCells().get(i);
+                Vocable vocable = (Vocable) dictTable.getItems().get(position.getRow());
+                cloneDictionary.remove(vocable);
+            }
+        }
+        reloadTable();
     }
 
     @FXML

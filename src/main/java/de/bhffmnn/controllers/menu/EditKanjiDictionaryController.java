@@ -285,13 +285,26 @@ public class EditKanjiDictionaryController implements Initializable {
 
     @FXML
     void deleteButtonAction(ActionEvent actionEvent) throws Exception {
-        if (!dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
+        //If nothing selected
+        if (dictTable.getSelectionModel().getSelectedCells().isEmpty()) {
+            return;
+        }
+        //If 1 row selected
+        if (dictTable.getSelectionModel().getSelectedCells().size() == 1) {
             TablePosition position = (TablePosition) dictTable.getSelectionModel().getSelectedCells().get(0);
             KanjiMenuItem kmi = (KanjiMenuItem) dictTable.getItems().get(position.getRow());
             kanjiMenuItems.remove(kmi);
             reloadTable();
         }
-
+        //If multiple rows selected
+        else {
+            for (int i = 0; i < dictTable.getSelectionModel().getSelectedCells().size(); i++) {
+                TablePosition position = (TablePosition) dictTable.getSelectionModel().getSelectedCells().get(i);
+                KanjiMenuItem kmi = (KanjiMenuItem) dictTable.getItems().get(position.getRow());
+                kanjiMenuItems.remove(kmi);
+            }
+            reloadTable();
+        }
     }
     @FXML
     private void saveButtonAction(ActionEvent actionEvent) throws Exception {
