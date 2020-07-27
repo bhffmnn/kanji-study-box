@@ -212,7 +212,10 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         return startedKanji;
     }
 
-    //TODO: addAll?
+    @Override
+    public boolean addAll(Collection<? extends Kanji> c) {
+        return dictionary.addAll(c);
+    }
 
     /**
      * Saves the dictionary to a specified file path
