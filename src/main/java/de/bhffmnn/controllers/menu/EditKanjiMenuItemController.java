@@ -11,10 +11,7 @@ package de.bhffmnn.controllers.menu;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import de.bhffmnn.controllers.menu.EditKanjiDictionaryController.*;
 
@@ -97,7 +94,9 @@ public class EditKanjiMenuItemController implements Initializable {
             }
         }
         if (characterExists) {
-            //TODO: Alert
+            Alert numberAlert = new Alert(Alert.AlertType.INFORMATION, "A kanji with this character already exists.");
+            numberAlert.setHeaderText("");
+            numberAlert.show();
         }
         else {
             kanjiMenuItemList.changeIndexOf(kanjiMenuItem, indexSpinner.getValue());

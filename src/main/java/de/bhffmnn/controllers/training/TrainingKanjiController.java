@@ -224,11 +224,15 @@ public class TrainingKanjiController implements Initializable {
                 checkCircle.setFill(Color.GREEN);
             }
             else {
-                //TODO: Sth that says number is not in range
+                Alert rangeAlert = new Alert(Alert.AlertType.ERROR, "Level out of range.");
+                rangeAlert.setHeaderText("");
+                rangeAlert.show();
             }
         }
         catch (NumberFormatException nfe) {
-        //TODO: Sth that says it's not a valid number
+            Alert numberAlert = new Alert(Alert.AlertType.ERROR, "Not a valid level number.");
+            numberAlert.setHeaderText("");
+            numberAlert.show();
     }
     }
     @FXML

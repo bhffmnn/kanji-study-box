@@ -14,6 +14,7 @@ import de.bhffmnn.controllers.menu.EditKanjiDictionaryController.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -58,7 +59,9 @@ public class AddKanjiMenuItemController implements Initializable {
             ((Stage) charField.getScene().getWindow()).close();
         }
         else {
-            //TODO: Alert
+            Alert numberAlert = new Alert(Alert.AlertType.INFORMATION, "A kanji with this character already exists.");
+            numberAlert.setHeaderText("");
+            numberAlert.show();
         }
     }
 }
