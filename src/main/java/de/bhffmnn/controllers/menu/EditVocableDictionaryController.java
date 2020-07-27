@@ -163,6 +163,22 @@ public class EditVocableDictionaryController implements Initializable {
     }
 
     @FXML
+    void importButtonAction(ActionEvent actionEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/importVocabulary.fxml"));
+
+        ImportVocabularyController controller = new ImportVocabularyController(cloneDictionary);
+        loader.setController(controller);
+
+        Stage childStage = new Stage();
+        childStage.initModality(Modality.WINDOW_MODAL);
+        childStage.initOwner(dictTable.getScene().getWindow());
+        childStage.setScene(new Scene((loader.load())));
+        childStage.showAndWait();
+
+        reloadTable();
+    }
+
+    @FXML
     private void saveButtonAction(ActionEvent actionEvent) throws Exception {
         App.vocableDictionary = cloneDictionary.cloneDeep();
         App.vocableDictionary.save(App.settings.getVocableDictionaryFilePath());
