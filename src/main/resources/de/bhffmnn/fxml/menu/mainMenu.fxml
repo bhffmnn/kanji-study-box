@@ -29,6 +29,7 @@
                         <Button mnemonicParsing="false" onAction="#kanjiDictionaryAction" prefWidth="150.0" text="Kanji dictionary..." />
                         <Button layoutX="10.0" layoutY="130.0" mnemonicParsing="false" onAction="#vocDictionaryAction" prefWidth="150.0" text="Vocabulary..." />
                         <Button mnemonicParsing="false" onAction="#settingsButtonAction" prefWidth="150.0" text="Settings" />
+                        <Button layoutX="235.0" layoutY="160.0" mnemonicParsing="false" onAction="#aboutButtonAction" prefWidth="150.0" text="About" />
                      </children>
                      <opaqueInsets>
                         <Insets />

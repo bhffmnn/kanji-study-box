@@ -60,8 +60,12 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    private void learnNewVocabularyButtonAction(ActionEvent actionEvent) throws Exception {
-        loadNewSceneStatic(actionEvent,"selectors/startNewVocab.fxml");
+    private void aboutButtonAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/menu/about.fxml"));
+
+        Stage childStage = new Stage();
+        childStage.setScene(new Scene((loader.load())));
+        childStage.show();
     }
 
 
