@@ -143,13 +143,13 @@ public class SettingsController implements Initializable {
         Optional<ButtonType> result = dictionaryDialogue.showAndWait();
         if (result.get() == loadButton) {
             FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showOpenDialog(kanjiPathLabel.getScene().getWindow());
+            File file = fileChooser.showOpenDialog(vocPathLabel.getScene().getWindow());
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary(file.getAbsolutePath());
                 App.vocableDictionary = newVocableDictionary;
                 App.settings.setVocableDictionaryFilePath(file.getAbsolutePath());
                 App.settings.save();
-                kanjiPathLabel.setText(file.getAbsolutePath());
+                vocPathLabel.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
                 Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
@@ -162,7 +162,7 @@ public class SettingsController implements Initializable {
             fileChooser.setInitialFileName("kanji_dictionary.csv");
             fileChooser.getExtensionFilters().add(
                     new FileChooser.ExtensionFilter("CSV files", "*.csv"));
-            File file = fileChooser.showSaveDialog(kanjiPathLabel.getScene().getWindow());
+            File file = fileChooser.showSaveDialog(vocPathLabel.getScene().getWindow());
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary();
                 newVocableDictionary.save(file.getAbsolutePath());
