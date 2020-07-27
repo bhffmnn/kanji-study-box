@@ -15,7 +15,7 @@ import java.time.LocalDate;
  */
 
 public class Kanji {
-    private String character;
+    private char character;
     private String onReading;
     private String kunReading;
     private String meaning;
@@ -29,7 +29,7 @@ public class Kanji {
     private LocalDate readingDue;
     private LocalDate meaningDue;
 
-    public Kanji(String character, String onReading, String kunReading, String meaning,
+    public Kanji(char character, String onReading, String kunReading, String meaning,
                  String mnemonic) {
         this.character = character;
         this.onReading = onReading;
@@ -44,7 +44,7 @@ public class Kanji {
         this.meaningDue = LocalDate.now().plusYears(100);
     }
 
-    public Kanji(String character, String onReading, String kunReading, String meaning,
+    public Kanji(char character, String onReading, String kunReading, String meaning,
                  String mnemonic, Integer characterLevel, LocalDate characterDue,
                  Integer readingLevel, LocalDate readingDue, Integer meaningLevel, LocalDate meaningDue) {
         this.character = character;
@@ -60,7 +60,7 @@ public class Kanji {
         this.meaningDue = meaningDue;
     }
 
-    public void setCharacter(String character) {
+    public void setCharacter(char character) {
         this.character = character;
     }
 
@@ -250,7 +250,7 @@ public class Kanji {
         return characterLevel;
     }
 
-    public String getCharacter() {
+    public char getCharacter() {
         return character;
     }
 

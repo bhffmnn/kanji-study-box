@@ -132,7 +132,7 @@ public class ChangeKanjiOrderController implements Initializable {
                 KanjiDictionary importDictionary = new KanjiDictionary(dictFile.getAbsolutePath());
                 int index = 0;
                 for (Kanji k : importDictionary) {
-                    kanjiMenuItemList.changeIndexOf(kanjiMenuItemList.getByCharacter(k.getCharacter().charAt(0)), index);
+                    kanjiMenuItemList.changeIndexOf(kanjiMenuItemList.getByCharacter(k.getCharacter()), index);
                 }
                 ((Stage) fileTypeBox.getScene().getWindow()).close();
             }

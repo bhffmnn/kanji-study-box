@@ -106,10 +106,10 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
      * @param character Character with shall be contained in the vocables
      * @return VocableDictionary with vocables containing the specified character
      */
-    public VocableDictionary getByCharacter(String character) { //TODO: This is a String, not a character
+    public VocableDictionary getByCharacter(char character) {
         VocableDictionary vocableDictionary = new VocableDictionary();
         for (Vocable vocable : this.dictionary) {
-            if (vocable.getForm().contains(character)) {
+            if (vocable.getForm().indexOf(character) != -1) {
                 vocableDictionary.add(vocable);
             }
         }

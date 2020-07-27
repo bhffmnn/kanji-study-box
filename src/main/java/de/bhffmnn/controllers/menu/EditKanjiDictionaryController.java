@@ -314,7 +314,7 @@ public class EditKanjiDictionaryController implements Initializable {
         if (charFilterField.isDisabled()) {
             kanjiFilter.setCharFilter(null);
         } else {
-            kanjiFilter.setCharFilter(charFilterField.getText());
+            kanjiFilter.setCharFilter(charFilterField.getText().charAt(0));
         }
 
         if (onFilterField.isDisabled()) {
@@ -402,7 +402,7 @@ public class EditKanjiDictionaryController implements Initializable {
     }
 
     private class KanjiFilter {
-        private String charFilter;
+        private Character charFilter;
         private String onFilter;
         private String kunFilter;
         private String meanFilter;
@@ -414,12 +414,13 @@ public class EditKanjiDictionaryController implements Initializable {
         private LocalDate meanDueFilter;
 
         private KanjiFilter() {
-            charFilter = onFilter = kunFilter = meanFilter = null;
+            charFilter = null;
+            onFilter = kunFilter = meanFilter = null;
             charLvlFilter = readLvlFilter = meanLvlFilter = null;
             charDueFilter = readDueFilter = meanDueFilter = null;
         }
 
-        public String getCharFilter() {
+        public Character getCharFilter() {
             return charFilter;
         }
         public String getKunFilter() {
@@ -452,7 +453,7 @@ public class EditKanjiDictionaryController implements Initializable {
             return readDueFilter;
         }
 
-        public void setCharFilter(String charFilter) {
+        public void setCharFilter(Character charFilter) {
             this.charFilter = charFilter;
         }
         public void setKunFilter(String kunFilter) {
@@ -492,7 +493,7 @@ public class EditKanjiDictionaryController implements Initializable {
             }
             if (!(charFilter == null)) {
                 for (KanjiMenuItem kmi : kanjiMenuItems) {
-                    if (!kmi.getCharacter().equals(charFilter)) {
+                    if (!charFilter.equals(kmi.getCharacter())) {
                         filteredIndexes.remove(Integer.valueOf(kanjiMenuItems.indexOf(kmi)));
                     }
                 }
@@ -591,9 +592,9 @@ public class EditKanjiDictionaryController implements Initializable {
             return kanjiMenuItems.remove(o);
         }
 
-        public KanjiMenuItem getByCharacter(char character) {
+        public KanjiMenuItem getByCharacter(Character character) {
             for (KanjiMenuItem kmi : kanjiMenuItems) {
-                if (kmi.getCharacter().charAt(0) == character) {
+                if (character.equals(kmi.getCharacter())) {
                     return kmi;
                 }
             }
@@ -670,7 +671,7 @@ public class EditKanjiDictionaryController implements Initializable {
 
         public boolean addNewItem(Kanji kanji) {
             for (KanjiMenuItem kmi : kanjiMenuItems) {
-                if (kmi.getCharacter().equals(kanji.getCharacter())) {
+                if (kmi.getCharacter() == kanji.getCharacter()) {
                     return false;
                 }
             }
@@ -680,7 +681,7 @@ public class EditKanjiDictionaryController implements Initializable {
 
         public boolean removeByKanji(Kanji kanji) {
             for (KanjiMenuItem kmi : kanjiMenuItems) {
-                if (kmi.getCharacter().equals(kanji.getCharacter())) {
+                if (kmi.getCharacter() == kanji.getCharacter()) {
                     this.remove(kmi);
                     return true;
                 }

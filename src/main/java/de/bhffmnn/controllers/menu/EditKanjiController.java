@@ -60,7 +60,7 @@ public class EditKanjiController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        charField.setText(kanji.getCharacter());
+        charField.setText(String.valueOf(kanji.getCharacter()));
         onField.setText(kanji.getOnReading());
         kunField.setText(kanji.getKunReading());
         meanField.setText(kanji.getMeaning());
@@ -80,7 +80,7 @@ public class EditKanjiController implements Initializable {
 
     @FXML
     private void saveButtonAction(ActionEvent actionEvent) {
-        kanji.setCharacter(charField.getText());
+        kanji.setCharacter(charField.getText().charAt(0));
         kanji.setOnReading(onField.getText());
         kanji.setKunReading(kunField.getText());
         kanji.setMeaning(meanField.getText());

@@ -23,7 +23,7 @@ import java.io.InputStream;
 
 public class KanjiTooltipBuilder {
     public static Tooltip kanjiTooltip(Kanji kanji) {
-        Label strokeChar = new Label(kanji.getCharacter());
+        Label strokeChar = new Label(String.valueOf(kanji.getCharacter()));
         try {
             InputStream fontStream = App.class.getResourceAsStream("fonts/KanjiStrokeOrders.ttf");
             if (fontStream != null) {
@@ -45,7 +45,7 @@ public class KanjiTooltipBuilder {
         featureGrid.add(new Label("kun-Reading:"), 0, 2);
         featureGrid.add(new Label("Meaning:"), 0, 3);
         featureGrid.add(new Label("Level:"), 0, 4);
-        featureGrid.add(new Label(kanji.getCharacter()), 1,0);
+        featureGrid.add(new Label(String.valueOf(kanji.getCharacter())), 1,0);
         featureGrid.add(new Label(kanji.getOnReading()),  1,1);
         featureGrid.add(new Label(kanji.getKunReading()),1, 2);
         featureGrid.add(new Label(kanji.getMeaning()), 1, 3);

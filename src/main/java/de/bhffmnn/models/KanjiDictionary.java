@@ -31,7 +31,7 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
             String row;
             while ((row = csvReader.readLine()) != null) {
                 String[] fields = row.split("\t");
-                if (!add(new Kanji(fields[0], fields[1], fields[2], fields[3],
+                if (!add(new Kanji(fields[0].charAt(0), fields[1], fields[2], fields[3],
                         fields[4], Integer.parseInt(fields[5]), LocalDate.parse(fields[6]),
                         Integer.parseInt(fields[7]), LocalDate.parse(fields[8]), Integer.parseInt(fields[9]), LocalDate.parse(fields[10])))) {
                     System.out.print("Duplicate kanji: " + fields);
@@ -82,7 +82,7 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
         String row;
         while ((row = csvReader.readLine()) != null) {
             String[] fields = row.split("\t");
-            if (!dictionary.add(new Kanji(fields[0], fields[1], fields[2], fields[3],
+            if (!dictionary.add(new Kanji(fields[0].charAt(0), fields[1], fields[2], fields[3],
                     fields[4], Integer.parseInt(fields[5]), LocalDate.parse(fields[6]),
                     Integer.parseInt(fields[7]), LocalDate.parse(fields[8]), Integer.parseInt(fields[9]), LocalDate.parse(fields[10])))) {
                 System.out.print("Duplicate kanji: " + fields);
@@ -197,9 +197,9 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
      * @param character Character of the kanji
      * @return Kanji object with the specified character
      */
-    public Kanji getKanjiByCharacter(String character) {
+    public Kanji getKanjiByCharacter(char character) {
         for (Kanji kanji : dictionary) {
-            if (kanji.getCharacter().equals(character))
+            if (kanji.getCharacter() == character)
                 return kanji;
         }
         return null;
@@ -242,7 +242,7 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
     @Override
     public boolean add(Kanji kanji) {
         for (Kanji k : dictionary) {
-            if (k.getCharacter().equals(kanji.getCharacter())) {
+            if (k.getCharacter() == kanji.getCharacter()) {
                 return false;
             }
         }

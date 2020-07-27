@@ -108,7 +108,7 @@ public class ImportKanjiController implements Initializable {
                     ArrayList<Kanji> removalList = new ArrayList<>();
                     for (char c : specifiedChars) {
                         for (Kanji k : importDictionary) {
-                            if (k.getCharacter().charAt(0) != c) {
+                            if (k.getCharacter() != c) {
                                 removalList.add(k);
                             }
                         }

@@ -67,7 +67,7 @@ public class EditKanjiMenuItemController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        charField.setText(kanjiMenuItem.getCharacter());
+        charField.setText(String.valueOf(kanjiMenuItem.getCharacter()));
         onField.setText(kanjiMenuItem.getOnReading());
         kunField.setText(kanjiMenuItem.getKunReading());
         meanField.setText(kanjiMenuItem.getMeaning());
@@ -91,8 +91,8 @@ public class EditKanjiMenuItemController implements Initializable {
     private void saveButtonAction(ActionEvent actionEvent) {
         boolean characterExists = false;
         for (KanjiMenuItem kmi : kanjiMenuItemList) {
-            if (!kanjiMenuItem.getCharacter().equals(charField.getText()) //If character has been changed
-                    && kmi.getCharacter().equals(charField.getText())) { //But already exists
+            if (!(kanjiMenuItem.getCharacter() == charField.getText().charAt(0)) //If character has been changed
+                    && kmi.getCharacter() == charField.getText().charAt(0)) { //But already exists
                 characterExists = true;
             }
         }
@@ -101,7 +101,7 @@ public class EditKanjiMenuItemController implements Initializable {
         }
         else {
             kanjiMenuItemList.changeIndexOf(kanjiMenuItem, indexSpinner.getValue());
-            kanjiMenuItem.setCharacter(charField.getText());
+            kanjiMenuItem.setCharacter(charField.getText().charAt(0));
             kanjiMenuItem.setOnReading(onField.getText());
             kanjiMenuItem.setKunReading(kunField.getText());
             kanjiMenuItem.setMeaning(meanField.getText());

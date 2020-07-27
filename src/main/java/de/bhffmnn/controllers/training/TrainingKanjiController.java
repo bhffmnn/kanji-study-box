@@ -381,7 +381,7 @@ public class TrainingKanjiController implements Initializable {
             vocabBox.getChildren().add(vocableLabel);
         }
 
-        character.setText(currentKanji.getCharacter());
+        character.setText(String.valueOf(currentKanji.getCharacter()));
         character.setTooltip(KanjiTooltipBuilder.kanjiTooltip(currentKanji));
 
         on.setText(currentKanji.getOnReading());

@@ -51,7 +51,7 @@ public class AddKanjiController implements Initializable {
 
     @FXML
     private void addButtonAction(ActionEvent actionEvent) {
-        Kanji kanji = new Kanji(charField.getText(), onField.getText(), kunField.getText(), meanField.getText(),
+        Kanji kanji = new Kanji(charField.getText().charAt(0), onField.getText(), kunField.getText(), meanField.getText(),
                                 mnemField.getText());
         if(!kanjiDictionary.add(kanji)) {
             System.out.println("Did not work.");

@@ -78,7 +78,7 @@ public class KanjidicKanji {
     }
 
     public Kanji toKanji() {
-        return new Kanji(String.valueOf(this.character), arrayToString(this.onReading, "、"), arrayToString(this.kunReading, "、"),
+        return new Kanji(this.character, arrayToString(this.onReading, "、"), arrayToString(this.kunReading, "、"),
                          arrayToString(this.meaning, ", "), "");
     }
 

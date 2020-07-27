@@ -278,7 +278,7 @@ public class LearningKanjiController implements Initializable {
     private void loadFeatures(int index) {
         Kanji currentKanji = studyKanji.getByIndex(index);
 
-        character.setText(currentKanji.getCharacter());
+        character.setText(String.valueOf(currentKanji.getCharacter()));
         character.setTooltip(KanjiTooltipBuilder.kanjiTooltip(currentKanji));
 
         on.setText(currentKanji.getOnReading());
