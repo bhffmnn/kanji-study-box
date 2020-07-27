@@ -71,8 +71,12 @@ public class SettingsController implements Initializable {
                 cancelButton);
         dictionaryDialogue.setTitle("Kanji Dictionary File Options");
         Optional<ButtonType> result = dictionaryDialogue.showAndWait();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("KSB kanji dictionary files", "*.ksbk"));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("All files", "*"));
         if (result.get() == loadButton) {
-            FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(kanjiPathLabel.getScene().getWindow());
             try {
                 KanjiDictionary newKanjiDictionary = new KanjiDictionary(file.getAbsolutePath());
@@ -88,10 +92,7 @@ public class SettingsController implements Initializable {
             }
         }
         else if (result.get() == createButton) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName("kanji_dictionary.csv");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("CSV files", "*.csv"));
+            fileChooser.setInitialFileName("kanji_dictionary.ksbk");
             File file = fileChooser.showSaveDialog(kanjiPathLabel.getScene().getWindow());
             try {
                 KanjiDictionary newKanjiDictionary = new KanjiDictionary();
@@ -108,10 +109,7 @@ public class SettingsController implements Initializable {
             }
         }
         else if (result.get() == backupButton) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName("kanji_dictionary.csv");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("CSV files", "*.csv"));
+            fileChooser.setInitialFileName("kanji_dictionary.ksbk");
             File file = fileChooser.showSaveDialog(kanjiPathLabel.getScene().getWindow());
             try {
                 App.kanjiDictionary.save(file.getAbsolutePath());
@@ -141,8 +139,12 @@ public class SettingsController implements Initializable {
                 cancelButton);
         dictionaryDialogue.setTitle("Vocable Dictionary File Path Options");
         Optional<ButtonType> result = dictionaryDialogue.showAndWait();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("KSB vocabulary dictionary files", "*.ksbv"));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("All files", "*"));
         if (result.get() == loadButton) {
-            FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(vocPathLabel.getScene().getWindow());
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary(file.getAbsolutePath());
@@ -158,10 +160,7 @@ public class SettingsController implements Initializable {
             }
         }
         else if (result.get() == createButton) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName("kanji_dictionary.csv");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("CSV files", "*.csv"));
+            fileChooser.setInitialFileName("kanji_dictionary.ksbv");
             File file = fileChooser.showSaveDialog(vocPathLabel.getScene().getWindow());
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary();
@@ -177,10 +176,7 @@ public class SettingsController implements Initializable {
             }
         }
         else if (result.get() == backupButton) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName("voc_dictionary.csv");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("CSV files", "*.csv"));
+            fileChooser.setInitialFileName("voc_dictionary.ksbv");
             File file = fileChooser.showSaveDialog(vocPathLabel.getScene().getWindow());
             try {
                 App.vocableDictionary.save(file.getAbsolutePath());

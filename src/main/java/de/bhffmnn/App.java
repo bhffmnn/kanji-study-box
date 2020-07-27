@@ -81,8 +81,12 @@ public class App extends Application {
                     quitButton);
             dictionaryDialogue.setTitle("Loading / Creating Kanji Dictionary");
             Optional<ButtonType> result = dictionaryDialogue.showAndWait();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("KSB kanji dictionary files", "*.ksbk"));
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("All files", "*"));
             if (result.get() == loadButton) {
-                FileChooser fileChooser = new FileChooser();
                 File file = fileChooser.showOpenDialog(stage);
                 try {
                     settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
@@ -97,11 +101,7 @@ public class App extends Application {
                 }
             }
             else if (result.get() == createButton) {
-                //TODO
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setInitialFileName("kanji_dictionary.csv");
-                fileChooser.getExtensionFilters().add(
-                        new FileChooser.ExtensionFilter("CSV files", "*.csv"));
+                fileChooser.setInitialFileName("kanji_dictionary.ksbk");
                 File file = fileChooser.showSaveDialog(stage);
                 try {
                     kanjiDictionary = new KanjiDictionary();
@@ -134,8 +134,12 @@ public class App extends Application {
                     quitButton);
             dictionaryDialogue.setTitle("Loading / Creating Vocabulary Dictionary");
             Optional<ButtonType> result = dictionaryDialogue.showAndWait();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("KSB vocabulary dictionary files", "*.ksbv"));
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("All files", "*"));
             if (result.get() == loadButton) {
-                FileChooser fileChooser = new FileChooser();
                 File file = fileChooser.showOpenDialog(stage);
                 try {
                     settings.setVocableDictionaryFilePath(file.getAbsolutePath());
@@ -150,10 +154,7 @@ public class App extends Application {
                 }
             }
             else if (result.get() == createButton) {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setInitialFileName("vocable_dictionary.csv");
-                fileChooser.getExtensionFilters().add(
-                        new FileChooser.ExtensionFilter("CSV files", "*.csv"));
+                fileChooser.setInitialFileName("vocable_dictionary.ksbv");
                 File file = fileChooser.showSaveDialog(stage);
                 try {
                     vocableDictionary = new VocableDictionary();

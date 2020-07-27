@@ -85,6 +85,10 @@ public class ImportKanjiController implements Initializable {
     @FXML
     public void chooseFileButtonAction() {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("KSB kanji dictionary files", "*.ksbk"));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("All files", "*"));
         dictFile = fileChooser.showOpenDialog(fileTypeBox.getScene().getWindow());
         if (dictFile != null) {
             pathField.setText(dictFile.getAbsolutePath());

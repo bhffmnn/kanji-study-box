@@ -57,6 +57,10 @@ public class ImportVocabularyController implements Initializable {
     @FXML
     public void chooseFileButtonAction() {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("KSB vocabulary dictionary files", "*.ksbv"));
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("All files", "*"));
         dictFile = fileChooser.showOpenDialog(pathField.getScene().getWindow());
         if (dictFile != null) {
             pathField.setText(dictFile.getAbsolutePath());
