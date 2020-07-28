@@ -125,15 +125,13 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
      * @throws IOException
      */
     public void save(String filePath) throws IOException {
-        PrintWriter dictWriter = new PrintWriter(new FileOutputStream(filePath, false));
-        StringBuilder dictStringBuilder = new StringBuilder();
-        dictStringBuilder.append("form\treading\tmeaning\texample\tlevel\tdue\n");
+        OutputStream outputStream = new FileOutputStream(filePath);
+        BufferedWriter dictWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
+        dictWriter.write("form\treading\tmeaning\texample\tlevel\tdue\n");
         for (Vocable vocable : dictionary) {
-            dictStringBuilder.append(vocable.toString() + "\n");
+            dictWriter.write(vocable.toString() + "\n");
         }
-        String dictString = dictStringBuilder.toString();
-        System.out.println(dictString);
-        dictWriter.print(dictString);
+        dictWriter.flush();
         dictWriter.close();
     }
 

@@ -36,7 +36,7 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
                 if (!add(new Kanji(fields[0].charAt(0), fields[1], fields[2], fields[3],
                         fields[4], Integer.parseInt(fields[5]), LocalDate.parse(fields[6]),
                         Integer.parseInt(fields[7]), LocalDate.parse(fields[8]), Integer.parseInt(fields[9]), LocalDate.parse(fields[10])))) {
-                    System.out.print("Duplicate kanji: " + fields);
+                    System.out.print("Duplicate kanji: " + fields[0] + ", index: " + this.size());
                 }
             }
             dictReader.close();
@@ -226,16 +226,14 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
      * @throws IOException
      */
     public void save(String filePath) throws IOException {
-        PrintWriter dictWriter = new PrintWriter(new FileOutputStream(filePath, false));
-        StringBuilder dictStringBuilder = new StringBuilder();
-        dictStringBuilder.append("character\ton\tkun\tmeaning\tmnemonic\tcharacterLevel\tcharacterDue\t" +
-                                "readingLevel\treadingDue\tmeaningLevel\tmeaningDue\n");
+        OutputStream outputStream = new FileOutputStream(filePath);
+        BufferedWriter dictWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
+        dictWriter.write("character\ton\tkun\tmeaning\tmnemonic\tcharacterLevel\tcharacterDue\t" +
+                "readingLevel\treadingDue\tmeaningLevel\tmeaningDue\n");
         for (Kanji kanji : dictionary) {
-            dictStringBuilder.append(kanji.toString() + "\n");
+            dictWriter.write(kanji.toString() + "\n");
         }
-        String dictString = dictStringBuilder.toString();
-        System.out.println(dictString);
-        dictWriter.print(dictString);
+        dictWriter.flush();
         dictWriter.close();
     }
 
