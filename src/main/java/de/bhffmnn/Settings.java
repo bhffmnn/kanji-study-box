@@ -9,6 +9,7 @@
 package de.bhffmnn;
 
 import java.io.*;
+import java.util.prefs.Preferences;
 
 
 /**
@@ -16,6 +17,7 @@ import java.io.*;
  */
 
 public class Settings {
+    private Preferences preferences;
     private String kanjiDictionaryFilePath; //loaded from settings
     private String vocableDictionaryFilePath;
     private String[][] studyDirectionsKanji; //currently hard coded
@@ -29,28 +31,9 @@ public class Settings {
         String[] answersFormVocab = {"form", "example", "level", "due"};
         String[] answersReadingVocab = {"reading", "example", "meaning", "level", "due"};
 
-        kanjiDictionaryFilePath = "";
-        vocableDictionaryFilePath = "";
+        preferences = Preferences.userRoot().node(Settings.class.getName());
         studyDirectionsKanji = new String[][]{answersCharacter, answersReadingKanji, answersMeaningKanji};
         studyDirectionsVocab = new String[][]{answersFormVocab, answersReadingVocab};
-    }
-
-    /**
-     * Loads the settings from the settings file.
-     * @return A settings object generated from the setinngs file or null if no settings file exist.
-     */
-    static Settings loadSettings() {
-        Settings settings = new Settings();
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("settings"));
-            settings.kanjiDictionaryFilePath = bufferedReader.readLine();
-            settings.vocableDictionaryFilePath = bufferedReader.readLine();
-        }
-        catch(Exception e) {
-            System.out.println(e);
-            return null;
-        }
-        return settings;
     }
 
     /**
@@ -65,12 +48,12 @@ public class Settings {
 
 
     public void setKanjiDictionaryFilePath(String filePath) {
-        kanjiDictionaryFilePath = filePath;
+        preferences.put("kanjiDictionaryFilePath", filePath);
     }
 
 
-    public void setVocableDictionaryFilePath(String vocableDictionaryFilePath) {
-        this.vocableDictionaryFilePath = vocableDictionaryFilePath;
+    public void setVocableDictionaryFilePath(String filePath) {
+        preferences.put("vocableDictionaryFilePath", filePath);
     }
 
     public String[][] getStudyDirectionsKanji() {
@@ -82,10 +65,10 @@ public class Settings {
     }
 
     public String getKanjiDictionaryFilePath() {
-        return kanjiDictionaryFilePath;
+        return preferences.get("kanjiDictionaryFilePath", "");
     }
 
     public String getVocableDictionaryFilePath() {
-        return vocableDictionaryFilePath;
+        return preferences.get("vocableDictionaryFilePath", "");
     }
 }

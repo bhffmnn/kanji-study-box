@@ -52,10 +52,7 @@ public class App extends Application {
      */
     @Override
     public void init() throws Exception {
-        settings = Settings.loadSettings();
-        if (settings == null) {
-            settings = new Settings();
-        }
+        settings = new Settings();
     }
 
     /**
