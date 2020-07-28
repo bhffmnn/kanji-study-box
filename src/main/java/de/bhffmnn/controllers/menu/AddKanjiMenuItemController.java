@@ -51,17 +51,26 @@ public class AddKanjiMenuItemController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
+
     @FXML
     private void addButtonAction(ActionEvent actionEvent) {
-        Kanji kanji = new Kanji(charField.getText().charAt(0), onField.getText(), kunField.getText(), meanField.getText(),
-                                mnemField.getText());
-        if(kanjiMenuItemList.addNewItem(kanji)) {
-            ((Stage) charField.getScene().getWindow()).close();
+        if (charField.getText().length() == 0) {
+            Kanji kanji = new Kanji(charField.getText().charAt(0), onField.getText(), kunField.getText(), meanField.getText(),
+                    mnemField.getText());
+            if (kanjiMenuItemList.addNewItem(kanji)) {
+                ((Stage) charField.getScene().getWindow()).close();
+            } else {
+                Alert numberAlert = new Alert(Alert.AlertType.INFORMATION, "A kanji with this character already exists.");
+                numberAlert.setHeaderText("");
+                numberAlert.show();
+            }
         }
         else {
-            Alert numberAlert = new Alert(Alert.AlertType.INFORMATION, "A kanji with this character already exists.");
-            numberAlert.setHeaderText("");
-            numberAlert.show();
+            Alert charAlert = new Alert(Alert.AlertType.INFORMATION,
+                    "You have either entered more than one character or a character outside of unicode's Basic" +
+                            " Multilingual Plane.");
+            charAlert.setHeaderText("");
+            charAlert.show();
         }
     }
 }

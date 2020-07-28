@@ -43,17 +43,20 @@ public class KandicReader {
         while (eventReader.hasNext()) {
             XMLEvent event = eventReader.nextEvent();
             if (event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("character")) {
-                dictNumbers.put(DictionaryType.DEFAULT, kanjList.size());
-                KanjidicKanji kanji = new KanjidicKanji(character.charAt(0), onReading,
-                        kunReading, meaning, jlpt, dictNumbers);
-                kanjList.add(kanji);
-
+                //This skips characters that are not in unicode's BMP. Java's char does not support those characters
+                if (character.length() == 1) {
+                    dictNumbers.put(DictionaryType.DEFAULT, kanjList.size());
+                    KanjidicKanji kanji = new KanjidicKanji(character.charAt(0), onReading,
+                            kunReading, meaning, jlpt, dictNumbers);
+                    kanjList.add(kanji);
+                }
                 onReading = new ArrayList<>();
                 kunReading = new ArrayList<>();
                 meaning = new ArrayList<>();
                 dictNumbers = new HashMap<>();
 
                 jlpt = 0;
+
             }
 
             else if (event.isStartElement()) {

@@ -86,35 +86,43 @@ public class EditKanjiMenuItemController implements Initializable {
 
     @FXML
     private void saveButtonAction(ActionEvent actionEvent) {
-        boolean characterExists = false;
-        for (KanjiMenuItem kmi : kanjiMenuItemList) {
-            if (!(kanjiMenuItem.getCharacter() == charField.getText().charAt(0)) //If character has been changed
-                    && kmi.getCharacter() == charField.getText().charAt(0)) { //But already exists
-                characterExists = true;
+        if (charField.getText().length() == 0) {
+            boolean characterExists = false;
+            for (KanjiMenuItem kmi : kanjiMenuItemList) {
+                if (!(kanjiMenuItem.getCharacter() == charField.getText().charAt(0)) //If character has been changed
+                        && kmi.getCharacter() == charField.getText().charAt(0)) { //But already exists
+                    characterExists = true;
+                }
+            }
+            if (characterExists) {
+                Alert numberAlert = new Alert(Alert.AlertType.INFORMATION, "A kanji with this character already exists.");
+                numberAlert.setHeaderText("");
+                numberAlert.show();
+            } else {
+                kanjiMenuItemList.changeIndexOf(kanjiMenuItem, indexSpinner.getValue());
+                kanjiMenuItem.setCharacter(charField.getText().charAt(0));
+                kanjiMenuItem.setOnReading(onField.getText());
+                kanjiMenuItem.setKunReading(kunField.getText());
+                kanjiMenuItem.setMeaning(meanField.getText());
+                kanjiMenuItem.setMnemonic(mnemField.getText());
+
+                kanjiMenuItem.setCharacterLevel(charLvlSpinner.getValue());
+                kanjiMenuItem.setReadingLevel(readLvlSpinner.getValue());
+                kanjiMenuItem.setMeaningLevel(meanLvlSpinner.getValue());
+
+                kanjiMenuItem.setCharacterDue(charDP.getValue());
+                kanjiMenuItem.setReadingDue(readDP.getValue());
+                kanjiMenuItem.setMeaningDue(meanDP.getValue());
+
+                ((Stage) charField.getScene().getWindow()).close();
             }
         }
-        if (characterExists) {
-            Alert numberAlert = new Alert(Alert.AlertType.INFORMATION, "A kanji with this character already exists.");
-            numberAlert.setHeaderText("");
-            numberAlert.show();
-        }
         else {
-            kanjiMenuItemList.changeIndexOf(kanjiMenuItem, indexSpinner.getValue());
-            kanjiMenuItem.setCharacter(charField.getText().charAt(0));
-            kanjiMenuItem.setOnReading(onField.getText());
-            kanjiMenuItem.setKunReading(kunField.getText());
-            kanjiMenuItem.setMeaning(meanField.getText());
-            kanjiMenuItem.setMnemonic(mnemField.getText());
-
-            kanjiMenuItem.setCharacterLevel(charLvlSpinner.getValue());
-            kanjiMenuItem.setReadingLevel(readLvlSpinner.getValue());
-            kanjiMenuItem.setMeaningLevel(meanLvlSpinner.getValue());
-
-            kanjiMenuItem.setCharacterDue(charDP.getValue());
-            kanjiMenuItem.setReadingDue(readDP.getValue());
-            kanjiMenuItem.setMeaningDue(meanDP.getValue());
-
-            ((Stage) charField.getScene().getWindow()).close();
+            Alert charAlert = new Alert(Alert.AlertType.INFORMATION,
+                    "You have either entered more than one character or a character outside of unicode's Basic" +
+                            " Multilingual Plane.");
+            charAlert.setHeaderText("");
+            charAlert.show();
         }
     }
 }
