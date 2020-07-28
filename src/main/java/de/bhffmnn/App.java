@@ -86,12 +86,11 @@ public class App extends Application {
             if (result.get() == loadButton) {
                 File file = fileChooser.showOpenDialog(stage);
                 try {
-                    settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
-                    settings.save();
                     kanjiDictionary = new KanjiDictionary(settings.getKanjiDictionaryFilePath());
+                    settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
                 }
                 catch (IOException eTwo) {
-                    Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                    Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
                     failAlert.show();
                     System.out.println(eTwo.getMessage());
                     System.exit(0);
@@ -104,10 +103,9 @@ public class App extends Application {
                     kanjiDictionary = new KanjiDictionary();
                     kanjiDictionary.save(file.getAbsolutePath());
                     settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
-                    settings.save();
                 }
                 catch (IOException eTwo) {
-                    Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                    Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
                     failAlert.show();
                     System.out.println(eTwo.getMessage());
                     System.exit(0);
@@ -139,12 +137,11 @@ public class App extends Application {
             if (result.get() == loadButton) {
                 File file = fileChooser.showOpenDialog(stage);
                 try {
-                    settings.setVocableDictionaryFilePath(file.getAbsolutePath());
-                    settings.save();
                     vocableDictionary = new VocableDictionary(settings.getKanjiDictionaryFilePath());
+                    settings.setVocableDictionaryFilePath(file.getAbsolutePath());
                 }
                 catch (IOException eTwo) {
-                    Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                    Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
                     failAlert.show();
                     System.out.println(eTwo.getMessage());
                     System.exit(0);
@@ -157,10 +154,9 @@ public class App extends Application {
                     vocableDictionary = new VocableDictionary();
                     vocableDictionary.save(file.getAbsolutePath());
                     settings.setVocableDictionaryFilePath(file.getAbsolutePath());
-                    settings.save();
                 }
                 catch (IOException eTwo) {
-                    Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                    Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
                     failAlert.show();
                     System.out.println(eTwo.getMessage());
                     System.exit(0);

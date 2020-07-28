@@ -18,10 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -81,12 +78,10 @@ public class SettingsController implements Initializable {
             try {
                 KanjiDictionary newKanjiDictionary = new KanjiDictionary(file.getAbsolutePath());
                 App.kanjiDictionary = newKanjiDictionary;
-                App.settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
-                App.settings.save();
                 kanjiPathLabel.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
-                Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
                 failAlert.show();
                 System.out.println(eTwo.getMessage());
             }
@@ -98,12 +93,10 @@ public class SettingsController implements Initializable {
                 KanjiDictionary newKanjiDictionary = new KanjiDictionary();
                 newKanjiDictionary.save(file.getAbsolutePath());
                 App.kanjiDictionary = newKanjiDictionary;
-                App.settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
-                App.settings.save();
                 kanjiPathLabel.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
-                Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
                 failAlert.show();
                 System.out.println(eTwo.getMessage());
             }
@@ -113,12 +106,10 @@ public class SettingsController implements Initializable {
             File file = fileChooser.showSaveDialog(kanjiPathLabel.getScene().getWindow());
             try {
                 App.kanjiDictionary.save(file.getAbsolutePath());
-                App.settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
-                App.settings.save();
                 kanjiPathLabel.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
-                Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
                 failAlert.show();
                 System.out.println(eTwo.getMessage());
             }
@@ -149,28 +140,24 @@ public class SettingsController implements Initializable {
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary(file.getAbsolutePath());
                 App.vocableDictionary = newVocableDictionary;
-                App.settings.setVocableDictionaryFilePath(file.getAbsolutePath());
-                App.settings.save();
                 vocPathLabel.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
-                Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
                 failAlert.show();
                 System.out.println(eTwo.getMessage());
             }
         }
         else if (result.get() == createButton) {
-            fileChooser.setInitialFileName("kanji_dictionary.ksbv");
+            fileChooser.setInitialFileName("voc_dictionary.ksbv");
             File file = fileChooser.showSaveDialog(vocPathLabel.getScene().getWindow());
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary();
                 newVocableDictionary.save(file.getAbsolutePath());
-                App.settings.setVocableDictionaryFilePath(file.getAbsolutePath());
-                App.settings.save();
                 vocPathLabel.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
-                Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
                 failAlert.show();
                 System.out.println(eTwo.getMessage());
             }
@@ -180,12 +167,10 @@ public class SettingsController implements Initializable {
             File file = fileChooser.showSaveDialog(vocPathLabel.getScene().getWindow());
             try {
                 App.vocableDictionary.save(file.getAbsolutePath());
-                App.settings.setVocableDictionaryFilePath(file.getAbsolutePath());
-                App.settings.save();
                 vocPathLabel.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
-                Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
+                Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
                 failAlert.show();
                 System.out.println(eTwo.getMessage());
             }
