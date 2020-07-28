@@ -9,6 +9,7 @@
 package de.bhffmnn.models;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
@@ -27,16 +28,17 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
 
     public VocableDictionary (String filePath) throws IOException {
         dictionary = new ArrayList<Vocable>();
-        BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
-        csvReader.readLine(); //skip header
+        BufferedReader dictReader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(filePath), StandardCharsets.UTF_8));
+        dictReader.readLine(); //skip header
         String row;
-        while ((row = csvReader.readLine()) != null) {
+        while ((row = dictReader.readLine()) != null) {
             String[] fields = row.split("\t");
             if (!dictionary.add(new Vocable(fields[0], fields[1], fields[2], fields[3]))) {
                 System.out.print("Duplicate: " + fields);
             }
         }
-        csvReader.close();
+        dictReader.close();
     }
 
     @Override
@@ -65,18 +67,19 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
      */
     public void reload(String filePath) throws IOException{
         dictionary = new ArrayList<Vocable>();
-        BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
-        if ((csvReader.readLine()) != null) {
+        BufferedReader dictReader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(filePath), StandardCharsets.UTF_8));
+        if ((dictReader.readLine()) != null) {
             //skip header
         }
         String row;
-        while ((row = csvReader.readLine()) != null) {
+        while ((row = dictReader.readLine()) != null) {
             String[] fields = row.split("\t");
             if (!dictionary.add(new Vocable(fields[0], fields[1], fields[2], fields[3]))) {
                 System.out.print("Duplicate: " + fields);
             }
         }
-        csvReader.close();
+        dictReader.close();
     }
 
     /**
@@ -122,16 +125,16 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
      * @throws IOException
      */
     public void save(String filePath) throws IOException {
-        PrintWriter csvWriter = new PrintWriter(new FileOutputStream(filePath, false));
-        StringBuilder csvStringBuilder = new StringBuilder();
-        csvStringBuilder.append("form\treading\tmeaning\texample\tlevel\tdue\n");
+        PrintWriter dictWriter = new PrintWriter(new FileOutputStream(filePath, false));
+        StringBuilder dictStringBuilder = new StringBuilder();
+        dictStringBuilder.append("form\treading\tmeaning\texample\tlevel\tdue\n");
         for (Vocable vocable : dictionary) {
-            csvStringBuilder.append(vocable.toString() + "\n");
+            dictStringBuilder.append(vocable.toString() + "\n");
         }
-        String csvString = csvStringBuilder.toString();
-        System.out.println(csvString);
-        csvWriter.print(csvString);
-        csvWriter.close();
+        String dictString = dictStringBuilder.toString();
+        System.out.println(dictString);
+        dictWriter.print(dictString);
+        dictWriter.close();
     }
 
     /**

@@ -9,6 +9,7 @@
 package de.bhffmnn.models;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -26,10 +27,11 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
     public KanjiDictionary (String filePath) throws IOException {
         dictionary = new ArrayList<Kanji>();
         try {
-            BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
-            csvReader.readLine(); //skip header
+            BufferedReader dictReader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(filePath), StandardCharsets.UTF_8));
+            dictReader.readLine(); //skip header
             String row;
-            while ((row = csvReader.readLine()) != null) {
+            while ((row = dictReader.readLine()) != null) {
                 String[] fields = row.split("\t");
                 if (!add(new Kanji(fields[0].charAt(0), fields[1], fields[2], fields[3],
                         fields[4], Integer.parseInt(fields[5]), LocalDate.parse(fields[6]),
@@ -37,7 +39,7 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
                     System.out.print("Duplicate kanji: " + fields);
                 }
             }
-            csvReader.close();
+            dictReader.close();
         }
         catch (ArrayIndexOutOfBoundsException e) {
             throw new IOException(e);
@@ -75,12 +77,13 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
      */
     public void reload(String filePath) throws IOException {
         dictionary = new ArrayList<Kanji>();
-        BufferedReader csvReader = new BufferedReader(new FileReader(filePath));
-        if ((csvReader.readLine()) != null) {
+        BufferedReader dictReader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(filePath), StandardCharsets.UTF_8));
+        if ((dictReader.readLine()) != null) {
             //skip header
         }
         String row;
-        while ((row = csvReader.readLine()) != null) {
+        while ((row = dictReader.readLine()) != null) {
             String[] fields = row.split("\t");
             if (!dictionary.add(new Kanji(fields[0].charAt(0), fields[1], fields[2], fields[3],
                     fields[4], Integer.parseInt(fields[5]), LocalDate.parse(fields[6]),
@@ -88,7 +91,7 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
                 System.out.print("Duplicate kanji: " + fields);
             }
         }
-        csvReader.close();
+        dictReader.close();
     }
 
     /**
@@ -223,17 +226,17 @@ public class KanjiDictionary extends AbstractCollection<Kanji> implements Clonea
      * @throws IOException
      */
     public void save(String filePath) throws IOException {
-        PrintWriter csvWriter = new PrintWriter(new FileOutputStream(filePath, false));
-        StringBuilder csvStringBuilder = new StringBuilder();
-        csvStringBuilder.append("character\ton\tkun\tmeaning\tmnemonic\tcharacterLevel\tcharacterDue\t" +
+        PrintWriter dictWriter = new PrintWriter(new FileOutputStream(filePath, false));
+        StringBuilder dictStringBuilder = new StringBuilder();
+        dictStringBuilder.append("character\ton\tkun\tmeaning\tmnemonic\tcharacterLevel\tcharacterDue\t" +
                                 "readingLevel\treadingDue\tmeaningLevel\tmeaningDue\n");
         for (Kanji kanji : dictionary) {
-            csvStringBuilder.append(kanji.toString() + "\n");
+            dictStringBuilder.append(kanji.toString() + "\n");
         }
-        String csvString = csvStringBuilder.toString();
-        System.out.println(csvString);
-        csvWriter.print(csvString);
-        csvWriter.close();
+        String dictString = dictStringBuilder.toString();
+        System.out.println(dictString);
+        dictWriter.print(dictString);
+        dictWriter.close();
     }
 
     /**
