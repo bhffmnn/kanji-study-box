@@ -144,7 +144,7 @@ public class App extends Application {
                 try {
                     settings.setVocableDictionaryFilePath(file.getAbsolutePath());
                     settings.save();
-                    kanjiDictionary = new KanjiDictionary(settings.getKanjiDictionaryFilePath());
+                    vocableDictionary = new VocableDictionary(settings.getKanjiDictionaryFilePath());
                 }
                 catch (IOException eTwo) {
                     Alert failAlert = new Alert(Alert.AlertType.ERROR, "That didn't work.");
