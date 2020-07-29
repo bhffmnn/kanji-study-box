@@ -54,7 +54,7 @@ public class AddKanjiMenuItemController implements Initializable {
 
     @FXML
     private void addButtonAction(ActionEvent actionEvent) {
-        if (charField.getText().length() == 0) {
+        if (charField.getText().length() == 1) {
             Kanji kanji = new Kanji(charField.getText().charAt(0), onField.getText(), kunField.getText(), meanField.getText(),
                     mnemField.getText());
             if (kanjiMenuItemList.addNewItem(kanji)) {
@@ -66,6 +66,7 @@ public class AddKanjiMenuItemController implements Initializable {
             }
         }
         else {
+            System.out.println("charField text: [" + charField.getText() + "] length: " + charField.getText().length());
             Alert charAlert = new Alert(Alert.AlertType.INFORMATION,
                     "You have either entered more than one character or a character outside of unicode's Basic" +
                             " Multilingual Plane.");

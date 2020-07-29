@@ -86,7 +86,7 @@ public class EditKanjiMenuItemController implements Initializable {
 
     @FXML
     private void saveButtonAction(ActionEvent actionEvent) {
-        if (charField.getText().length() == 0) {
+        if (charField.getText().length() == 1) {
             boolean characterExists = false;
             for (KanjiMenuItem kmi : kanjiMenuItemList) {
                 if (!(kanjiMenuItem.getCharacter() == charField.getText().charAt(0)) //If character has been changed
