@@ -34,14 +34,14 @@ import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
     @FXML
-    private Label kanjiPathLabel;
+    private TextField kanjiPathField;
     @FXML
-    private Label vocPathLabel;
+    private TextField vocPathField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        kanjiPathLabel.setText(App.settings.getKanjiDictionaryFilePath());
-        vocPathLabel.setText(App.settings.getVocableDictionaryFilePath());
+        kanjiPathField.setText(App.settings.getKanjiDictionaryFilePath());
+        vocPathField.setText(App.settings.getVocableDictionaryFilePath());
     }
 
     @FXML
@@ -74,11 +74,11 @@ public class SettingsController implements Initializable {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("All files", "*"));
         if (result.get() == loadButton) {
-            File file = fileChooser.showOpenDialog(kanjiPathLabel.getScene().getWindow());
+            File file = fileChooser.showOpenDialog(kanjiPathField.getScene().getWindow());
             try {
                 KanjiDictionary newKanjiDictionary = new KanjiDictionary(file.getAbsolutePath());
                 App.kanjiDictionary = newKanjiDictionary;
-                kanjiPathLabel.setText(file.getAbsolutePath());
+                kanjiPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
                 Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
@@ -88,12 +88,12 @@ public class SettingsController implements Initializable {
         }
         else if (result.get() == createButton) {
             fileChooser.setInitialFileName("kanji_dictionary.ksbk");
-            File file = fileChooser.showSaveDialog(kanjiPathLabel.getScene().getWindow());
+            File file = fileChooser.showSaveDialog(kanjiPathField.getScene().getWindow());
             try {
                 KanjiDictionary newKanjiDictionary = new KanjiDictionary();
                 newKanjiDictionary.save(file.getAbsolutePath());
                 App.kanjiDictionary = newKanjiDictionary;
-                kanjiPathLabel.setText(file.getAbsolutePath());
+                kanjiPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
                 Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
@@ -103,10 +103,10 @@ public class SettingsController implements Initializable {
         }
         else if (result.get() == backupButton) {
             fileChooser.setInitialFileName("kanji_dictionary.ksbk");
-            File file = fileChooser.showSaveDialog(kanjiPathLabel.getScene().getWindow());
+            File file = fileChooser.showSaveDialog(kanjiPathField.getScene().getWindow());
             try {
                 App.kanjiDictionary.save(file.getAbsolutePath());
-                kanjiPathLabel.setText(file.getAbsolutePath());
+                kanjiPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
                 Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
@@ -136,11 +136,11 @@ public class SettingsController implements Initializable {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("All files", "*"));
         if (result.get() == loadButton) {
-            File file = fileChooser.showOpenDialog(vocPathLabel.getScene().getWindow());
+            File file = fileChooser.showOpenDialog(vocPathField.getScene().getWindow());
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary(file.getAbsolutePath());
                 App.vocableDictionary = newVocableDictionary;
-                vocPathLabel.setText(file.getAbsolutePath());
+                vocPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
                 Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
@@ -150,11 +150,11 @@ public class SettingsController implements Initializable {
         }
         else if (result.get() == createButton) {
             fileChooser.setInitialFileName("voc_dictionary.ksbv");
-            File file = fileChooser.showSaveDialog(vocPathLabel.getScene().getWindow());
+            File file = fileChooser.showSaveDialog(vocPathField.getScene().getWindow());
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary();
                 newVocableDictionary.save(file.getAbsolutePath());
-                vocPathLabel.setText(file.getAbsolutePath());
+                vocPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
                 Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
@@ -164,10 +164,10 @@ public class SettingsController implements Initializable {
         }
         else if (result.get() == backupButton) {
             fileChooser.setInitialFileName("voc_dictionary.ksbv");
-            File file = fileChooser.showSaveDialog(vocPathLabel.getScene().getWindow());
+            File file = fileChooser.showSaveDialog(vocPathField.getScene().getWindow());
             try {
                 App.vocableDictionary.save(file.getAbsolutePath());
-                vocPathLabel.setText(file.getAbsolutePath());
+                vocPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
                 Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
