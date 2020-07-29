@@ -78,6 +78,7 @@ public class SettingsController implements Initializable {
             try {
                 KanjiDictionary newKanjiDictionary = new KanjiDictionary(file.getAbsolutePath());
                 App.kanjiDictionary = newKanjiDictionary;
+                App.settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
                 kanjiPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
@@ -93,6 +94,7 @@ public class SettingsController implements Initializable {
                 KanjiDictionary newKanjiDictionary = new KanjiDictionary();
                 newKanjiDictionary.save(file.getAbsolutePath());
                 App.kanjiDictionary = newKanjiDictionary;
+                App.settings.setKanjiDictionaryFilePath(file.getAbsolutePath());
                 kanjiPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
@@ -106,7 +108,6 @@ public class SettingsController implements Initializable {
             File file = fileChooser.showSaveDialog(kanjiPathField.getScene().getWindow());
             try {
                 App.kanjiDictionary.save(file.getAbsolutePath());
-                kanjiPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
                 Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
@@ -140,6 +141,7 @@ public class SettingsController implements Initializable {
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary(file.getAbsolutePath());
                 App.vocableDictionary = newVocableDictionary;
+                App.settings.setVocableDictionaryFilePath(file.getAbsolutePath());
                 vocPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
@@ -153,7 +155,9 @@ public class SettingsController implements Initializable {
             File file = fileChooser.showSaveDialog(vocPathField.getScene().getWindow());
             try {
                 VocableDictionary newVocableDictionary = new VocableDictionary();
+                App.vocableDictionary = newVocableDictionary;
                 newVocableDictionary.save(file.getAbsolutePath());
+                App.settings.setVocableDictionaryFilePath(file.getAbsolutePath());
                 vocPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
@@ -167,10 +171,9 @@ public class SettingsController implements Initializable {
             File file = fileChooser.showSaveDialog(vocPathField.getScene().getWindow());
             try {
                 App.vocableDictionary.save(file.getAbsolutePath());
-                vocPathField.setText(file.getAbsolutePath());
             }
             catch (IOException eTwo) {
-                Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't load dictionary file.");
+                Alert failAlert = new Alert(Alert.AlertType.ERROR, "Couldn't save dictionary file.");
                 failAlert.show();
                 System.out.println(eTwo.getMessage());
             }
