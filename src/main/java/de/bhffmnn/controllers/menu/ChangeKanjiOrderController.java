@@ -102,8 +102,14 @@ public class ChangeKanjiOrderController implements Initializable {
     @FXML
     public void chooseFileButtonAction() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("KSB kanji dictionary files", "*.ksbk"));
+        if (fileTypeBox.getValue().equals("KANJIDIC2")) {
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("KANJIDIC2 file", "*.xml"));
+        }
+        else {
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("KSB kanji dictionary files", "*.ksbk"));
+        }
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("All files", "*"));
         dictFile = fileChooser.showOpenDialog(fileTypeBox.getScene().getWindow());
