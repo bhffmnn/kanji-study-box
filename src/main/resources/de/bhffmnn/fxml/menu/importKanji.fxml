@@ -22,7 +22,7 @@
                         <VBox spacing="5.0">
                            <children>
                               <Label text="Import from..." />
-                              <ComboBox fx:id="fileTypeBox" prefWidth="150.0" />
+                              <ComboBox fx:id="fileTypeBox" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" />
@@ -38,7 +38,7 @@
                               <RadioButton fx:id="radioTheseKanji" mnemonicParsing="false" text="These kanji:" toggleGroup="$kanjiSelectionGroup" />
                               <TextField fx:id="kanjiSelectionField" />
                               <RadioButton fx:id="radioPresetKanji" mnemonicParsing="false" text="By preset:" toggleGroup="$kanjiSelectionGroup" />
-                              <ComboBox fx:id="presetBox" prefWidth="150.0" />
+                              <ComboBox fx:id="presetBox" />
                            </children>
                            <opaqueInsets>
                               <Insets />
