@@ -33,7 +33,7 @@ public class VocableDictionary extends AbstractCollection<Vocable> implements Cl
         dictReader.readLine(); //skip header
         String row;
         while ((row = dictReader.readLine()) != null) {
-            String[] fields = row.split("\t");
+            String[] fields = row.split("\t", -1);
             if (!dictionary.add(new Vocable(fields[0], fields[1], fields[2], fields[3]))) {
                 System.out.print("Duplicate: " + fields);
             }
