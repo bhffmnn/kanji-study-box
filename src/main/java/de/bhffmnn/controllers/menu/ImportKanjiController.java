@@ -146,11 +146,15 @@ public class ImportKanjiController implements Initializable {
                 if (radioTheseKanji.isSelected()) {
                     char[] specifiedChars = kanjiSelectionField.textProperty().get().toCharArray();
                     ArrayList<KanjidicKanji> removalList = new ArrayList<>();
-                    for (char c : specifiedChars) {
-                        for (KanjidicKanji kdk : kanjiList) {
-                            if (kdk.getCharacter() != c) {
-                                removalList.add(kdk);
+                    for (KanjidicKanji kdk : kanjiList) {
+                        boolean found = false;
+                        for (char c : specifiedChars) {
+                            if (kdk.getCharacter() == c) {
+                                found = true;
                             }
+                        }
+                        if (!found) {
+                            removalList.add(kdk);
                         }
                     }
                     kanjiList.removeAll(removalList);
