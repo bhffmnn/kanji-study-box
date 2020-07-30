@@ -78,6 +78,8 @@ public class LearningKanjiController implements Initializable {
     @FXML
     private Label mnemonic;
     @FXML
+    private Label phaseLabel;
+    @FXML
     private VBox vocabBox;
 
     //Progress bar
@@ -146,6 +148,12 @@ public class LearningKanjiController implements Initializable {
         phase.addListener(((observableValue, oldValue, newValue) -> {
             if (newValue.intValue() > 0) {
                 showAndCheckButton.setDisable(false);
+                if (newValue.intValue() == 1) {
+                    phaseLabel.setText("Phase 2/3: Repeat Character");
+                }
+                else if (newValue.intValue() == 2) {
+                    phaseLabel.setText("Phase 3/3: Repeat Features");
+                }
             }
             studyKanji = kanjiStudyList.clone();
             uncheckedKanji = studyKanji.clone();
