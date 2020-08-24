@@ -200,7 +200,7 @@ public class TrainingKanjiController implements Initializable {
     private void setButtonAction() {
         try {
             int newLevel = Integer.parseInt(levelField.getText());
-            if (newLevel >= 0 && newLevel <= 10) {
+            if (newLevel >= 0 && newLevel <= App.settings.getMaxLevel()) {
                 switch (studyDirection) {
                     case 0:
                         kanjiStudyList.getByIndex(currentIndex.get()).updateCharacterLevel(Integer.parseInt(levelField.getText()));
@@ -239,12 +239,12 @@ public class TrainingKanjiController implements Initializable {
     private void minusButtonAction() {
         try {
             int currentLevel = Integer.parseInt(levelField.getText());
-            if (currentLevel > 0) {
+            if (currentLevel > 1) {
                 levelField.setText(String.valueOf(currentLevel - 1));
             }
             else {
-                //if 0 or lower, set to 0
-                levelField.setText("0");
+                //if 1 or lower, set to 1
+                levelField.setText("1");
             }
         }
         catch (NumberFormatException nfe) {
@@ -267,12 +267,12 @@ public class TrainingKanjiController implements Initializable {
     private void plusButtonAction() {
         try {
             int currentLevel = Integer.parseInt(levelField.getText());
-            if (currentLevel < 10) {
+            if (currentLevel < App.settings.getMaxLevel()) {
                 levelField.setText(String.valueOf(currentLevel + 1));
             }
             else {
-                //if 10 or higher, set to 10
-                levelField.setText("10");
+                //if max or higher, set to max
+                levelField.setText(String.valueOf(App.settings.getMaxLevel()));
             }
         }
         catch (NumberFormatException nfe) {

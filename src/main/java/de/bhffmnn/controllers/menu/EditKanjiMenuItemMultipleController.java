@@ -9,6 +9,7 @@
 
 package de.bhffmnn.controllers.menu;
 
+import de.bhffmnn.App;
 import de.bhffmnn.controllers.menu.EditKanjiDictionaryController.KanjiMenuItem;
 import de.bhffmnn.controllers.menu.EditKanjiDictionaryController.KanjiMenuItemList;
 import javafx.event.ActionEvent;
@@ -68,11 +69,11 @@ public class EditKanjiMenuItemMultipleController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        charLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
+        charLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, App.settings.getMaxLevel()));
         charLvlSpinner.getValueFactory().setValue(0);
-        readLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
+        readLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, App.settings.getMaxLevel()));
         readLvlSpinner.getValueFactory().setValue(0);
-        meanLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
+        meanLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, App.settings.getMaxLevel()));
         meanLvlSpinner.getValueFactory().setValue(0);
 
         charDP.setValue(LocalDate.now().plusYears(100));

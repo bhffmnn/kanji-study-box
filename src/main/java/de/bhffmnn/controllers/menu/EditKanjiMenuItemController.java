@@ -8,6 +8,7 @@
 
 package de.bhffmnn.controllers.menu;
 
+import de.bhffmnn.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -72,11 +73,11 @@ public class EditKanjiMenuItemController implements Initializable {
 
         indexSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, kanjiMenuItemList.size() - 1));
         indexSpinner.getValueFactory().setValue(kanjiMenuItem.getIndex());
-        charLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
+        charLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, App.settings.getMaxLevel()));
         charLvlSpinner.getValueFactory().setValue(kanjiMenuItem.getCharacterLevel());
-        readLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
+        readLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, App.settings.getMaxLevel()));
         readLvlSpinner.getValueFactory().setValue(kanjiMenuItem.getReadingLevel());
-        meanLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10));
+        meanLvlSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, App.settings.getMaxLevel()));
         meanLvlSpinner.getValueFactory().setValue(kanjiMenuItem.getMeaningLevel());
 
         charDP.setValue(kanjiMenuItem.getCharacterDue());

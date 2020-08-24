@@ -8,6 +8,8 @@
 
 package de.bhffmnn.models;
 
+import de.bhffmnn.App;
+
 import java.time.LocalDate;
 
 /**
@@ -89,40 +91,10 @@ public class Kanji {
      * @param newLevel The new level for the character
      */
     public void updateCharacterLevel(int newLevel){
-        if (newLevel == 1) {
-            this.characterDue = LocalDate.now().plusDays(1);
+        if (newLevel > 0 && newLevel <= App.settings.getMaxLevel()) {
+            this.characterDue = LocalDate.now().plusDays(App.settings.getSpacingByLevel(newLevel));
+            this.characterLevel = newLevel;
         }
-        else if (newLevel == 2) {
-            this.characterDue = LocalDate.now().plusDays(2);
-        }
-        else if (newLevel == 3) {
-            this.characterDue = LocalDate.now().plusDays(4);
-        }
-        else if (newLevel == 4) {
-            this.characterDue = LocalDate.now().plusWeeks(1);
-        }
-        else if (newLevel == 5) {
-            this.characterDue = LocalDate.now().plusWeeks(2);
-        }
-        else if (newLevel == 6) {
-            this.characterDue = LocalDate.now().plusWeeks(4);
-        }
-        else if (newLevel == 7) {
-            this.characterDue = LocalDate.now().plusWeeks(8);
-        }
-        else if (newLevel == 8) {
-            this.characterDue = LocalDate.now().plusWeeks(16);
-        }
-        else if (newLevel == 9) {
-            this.characterDue = LocalDate.now().plusWeeks(32);
-        }
-        else if (newLevel == 10) {
-            this.characterDue = LocalDate.now().plusWeeks(64);
-        }
-        else {
-            this.characterDue = LocalDate.now().plusYears(100);
-        }
-        this.characterLevel = newLevel;
     }
 
     /**
@@ -130,40 +102,10 @@ public class Kanji {
      * @param newLevel The new level for the reading
      */
     public void updateReadingLevel(int newLevel){
-        if (newLevel == 1) {
-            this.readingDue = LocalDate.now().plusDays(1);
+        if (newLevel > 0 && newLevel <= App.settings.getMaxLevel()) {
+            this.readingDue = LocalDate.now().plusDays(App.settings.getSpacingByLevel(newLevel));
+            this.readingLevel = newLevel;
         }
-        else if (newLevel == 2) {
-            this.readingDue = LocalDate.now().plusDays(2);
-        }
-        else if (newLevel == 3) {
-            this.readingDue = LocalDate.now().plusDays(4);
-        }
-        else if (newLevel == 4) {
-            this.readingDue = LocalDate.now().plusWeeks(1);
-        }
-        else if (newLevel == 5) {
-            this.readingDue = LocalDate.now().plusWeeks(2);
-        }
-        else if (newLevel == 6) {
-            this.readingDue = LocalDate.now().plusWeeks(4);
-        }
-        else if (newLevel == 7) {
-            this.readingDue = LocalDate.now().plusWeeks(8);
-        }
-        else if (newLevel == 8) {
-            this.readingDue = LocalDate.now().plusWeeks(16);
-        }
-        else if (newLevel == 9) {
-            this.readingDue = LocalDate.now().plusWeeks(32);
-        }
-        else if (newLevel == 10) {
-            this.readingDue = LocalDate.now().plusWeeks(64);
-        }
-        else {
-            this.readingDue = LocalDate.now().plusYears(100);
-        }
-        this.readingLevel = newLevel;
     }
 
     /**
@@ -171,40 +113,10 @@ public class Kanji {
      * @param newLevel The new level for the meaning
      */
     public void updateMeaningLevel(int newLevel){
-        if (newLevel == 1) {
-            this.meaningDue = LocalDate.now().plusDays(1);
+        if (newLevel > 0 && newLevel <= App.settings.getMaxLevel()) {
+            this.meaningDue = LocalDate.now().plusDays(App.settings.getSpacingByLevel(newLevel));
+            this.meaningLevel = newLevel;
         }
-        else if (newLevel == 2) {
-            this.meaningDue = LocalDate.now().plusDays(2);
-        }
-        else if (newLevel == 3) {
-            this.meaningDue = LocalDate.now().plusDays(4);
-        }
-        else if (newLevel == 4) {
-            this.meaningDue = LocalDate.now().plusWeeks(1);
-        }
-        else if (newLevel == 5) {
-            this.meaningDue = LocalDate.now().plusWeeks(2);
-        }
-        else if (newLevel == 6) {
-            this.meaningDue = LocalDate.now().plusWeeks(4);
-        }
-        else if (newLevel == 7) {
-            this.meaningDue = LocalDate.now().plusWeeks(8);
-        }
-        else if (newLevel == 8) {
-            this.meaningDue = LocalDate.now().plusWeeks(16);
-        }
-        else if (newLevel == 9) {
-            this.meaningDue = LocalDate.now().plusWeeks(32);
-        }
-        else if (newLevel == 10) {
-            this.meaningDue = LocalDate.now().plusWeeks(64);
-        }
-        else {
-            this.meaningDue = LocalDate.now().plusYears(100);
-        }
-        this.meaningLevel = newLevel;
     }
 
     /**

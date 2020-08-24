@@ -17,11 +17,13 @@ import java.util.prefs.Preferences;
  */
 
 public class Settings {
+    private int[] levels;
     private Preferences preferences;
     private String[][] studyDirectionsKanji; //currently hard coded
     private String[][] studyDirectionsVocab; //currently hard coded
 
     public Settings() {
+        levels = new int[]{1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610};
         String[] answersCharacter = {"character", "vocab", "mnemonic", "level", "due"};
         String[] answersReadingKanji = {"on", "kun", "meaning", "vocab", "mnemonic", "level", "due"};
         String[] answersMeaningKanji = {"on", "kun", "meaning", "vocab", "mnemonic", "level", "due"};
@@ -30,6 +32,13 @@ public class Settings {
         studyDirectionsKanji = new String[][]{answersCharacter, answersReadingKanji, answersMeaningKanji};
     }
 
+    public int getSpacingByLevel(int level) {
+        return levels[level - 1];
+    }
+
+    public int getMaxLevel() {
+        return levels.length;
+    }
 
     public void setKanjiDictionaryFilePath(String filePath) {
         preferences.put("kanjiDictionaryFilePath", filePath);
