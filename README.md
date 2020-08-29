@@ -1,4 +1,4 @@
-# Kanji Study Box
+<h1> <img src="src/main/resources/de/bhffmnn/images/kanjibox_small.png" alt="logo" width="50"/> Kanji Study Box</h1>
 
 1. [ Overview ](#overview)
 2. [ How to Start Studying ](#how-to-start-studying)
