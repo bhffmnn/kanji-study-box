@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,9 +29,25 @@ import java.util.ResourceBundle;
  * Controller for the MainMenu view.
  */
 public class MainMenuController implements Initializable {
+    //Kanji count labels
+    @FXML Label totalLabel;
+    @FXML Label newLabel;
+    @FXML Label startedLabel;
+
+    //Due count labels
+    @FXML Label characterLabel;
+    @FXML Label readingLabel;
+    @FXML Label meaningLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        totalLabel.setText(String.valueOf(App.kanjiDictionary.size()));
+        newLabel.setText(String.valueOf(App.kanjiDictionary.getByCharacterLevel(0).size()));
+        startedLabel.setText(String.valueOf(App.kanjiDictionary.getStarted().size()));
+
+        characterLabel.setText(String.valueOf(App.kanjiDictionary.getCharacterDue().size()));
+        readingLabel.setText(String.valueOf(App.kanjiDictionary.getReadingDue().size()));
+        meaningLabel.setText(String.valueOf(App.kanjiDictionary.getMeaningDue().size()));
     }
 
     @FXML
