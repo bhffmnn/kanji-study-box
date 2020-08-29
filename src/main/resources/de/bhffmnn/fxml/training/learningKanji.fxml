@@ -110,7 +110,7 @@
                   </ButtonBar>
                </children>
                <BorderPane.margin>
-                  <Insets bottom="5.0" />
+                  <Insets bottom="5.0" top="5.0" />
                </BorderPane.margin>
             </VBox>
          </bottom>

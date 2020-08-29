@@ -127,7 +127,7 @@
             </ScrollPane>
          </center>
          <bottom>
-            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
                   <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity">
                      <buttons>
@@ -161,10 +161,13 @@
                         </ButtonBar>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
+                        <Insets />
                      </VBox.margin>
                   </HBox>
                </children>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
             </VBox>
          </bottom>
          <top>
@@ -180,7 +183,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#xButtonAction" text="X">
                      <GridPane.margin>
-                        <Insets left="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Button>
                   <StackPane GridPane.columnIndex="1">
@@ -191,7 +194,7 @@
                   </StackPane>
                   <Circle fx:id="checkCircle" fill="#ffffff00" radius="10.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Circle>
                </children>
