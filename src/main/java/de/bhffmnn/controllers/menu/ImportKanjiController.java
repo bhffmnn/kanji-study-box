@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 /**
@@ -143,6 +144,8 @@ public class ImportKanjiController implements Initializable {
         else {
             try {
                 ArrayList<KanjidicKanji> kanjiList = KandicReader.getAllKandicKanjiAsArrayList(dictFile.getAbsolutePath());
+
+                //These Kanji Option
                 if (radioTheseKanji.isSelected()) {
                     char[] specifiedChars = kanjiSelectionField.textProperty().get().toCharArray();
                     ArrayList<KanjidicKanji> removalList = new ArrayList<>();
@@ -159,57 +162,48 @@ public class ImportKanjiController implements Initializable {
                     }
                     kanjiList.removeAll(removalList);
                 }
+
+                //Preset Option
                 else if (radioPresetKanji.isSelected()) {
                     ArrayList<KanjidicKanji> removalList = new ArrayList<>();
+
+                    //Joyo Kanji Preset
                     if (presetBox.getValue().equals(SelectionPreset.JOYO)) {
-                        for (char c : KandicReader.joyoKanji.toCharArray()) {
-                            for (KanjidicKanji kdk : kanjiList) {
+                        for (KanjidicKanji kdk : kanjiList) {
+                            boolean found = false;
+                            for (char c : KandicReader.joyoKanji.toCharArray()) {
                                 if (kdk.getCharacter() == c) {
-                                    removalList.add(kdk);
+                                    found = true;
                                 }
                             }
+                            if (!found) {
+                                removalList.add(kdk);
+                            }
                         }
+                        kanjiList.removeAll(removalList);
                     }
+
+                    //Old Joyo Kanji Preset
                     else if (presetBox.getValue().equals(SelectionPreset.JOYO_OLD)) {
-                        for (char c : KandicReader.joyoKanjiOld.toCharArray()) {
-                            for (KanjidicKanji kdk : kanjiList) {
+                        for (KanjidicKanji kdk : kanjiList) {
+                            boolean found = false;
+                            for (char c : KandicReader.joyoKanjiOld.toCharArray()) {
                                 if (kdk.getCharacter() == c) {
-                                    removalList.add(kdk);
+                                    found = true;
                                 }
                             }
-                        }
-                    }
-                    else if (presetBox.getValue().equals(SelectionPreset.JLPT_1)) {
-                        for (KanjidicKanji kdk : kanjiList) {
-                            if (kdk.getJlpt() < 1) {
+                            if (!found) {
                                 removalList.add(kdk);
                             }
                         }
+                        kanjiList.removeAll(removalList);
                     }
-                    else if (presetBox.getValue().equals(SelectionPreset.JLPT_2)) {
+
+                    //JLPT Presets
+                    else if (presetBox.getValue().toString().contains("JLPT")) {
+                        int jlptLevel = presetBox.getValue().ordinal() - 1;
                         for (KanjidicKanji kdk : kanjiList) {
-                            if (kdk.getJlpt() < 2) {
-                                removalList.add(kdk);
-                            }
-                        }
-                    }
-                    else if (presetBox.getValue().equals(SelectionPreset.JLPT_3)) {
-                        for (KanjidicKanji kdk : kanjiList) {
-                            if (kdk.getJlpt() < 3) {
-                                removalList.add(kdk);
-                            }
-                        }
-                    }
-                    else if (presetBox.getValue().equals(SelectionPreset.JLPT_4)) {
-                        for (KanjidicKanji kdk : kanjiList) {
-                            if (kdk.getJlpt() < 4) {
-                                removalList.add(kdk);
-                            }
-                        }
-                    }
-                    else if (presetBox.getValue().equals(SelectionPreset.JLPT_5)) {
-                        for (KanjidicKanji kdk : kanjiList) {
-                            if (kdk.getJlpt() < 5) {
+                            if (kdk.getJlpt() < jlptLevel) {
                                 removalList.add(kdk);
                             }
                         }
@@ -217,6 +211,7 @@ public class ImportKanjiController implements Initializable {
                     kanjiList.removeAll(removalList);
                 }
 
+                //Put the imported kanji into the kanji dictionary
                 for (KanjidicKanji kdk : kanjiList) {
                     Kanji k = kdk.toKanji();
                     if (!kanjiMenuItemList.addNewItem(k)) {
